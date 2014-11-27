@@ -1,4 +1,6 @@
-CompanhiaBusao
+﻿CiaDoBusao
 ==============
 
-Projeto de LES UFCG- companhia do busão, um projeto que visa não deixar pessas que se conhecem e pegam o mesmo onibus andarem sós no mesmo onibus
+Projeto da disciplina de Laboratório de Engenharia de Software (UFCG 2014.2)
+
+Nesse aplicativo, você pode conectar-se com pessoas interessadas em ir ao ponto de ônibus acompanhadas, através de horários, linhas e pontos específicos.

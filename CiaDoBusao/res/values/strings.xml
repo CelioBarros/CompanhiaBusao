@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">CiaDoBusao</string>
+    <string name="app_name">Cia do Busão</string>
     <string name="title_section1">Início</string>
     <string name="title_section2">Novo Encontro</string>
     <string name="title_section3">Meus Encontros</string>

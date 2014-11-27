@@ -11,5 +11,14 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
         />
+    
+	<ImageView
+        android:layout_height="100dp"
+        android:layout_width="100dp"
+        android:id="@+id/imageView"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="100dp"
+        android:src="@drawable/ic_launcher" />
+    
 
 </LinearLayout>

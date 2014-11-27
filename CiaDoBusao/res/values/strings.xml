@@ -2,6 +2,15 @@
 <resources>
 
     <string name="app_name">CiaDoBusao</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="title_section1">Início</string>
+    <string name="title_section2">Novo Encontro</string>
+    <string name="title_section3">Meus Encontros</string>
+    <string name="title_section4">Notificações</string>
+    <string name="title_section5">Perfil</string>
+    <string name="title_section6">Sair</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
+    <string name="action_settings">Settings</string>
 
 </resources>

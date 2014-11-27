@@ -45,8 +45,11 @@ public class MainActivity extends ActionBarActivity
     }
     
     public void criarEncontro(View v){
-    	
     	Toast.makeText(getApplicationContext(), "Encontro criado com sucesso!", Toast.LENGTH_SHORT).show();
+    	FragmentManager fragmentManager = getSupportFragmentManager();
+		fragmentManager.beginTransaction()
+				.replace(R.id.container, new HomeFragment()).commit();
+    
     }
 
     @Override

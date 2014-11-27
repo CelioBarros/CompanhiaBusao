@@ -18,7 +18,7 @@ public class MainFragment extends Fragment {
 	
 	private UiLifecycleHelper uiHelper;
 	private static final String TAG = "MainFragment";
-	
+	private int countTelas = 0;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 	    View view = inflater.inflate(R.layout.activity_main, container, false);
@@ -32,6 +32,12 @@ public class MainFragment extends Fragment {
 	private void onSessionStateChange(Session session, SessionState state, Exception exception) {
 	    if (state.isOpened()) {
 	        Log.i(TAG, "Logged in...");
+	       //ABRE MUITAS TELAS
+	        if(countTelas==0){
+	        Intent intent = new Intent(getActivity(), MenuActivity.class);
+	        getActivity().startActivity(intent);
+	        getActivity().finish();
+	        }
 	    } else if (state.isClosed()) {
 	        Log.i(TAG, "Logged out...");
 	    }

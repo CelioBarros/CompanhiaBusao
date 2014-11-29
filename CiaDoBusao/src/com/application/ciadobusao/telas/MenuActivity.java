@@ -1,4 +1,12 @@
-package com.application.ciadobusao;
+package com.application.ciadobusao.telas;
+
+import com.application.ciadobusao.NavigationDrawerFragment;
+import com.application.ciadobusao.R;
+import com.application.ciadobusao.NavigationDrawerFragment.NavigationDrawerCallbacks;
+import com.application.ciadobusao.R.id;
+import com.application.ciadobusao.R.layout;
+import com.application.ciadobusao.R.menu;
+import com.application.ciadobusao.R.string;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -43,14 +51,8 @@ public class MenuActivity extends ActionBarActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
     }
-    
-    public void criarEncontro(View v){
-    	Toast.makeText(getApplicationContext(), "Encontro criado com sucesso!", Toast.LENGTH_SHORT).show();
-    	FragmentManager fragmentManager = getSupportFragmentManager();
-		fragmentManager.beginTransaction()
-				.replace(R.id.container, new HomeFragment()).commit();
-    
-    }
+ 
+   
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
@@ -61,11 +63,15 @@ public class MenuActivity extends ActionBarActivity
                 .commit();
     }
 
+    //Responsavel pelo clique no menu
     public void onSectionAttached(int number) {
     	Fragment fragment = null;
         switch (number) {
-            case 1:
+         //Clique em H
+        	case 1:
                 mTitle = getString(R.string.title_section1);
+                fragment = new HomeFragment();
+               
                 break;
             case 2:
                 mTitle = getString(R.string.title_section2);
@@ -73,15 +79,19 @@ public class MenuActivity extends ActionBarActivity
                 break;
             case 3:
                 mTitle = getString(R.string.title_section3);
+                //fragment = new 
                 break;
             case 4:
                 mTitle = getString(R.string.title_section4);
+              //fragment = new 
                 break;
             case 5:
                 mTitle = getString(R.string.title_section5);
+              //fragment = new 
                 break;
             case 6:
                 mTitle = getString(R.string.title_section6);
+              //fragment = new 
                 break;                
         }
         
@@ -128,6 +138,18 @@ public class MenuActivity extends ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /**
      * A placeholder fragment containing a simple view.
      */

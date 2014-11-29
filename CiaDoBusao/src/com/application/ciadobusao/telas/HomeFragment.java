@@ -1,4 +1,7 @@
-package com.application.ciadobusao;
+package com.application.ciadobusao.telas;
+
+import com.application.ciadobusao.R;
+import com.application.ciadobusao.R.layout;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;

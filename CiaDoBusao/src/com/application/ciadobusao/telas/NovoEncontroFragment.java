@@ -2,52 +2,87 @@ package com.application.ciadobusao.telas;
 
 import java.util.Calendar;
 
-import com.application.ciadobusao.R;
-import com.application.ciadobusao.R.layout;
-
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.TextView;
+import android.widget.TimePicker;
+
+import com.application.ciadobusao.R;
+import com.application.ciadobusao.util.DataDoEncontro;
+import com.application.ciadobusao.util.Encontro;
+import com.application.ciadobusao.util.HorarioDoEncontro;
+
 
 public class NovoEncontroFragment extends Fragment{
 	private Button dataButton;
 	private Button criarEncontroButton;
+	private Button horaButton;
+	private DataDoEncontro data;
+	private HorarioDoEncontro horario;
+	private Encontro encontro; 
+	private View rootView;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		View rootView = inflater.inflate(R.layout.fragment_novo_encontro, container, false);
-		
+		rootView = inflater.inflate(R.layout.fragment_novo_encontro, container, false);
+
 		dataButton= (Button) rootView.findViewById(R.id.dataPickerButton);
 		dataButton.setOnClickListener(new View.OnClickListener() {
-		    @Override
-		    public void onClick(View v) {
-		    	 DialogFragment newFragment = new DatePickerFragment();
-		    	  newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");;
-		    }
+			@Override
+			public void onClick(View v) {
+				DialogFragment newFragment = new DatePickerFragment();
+				newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");;
+			}
+		});
+		
+		horaButton= (Button) rootView.findViewById(R.id.horarioButton);
+		horaButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				DialogFragment newFragment = new TimePickerFragment();
+			    newFragment.show(getActivity().getSupportFragmentManager(), "timePicker");
+			   
+			}
 		});
 		
 		
-
+		criarEncontroButton= (Button) rootView.findViewById(R.id.botaocriar);
+		criarEncontroButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				encontro = new Encontro(
+						((TextView) rootView.findViewById(R.id.nomeEdit)).getText().toString(),
+						((TextView) rootView.findViewById(R.id.pontoEdit)).getText().toString(),
+						((TextView) rootView.findViewById(R.id.linhaEdit)).getText().toString(),
+						horario, 
+						data);
+				System.out.println(encontro.toString());
+			   
+			}
+		});
 		return rootView;
 	}	
 
-	
-	
-	
-	
-	
-	
-//=======================DATA PICKER =====================
-	public static class DatePickerFragment extends DialogFragment
+
+
+
+
+
+
+	//=======================DATA PICKER =====================
+	public class DatePickerFragment extends DialogFragment
 	implements DatePickerDialog.OnDateSetListener {
 
 		@Override
@@ -63,12 +98,31 @@ public class NovoEncontroFragment extends Fragment{
 		}
 
 		public void onDateSet(DatePicker view, int year, int month, int day) {
-			// Do something with the date chosen by the user
+			data = new DataDoEncontro(day, month, year);
 		}
-		
-		
-	};
 
+
+	};
+	//====================CLOCK PICKER=========================================
+	public class TimePickerFragment extends DialogFragment
+	implements TimePickerDialog.OnTimeSetListener {
+
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			// Use the current time as the default values for the picker
+			final Calendar c = Calendar.getInstance();
+			int hour = c.get(Calendar.HOUR_OF_DAY);
+			int minute = c.get(Calendar.MINUTE);
+
+			// Create a new instance of TimePickerDialog and return it
+			return new TimePickerDialog(getActivity(), this, hour, minute,
+					DateFormat.is24HourFormat(getActivity()));
+		}
+
+		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+			horario = new HorarioDoEncontro(hourOfDay, minute);
+		}
+	};
 }
 
 

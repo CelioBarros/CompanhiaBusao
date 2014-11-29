@@ -16,7 +16,7 @@
             android:id="@+id/textView" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/nomeEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -39,7 +39,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editText2"
+            android:id="@+id/linhaEdit"
             android:layout_weight="1" />
     </LinearLayout>
 
@@ -57,7 +57,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editText3"
+            android:id="@+id/pontoEdit"
             android:layout_weight="1" />
     </LinearLayout>
 
@@ -66,17 +66,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/textView4"
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Horario:" />
-
-        <TimePicker
-            android:id="@+id/timePicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
+            android:text="Horário"
+            android:id="@+id/horarioButton" />
     </LinearLayout>
 
     <LinearLayout
@@ -88,7 +82,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Data"
-
             android:id="@+id/dataPickerButton" />
     </LinearLayout>
 
@@ -102,15 +95,14 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Criar!"
-            android:id="@+id/button_criar"
-            android:onClick="criarEncontro"
+            android:text="Criar"
+       		android:id="@+id/botaocriar"
             android:layout_weight="1" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancelar"
+            android:text="Cancelar" 
             android:id="@+id/button2"
             android:layout_weight="1" />
     </LinearLayout>

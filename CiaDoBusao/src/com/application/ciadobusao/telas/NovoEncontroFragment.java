@@ -8,6 +8,7 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.application.ciadobusao.R;
 import com.application.ciadobusao.util.DataDoEncontro;
@@ -68,7 +70,11 @@ public class NovoEncontroFragment extends Fragment{
 						((TextView) rootView.findViewById(R.id.linhaEdit)).getText().toString(),
 						horario, 
 						data);
-				System.out.println(encontro.toString());
+				
+				FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+				fragmentManager.beginTransaction()
+						.replace(R.id.container, new HomeFragment()).commit();
+				Toast.makeText(getActivity(), "Encontro Criado",Toast.LENGTH_LONG).show();
 			   
 			}
 		});

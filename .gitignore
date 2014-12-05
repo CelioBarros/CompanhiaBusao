@@ -3,6 +3,6 @@ R.java
 R.txt
 *~
 CiaDoBusao/bin/**
-FacebookSDK/bin/**
-appcompat_v7/bin/**
+FacebookSDK/**
+appcompat_v7/**
 Thumbs.db

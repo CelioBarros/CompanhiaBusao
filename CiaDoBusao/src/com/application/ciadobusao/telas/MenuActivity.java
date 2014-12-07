@@ -83,7 +83,7 @@ public class MenuActivity extends ActionBarActivity
                 break;
             case 4:
                 mTitle = getString(R.string.title_section4);
-              //fragment = new 
+              fragment = new NotificacoesFragment();
                 break;
             case 5:
                 mTitle = getString(R.string.title_section5);

@@ -20,6 +20,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.application.ciadobusao.R;
+import com.application.ciadobusao.db.SingletonDB;
 import com.application.ciadobusao.util.DataDoEncontro;
 import com.application.ciadobusao.util.Encontro;
 import com.application.ciadobusao.util.HorarioDoEncontro;
@@ -70,7 +71,7 @@ public class NovoEncontroFragment extends Fragment{
 						((TextView) rootView.findViewById(R.id.linhaEdit)).getText().toString(),
 						horario, 
 						data);
-				
+				SingletonDB.getInstance().addEncontro(encontro);
 				FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 				fragmentManager.beginTransaction()
 						.replace(R.id.container, new HomeFragment()).commit();

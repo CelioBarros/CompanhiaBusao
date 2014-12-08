@@ -127,4 +127,9 @@ public class MeusEncontrosFragment extends Fragment {
 		return rootView;
 	}
 
+	public SingletonDB getMeusEncontros() {
+		return meusEncontros;
+	}
+	
+
 }

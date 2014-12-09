@@ -92,6 +92,7 @@ public class MenuActivity extends ActionBarActivity
             case 6:
                 mTitle = getString(R.string.title_section6);
               //fragment = new 
+                this.finish();
                 break;                
         }
         

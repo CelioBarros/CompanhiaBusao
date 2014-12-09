@@ -2,15 +2,23 @@ package com.application.ciadobusao.db;
 
 import java.util.ArrayList;
 
+import com.application.ciadobusao.util.DataDoEncontro;
 import com.application.ciadobusao.util.Encontro;
+import com.application.ciadobusao.util.HorarioDoEncontro;
 
 public class SingletonDB {
 	private static SingletonDB mInstance = null;
 
 	private ArrayList<Encontro> encontros;
+	private ArrayList<Encontro> notificacoes;
+	//abaixo provisorio pra criar notificacoes fake
+	private HorarioDoEncontro horario;
+	private DataDoEncontro data;
 
 	private SingletonDB() {
 		encontros = new ArrayList<Encontro>();
+		notificacoes = new ArrayList<Encontro>();
+		criaNotificacoes();
 	}
 
 	public static SingletonDB getInstance() {
@@ -30,12 +38,10 @@ public class SingletonDB {
 
 	public void addEncontro(Encontro encontro) {
 		encontros.add(encontro);
-		System.out.println(encontros.size());
 	}
 
 	public void delEncontro(Encontro encontro) {
 		encontros.remove(encontro);
-		System.out.println(encontros.size());
 	}
 
 	public boolean contem(Encontro encontro) {
@@ -55,6 +61,37 @@ public class SingletonDB {
 
 	public void delEncontroAtIndex(int position) {
 		encontros.remove(position);
+
+	}
+	
+	
+	//notificaçoes
+	public ArrayList<Encontro> getNotificacoes() {
+		return this.notificacoes;
+	}
+
+	public ArrayList<Encontro> criaNotificacoes() {
+		for (int i = 0; i < 10; i++) {
+			data = new DataDoEncontro(12, 12, 14);
+			horario = new HorarioDoEncontro(12, 12);
+			Encontro encontro = new Encontro("encontro " + String.valueOf(i),
+					" ponto " + String.valueOf(i), " linha "
+							+ String.valueOf(i), null, null);
+//			if (!meusEncontros.contem(notificacoes.get(i)))
+				notificacoes.add(encontro);
+		}
+		return notificacoes;
+	}
+
+	public void addNotificacao(Encontro encontro) {
+		notificacoes.add(encontro);
+	}
+
+	public void delNotificacao(Encontro encontro) {
+		notificacoes.remove(encontro);
+	}
+	public void delNotificacaoAtIndex(int position) {
+		notificacoes.remove(position);
 
 	}
 }

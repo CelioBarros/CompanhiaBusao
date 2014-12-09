@@ -23,6 +23,7 @@ import android.support.v4.app.Fragment;
 public class MeusEncontrosFragment extends Fragment {
 	private ListView tweetListView;
 	private SingletonDB meusEncontros = SingletonDB.getInstance();
+	private SingletonDB notificacoes = SingletonDB.getInstance();
 	private ArrayAdapter tweetItemArrayAdapter;
 
 	@Override
@@ -87,6 +88,7 @@ public class MeusEncontrosFragment extends Fragment {
 							public void onClick(DialogInterface dialog,
 									int which) {
 								try {
+									notificacoes.addNotificacao(meusEncontros.getEncontros().get(pos));
 									meusEncontros.delEncontroAtIndex(pos);
 								} catch (Exception e) {
 									// TODO: handle exception

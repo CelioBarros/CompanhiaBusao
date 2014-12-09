@@ -29,29 +29,29 @@ import android.support.v4.app.FragmentManager;
 
 public class NotificacoesFragment extends Fragment {
 	private ListView tweetListView;
-	private ArrayList<Encontro> notificacoes = new ArrayList<Encontro>();
+	private ArrayList<Encontro> notificacoes = SingletonDB.getInstance().getNotificacoes();
 	private ArrayAdapter tweetItemArrayAdapter;
-	private HorarioDoEncontro horario;
-	private DataDoEncontro data;
 	private SingletonDB meusEncontros = SingletonDB.getInstance();
+	
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// setContentView(R.layout.fragment_meus_encontros);
 
-		data = new DataDoEncontro(12, 12, 14);
-		horario = new HorarioDoEncontro(12, 12);
+		
 		View rootView = inflater.inflate(R.layout.fragment_notificacoes,
 				container, false);
 
-		for (int i = 0; i < 10; i++) {
-			Encontro encontro = new Encontro("encontro " + String.valueOf(i),
-					" ponto " + String.valueOf(i), " linha "
-							+ String.valueOf(i), null, null);
-//			if (!meusEncontros.contem(notificacoes.get(i)))
-				notificacoes.add(encontro);
-		}
+//		for (int i = 0; i < 10; i++) {
+//			Encontro encontro = new Encontro("encontro " + String.valueOf(i),
+//					" ponto " + String.valueOf(i), " linha "
+//							+ String.valueOf(i), null, null);
+////			if (!meusEncontros.contem(notificacoes.get(i)))
+//				notificacoes.add(encontro);
+//		}
+		
+		
 
 		tweetItemArrayAdapter = new ArrayAdapter(this.getActivity(),
 				android.R.layout.simple_list_item_1, notificacoes);
@@ -94,7 +94,7 @@ public class NotificacoesFragment extends Fragment {
 								notificacoes.remove(pos);
 								Toast.makeText(
 										getActivity().getApplicationContext(),
-										"Encontro " + pos + " adicionado",
+										"Encontro adicionado",
 										Toast.LENGTH_LONG).show();
 								tweetItemArrayAdapter.notifyDataSetChanged();
 

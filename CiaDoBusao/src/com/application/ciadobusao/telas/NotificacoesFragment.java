@@ -1,24 +1,18 @@
 package com.application.ciadobusao.telas;
 
-import java.util.ArrayList;
 
 import com.application.ciadobusao.R;
 import com.application.ciadobusao.db.SingletonDB;
-import com.application.ciadobusao.util.DataDoEncontro;
-import com.application.ciadobusao.util.Encontro;
-import com.application.ciadobusao.util.HorarioDoEncontro;
 //import com.application.ciadobusao.util.NotificacoesAdapter;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ArrayAdapter;
@@ -29,7 +23,7 @@ import android.support.v4.app.FragmentManager;
 
 public class NotificacoesFragment extends Fragment {
 	private ListView tweetListView;
-	private ArrayList<Encontro> notificacoes = SingletonDB.getInstance().getNotificacoes();
+	private SingletonDB notificacoes = SingletonDB.getInstance();
 	private ArrayAdapter tweetItemArrayAdapter;
 	private SingletonDB meusEncontros = SingletonDB.getInstance();
 	
@@ -54,7 +48,7 @@ public class NotificacoesFragment extends Fragment {
 		
 
 		tweetItemArrayAdapter = new ArrayAdapter(this.getActivity(),
-				android.R.layout.simple_list_item_1, notificacoes);
+				android.R.layout.simple_list_item_1, notificacoes.getNotificacoes());
 		tweetListView = (ListView) rootView.findViewById(R.id.notificacoes);
 		tweetListView.setAdapter(tweetItemArrayAdapter);
 
@@ -72,15 +66,15 @@ public class NotificacoesFragment extends Fragment {
 
 				AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
 						.create(); // Read Update
-				alertDialog.setTitle(notificacoes.get(position).getNome());
+				alertDialog.setTitle(notificacoes.getNotificacoes().get(position).getNome());
 				alertDialog
-						.setMessage(notificacoes.get(position).getPonto()
+						.setMessage(notificacoes.getNotificacoes().get(position).getPonto()
 								+ "\n"
-								+ notificacoes.get(position).getLinha()
+								+ notificacoes.getNotificacoes().get(position).getLinha()
 								+ "\n"
-								+ notificacoes.get(position).getData()
+								+ notificacoes.getNotificacoes().get(position).getData()
 								+ "\n"
-								+ notificacoes.get(position).getHorario()
+								+ notificacoes.getNotificacoes().get(position).getHorario()
 								+ "\n"
 								+ "confirmados: \n"
 								+ "Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis."
@@ -90,8 +84,8 @@ public class NotificacoesFragment extends Fragment {
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog,
 									int which) {
-								meusEncontros.addEncontro(notificacoes.get(pos));
-								notificacoes.remove(pos);
+								meusEncontros.addEncontro(notificacoes.getNotificacoes().get(pos));
+								notificacoes.delNotificacaoAtIndex(pos);
 								Toast.makeText(
 										getActivity().getApplicationContext(),
 										"Encontro adicionado",

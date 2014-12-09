@@ -1,10 +1,7 @@
 package com.application.ciadobusao.telas;
 
-import java.util.ArrayList;
-
 import com.application.ciadobusao.R;
 import com.application.ciadobusao.db.SingletonDB;
-import com.application.ciadobusao.util.Encontro;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;

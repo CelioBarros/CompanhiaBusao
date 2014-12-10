@@ -25,4 +25,11 @@ public class HorarioDoEncontro {
 		this.min = min;
 	}
 
+	@Override
+	public String toString() {
+		return hora + ":"+ min;
+	}
+	
+	
+
 }

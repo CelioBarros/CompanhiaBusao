@@ -35,4 +35,11 @@ public class DataDoEncontro {
 		this.ano = ano;
 	}
 
+	@Override
+	public String toString() {
+		return dia+ "/"+mes +"/"+ ano;
+	}
+	
+	
+
 }

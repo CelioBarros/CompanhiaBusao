@@ -33,6 +33,7 @@ public class NovoEncontroFragment extends Fragment{
 	private Button dataButton;
 	private Button criarEncontroButton;
 	private Button horaButton;
+	private Button cancelarButton;
 	private DataDoEncontro data;
 	private HorarioDoEncontro horario;
 	private Encontro encontro; 
@@ -75,6 +76,17 @@ public class NovoEncontroFragment extends Fragment{
 			}
 		});
 		
+		cancelarButton = (Button) rootView.findViewById(R.id.cancelarButtonId);
+		cancelarButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+				fragmentManager.beginTransaction()
+						.replace(R.id.container, new HomeFragment()).commit();
+				
+			}
+		});
 		
 		criarEncontroButton= (Button) rootView.findViewById(R.id.botaocriar);
 		criarEncontroButton.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +107,14 @@ public class NovoEncontroFragment extends Fragment{
 				if(!isLinhaEncontroValid(linhaEncontro)){
 					linhaEncontroTextView.setError("Linha Invalida");
 					count = count +1;
+				}
+				if(horario==null){
+					count = count +1;
+					Toast.makeText(getActivity(), "Horario Invalido",Toast.LENGTH_LONG).show();
+				}
+				if(data == null){
+					count = count +1;
+					Toast.makeText(getActivity(), "Data Invalida",Toast.LENGTH_LONG).show();
 				}
 				
 				if(count==0){

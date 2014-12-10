@@ -18,7 +18,8 @@
                 android:id="@+id/imageView"
                 android:src="@drawable/ico_onibus"
                 android:adjustViewBounds="true"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="16dp" />
         </LinearLayout>
 
         <LinearLayout

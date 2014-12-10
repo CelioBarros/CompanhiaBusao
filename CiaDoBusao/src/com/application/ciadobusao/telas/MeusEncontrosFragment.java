@@ -23,40 +23,21 @@ public class MeusEncontrosFragment extends Fragment {
 	private ListView mListView;
 	private SingletonDB meusEncontros = SingletonDB.getInstance();
 	private SingletonDB notificacoes = SingletonDB.getInstance();
-	//private ArrayAdapter tweetItemArrayAdapter;
+
 	private AdapterListView adapterListView;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		// setContentView(R.layout.fragment_meus_encontros);
+		
 
 		View rootView = inflater.inflate(R.layout.fragment_meus_encontros,
 				container, false);
 		mListView = (ListView) rootView.findViewById(R.id.encontros);
-		// stringArray = new String[15];
-		// for(int i=0; i < SingletonDB.getInstance().getEncontros().size();
-		// i++){
-		// meusEncontros.add();
-		// }
-
-		// meusEncontros = SingletonDB.getInstance().getEncontros();
-		////////tweetItemArrayAdapter = new ArrayAdapter(this.getActivity(),
-		//////		android.R.layout.simple_list_item_1,
-		//////		meusEncontros.getEncontros());
-		//////tweetListView = (ListView) rootView.findViewById(R.id.encontros);
-		////tweetListView.setAdapter(tweetItemArrayAdapter);
+		
 		
 		adapterListView = new AdapterListView(getActivity(), meusEncontros.getEncontros());
 		mListView.setAdapter(adapterListView);
-		// String[] values = new String[] {"a","b","c","d","e","f","g",
-		// "Android", "iPhone", "WindowsMobile",
-		// "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-		// "Linux", "OS/2" };
-		// ArrayAdapter<String> adapter = new
-		// ArrayAdapter<String>(getActivity(),
-		// android.R.layout.simple_list_item_1, values);
-		// tweetListView.setAdapter(adapter);
 
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 			@SuppressWarnings("deprecation")
@@ -104,26 +85,11 @@ public class MeusEncontrosFragment extends Fragment {
 								// simplesmente fecha a janela
 							}
 						});
-				// alertDialog.setButton3("Editar", new
-				// DialogInterface.OnClickListener() {
-				// public void onClick(DialogInterface dialog, int which) {
-				// // ir pra ediçao talvez
-				// }
-				// });
+			
 
 				alertDialog.show();
 
-				// ImageView imageView = (ImageView)
-				// view.findViewById(R.id.icon);
-				// try {
-				// meusEncontros.delEncontroAtIndex(position);
-				// } catch (Exception e) {
-				// // TODO: handle exception
-				// }
-				// Toast.makeText(getActivity().getApplicationContext(),
-				// "Encontro " + position + " removido" , Toast.LENGTH_LONG)
-				// .show();
-				// tweetItemArrayAdapter.notifyDataSetChanged();
+				
 			}
 		});
 

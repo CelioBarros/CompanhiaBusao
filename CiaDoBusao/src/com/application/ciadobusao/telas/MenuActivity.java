@@ -87,7 +87,7 @@ public class MenuActivity extends ActionBarActivity
                 break;
             case 5:
                 mTitle = getString(R.string.title_section5);
-              //fragment = new 
+              	fragment = new PerfilFragment(); 
                 break;
             case 6:
                 mTitle = getString(R.string.title_section6);

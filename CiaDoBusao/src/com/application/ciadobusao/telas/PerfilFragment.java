@@ -79,7 +79,7 @@ public class PerfilFragment extends Fragment {
 						} else {
 							gender = "Indefinido";
 						}
-	                    userNameGender.setText("Gênero: " + gender);
+	                    userNameGender.setText("GÃªnero: " + gender);
 	                }
 	            }
 	            if (response.getError() != null) {

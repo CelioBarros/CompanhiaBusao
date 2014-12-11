@@ -1,14 +1,19 @@
 package com.application.ciadobusao.util;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 public class DataDoEncontro {
-	
+
 	private int dia, mes, ano;
 	
-	public DataDoEncontro (int dia, int mes, int ano) {
+	public DataDoEncontro(){
+	}
+
+	public DataDoEncontro(int dia, int mes, int ano) {
 		this.setDia(dia);
 		this.setMes(mes);
 		this.setAno(ano);
-		
 	}
 
 	public int getDia() {
@@ -37,9 +42,12 @@ public class DataDoEncontro {
 
 	@Override
 	public String toString() {
-		return dia+ "/"+mes +"/"+ ano;
+		NumberFormat formatter1 = new DecimalFormat("00");
+		NumberFormat formatter2 = new DecimalFormat("0000"); 
+		String d = formatter1.format(dia);
+		String m = formatter1.format(mes);
+		String a = formatter2.format(ano);
+		return d + "/" + m + "/" + a;
 	}
-	
-	
 
 }

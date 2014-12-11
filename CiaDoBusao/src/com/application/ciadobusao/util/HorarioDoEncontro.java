@@ -1,8 +1,14 @@
 package com.application.ciadobusao.util;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 public class HorarioDoEncontro {
 	
 	private int hora, min;
+	
+	public HorarioDoEncontro(){
+	}
 	
 	public HorarioDoEncontro(int hora, int min) {
 		this.setHora(hora);
@@ -27,9 +33,10 @@ public class HorarioDoEncontro {
 
 	@Override
 	public String toString() {
-		return hora + ":"+ min;
+		NumberFormat formatter = new DecimalFormat("00"); 
+		String h = formatter.format(hora);
+		String m = formatter.format(min);
+		return h + ":" + m;
 	}
-	
-	
 
 }

@@ -23,6 +23,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.application.ciadobusao.R;
+import com.application.ciadobusao.db.EncontroDAO;
 import com.application.ciadobusao.db.SingletonDB;
 import com.application.ciadobusao.util.DataDoEncontro;
 import com.application.ciadobusao.util.Encontro;
@@ -53,10 +54,6 @@ public class NovoEncontroFragment extends Fragment{
 		nomeEncontroTextView = (TextView) rootView.findViewById(R.id.nomeEdit);
 		linhaEncontroTextView = (TextView) rootView.findViewById(R.id.linhaEdit);
 		pontoEncontroTextView = (TextView) rootView.findViewById(R.id.pontoEdit);
-		
-		
-		
-	
 		
 		dataButton= (Button) rootView.findViewById(R.id.dataPickerButton);
 		dataButton.setOnClickListener(new View.OnClickListener() {
@@ -119,18 +116,22 @@ public class NovoEncontroFragment extends Fragment{
 				}
 				
 				if(count==0){
-				
-					encontro = new Encontro(
+					EncontroDAO e = new EncontroDAO();
+					
+					encontro = new Encontro(0,
 							nomeEncontro,
 							pontoEncontro,
 							linhaEncontro,
 							horario, 
 							data);
+					
+					boolean resultado = e.inserirEncontro(encontro); //teste BD
+					
 					meusEncontros.addEncontro(encontro);
 					FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 					fragmentManager.beginTransaction()
 							.replace(R.id.container, new HomeFragment()).commit();
-					Toast.makeText(getActivity(), "Encontro Criado",Toast.LENGTH_LONG).show();
+					Toast.makeText(getActivity(), "Encontro Criado " + resultado, Toast.LENGTH_LONG).show();
 				
 				
 				}

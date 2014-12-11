@@ -7,8 +7,14 @@ public class Encontro {
 	private HorarioDoEncontro horario;
 	private DataDoEncontro data;
 	private ArrayList<String> perfisConfirmados;
+	private int id;
 	
-	public Encontro(String nome, String linha, String ponto, HorarioDoEncontro horario, DataDoEncontro data) {
+	public Encontro(){
+		
+	}
+	
+	public Encontro(int id,String nome, String linha, String ponto, HorarioDoEncontro horario, DataDoEncontro data) {
+		this.id =id;
 		this.setNome(nome);
 		this.linha = linha;
 		this.ponto = ponto;
@@ -69,6 +75,14 @@ public class Encontro {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	
+	public int getId(){
+		return this.id;
+	}
+	
+	public void setId(int id){
+		this.id = id;
 	}
 
 }

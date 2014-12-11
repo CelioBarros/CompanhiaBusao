@@ -37,6 +37,7 @@ public class NovoEncontroFragment extends Fragment{
 	private DataDoEncontro data;
 	private HorarioDoEncontro horario;
 	private Encontro encontro; 
+	private SingletonDB meusEncontros = SingletonDB.getInstance();
 	
 	private View rootView;
 	private TextView nomeEncontroTextView;
@@ -125,7 +126,7 @@ public class NovoEncontroFragment extends Fragment{
 							linhaEncontro,
 							horario, 
 							data);
-					SingletonDB.getInstance().addEncontro(encontro);
+					meusEncontros.addEncontro(encontro);
 					FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 					fragmentManager.beginTransaction()
 							.replace(R.id.container, new HomeFragment()).commit();

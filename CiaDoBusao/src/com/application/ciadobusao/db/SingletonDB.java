@@ -18,7 +18,7 @@ public class SingletonDB {
 	private SingletonDB() {
 		encontros = new ArrayList<Encontro>();
 		notificacoes = new ArrayList<Encontro>();
-		criaNotificacoes();
+
 	}
 
 	public static SingletonDB getInstance() {
@@ -70,21 +70,7 @@ public class SingletonDB {
 		return this.notificacoes;
 	}
 
-	public ArrayList<Encontro> criaNotificacoes() {
-		for (int i = 0; i < 10; i++) {
-			data = new DataDoEncontro(12, 12, 2014);
-			horario = new HorarioDoEncontro(10, 10);
-			Encontro encontro = new Encontro(0, "encontro " + String.valueOf(i),
-					String.valueOf(i*100), String.valueOf(i+3), horario, data);
-//			horario = new HorarioDoEncontro(12, 12);
-//			Encontro encontro = new Encontro(0,"encontro " + String.valueOf(i),
-//					" ponto " + String.valueOf(i), " linha "
-//							+ String.valueOf(i), horario, data);
-//			if (!meusEncontros.contem(notificacoes.get(i)))
-				notificacoes.add(encontro);
-		}
-		return notificacoes;
-	}
+	
 
 	public void addNotificacao(Encontro encontro) {
 		notificacoes.add(encontro);

@@ -9,17 +9,10 @@ public class Encontro {
 	private ArrayList<String> perfisConfirmados;
 	private int id;
 	
-	public Encontro(){
-		
-	}
 	
-	public Encontro(int id,String nome, String linha, String ponto, HorarioDoEncontro horario, DataDoEncontro data) {
-		this.id =id;
-		this.setNome(nome);
-		this.linha = linha;
-		this.ponto = ponto;
-		this.horario = horario;
-		this.data = data;
+	
+	public Encontro() {
+
 		perfisConfirmados = new ArrayList<String> ();
 	}
 

@@ -2,6 +2,7 @@ package com.application.ciadobusao.telas;
 
 import java.util.Calendar;
 
+
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -20,7 +21,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.application.ciadobusao.R;
-import com.application.ciadobusao.db.EncontroDAO;
+
+import com.application.ciadobusao.db.ClienteRest;
 import com.application.ciadobusao.db.SingletonDB;
 import com.application.ciadobusao.util.DataDoEncontro;
 import com.application.ciadobusao.util.Encontro;
@@ -113,22 +115,27 @@ public class NovoEncontroFragment extends Fragment{
 				}
 				
 				if(count==0){
-					EncontroDAO e = new EncontroDAO();
 					
-					encontro = new Encontro(0,
-							nomeEncontro,
-							pontoEncontro,
-							linhaEncontro,
-							horario, 
-							data);
+					encontro = new Encontro();
 					
-					boolean resultado = e.inserirEncontro(encontro); //teste BD
+					encontro.setNome(nomeEncontro);
+					encontro.setPonto(pontoEncontro);
+					encontro.setLinha(linhaEncontro);
+					encontro.setHorario(horario);
+					encontro.setData(data);
+					ClienteRest cliREST = new ClienteRest();
+		             try {
+		                 String resposta = cliREST.inserirEncontro(encontro);
+		                
+		             } catch (Exception e) {
+		                 e.printStackTrace();
+		                 gerarToast(e.getMessage());
+		             }
 					
-					meusEncontros.addEncontro(encontro);
 					FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 					fragmentManager.beginTransaction()
 							.replace(R.id.container, new HomeFragment()).commit();
-					Toast.makeText(getActivity(), "Encontro Criado " + resultado, Toast.LENGTH_LONG).show();
+					gerarToast("Encontro Criado!");
 				
 				
 				}
@@ -137,7 +144,12 @@ public class NovoEncontroFragment extends Fragment{
 		});
 		return rootView;
 	}	
-	
+	private void gerarToast(CharSequence message) {
+	     int duration = Toast.LENGTH_LONG;
+	     Toast toast = Toast
+	             .makeText(getActivity().getApplicationContext(), message, duration);
+	     toast.show();
+	    }
 	private boolean isPontoEcontroValid(String ponto){
 		if(ponto.length()>2  && ponto != null){
 			return true;

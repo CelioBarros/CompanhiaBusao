@@ -66,14 +66,18 @@ public class AdapterListView extends BaseAdapter
         //Pega o item de acordo com a pos��o.
     	Encontro item = itens.get(position);
         //infla o layout para podermos preencher os dados
-        view = mInflater.inflate(R.layout.listview_layout, null);
+        view = mInflater.inflate(R.layout.element_listview, null);
  
         //atravez do layout pego pelo LayoutInflater, pegamos cada id relacionado
         //ao item e definimos as informa��es.
       
-        ((TextView) view.findViewById(R.id.nomeEncontroTVid)).setText(item.getNome());
+        ((TextView) view.findViewById(R.id.nomeEncontro)).setText(item.getNome());
         ((TextView) view.findViewById(R.id.data)).setText(item.getData().toString());
-        ((TextView) view.findViewById(R.id.horarioId)).setText(item.getHorario().toString());
+        ((TextView) view.findViewById(R.id.hora)).setText(item.getHorario().toString());
+        ((TextView) view.findViewById(R.id.ponto)).setText(item.getPonto());
+        ((TextView) view.findViewById(R.id.linha)).setText(item.getLinha());
+        
+        
  
         return view;
     }

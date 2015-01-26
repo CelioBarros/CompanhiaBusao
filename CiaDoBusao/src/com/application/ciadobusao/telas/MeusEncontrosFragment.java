@@ -9,6 +9,7 @@ import com.application.ciadobusao.db.SingletonDB;
 import com.application.ciadobusao.telas.NotificacoesFragment.MeuAsyncTask;
 import com.application.ciadobusao.util.AdapterListView;
 import com.application.ciadobusao.util.Encontro;
+import com.facebook.widget.LikeView.AuxiliaryViewPosition;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -28,9 +29,10 @@ import android.support.v4.app.Fragment;
 public class MeusEncontrosFragment extends Fragment {
 	private ListView mListView;
 	private List<Encontro> meusEncontros;
+	private AdapterListView myAdapter;
+	private ArrayList<Encontro> auxMeusEncontros;
 //	private SingletonDB notificacoes = SingletonDB.getInstance();
 
-	private AdapterListView adapterListView;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,6 +41,8 @@ public class MeusEncontrosFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.fragment_meus_encontros,
 				container, false);
 		mListView = (ListView) rootView.findViewById(R.id.encontros);
+		
+		final ClienteRest newRest = new ClienteRest();
 		
 		new MeuAsyncTask().execute();
 
@@ -50,7 +54,7 @@ public class MeusEncontrosFragment extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				final int pos = position;
-				Encontro item = adapterListView.getItem(position);
+				Encontro item = auxMeusEncontros.get(position);
 
 				AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
 						.create(); // Read Update
@@ -72,13 +76,8 @@ public class MeusEncontrosFragment extends Fragment {
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog,
 									int which) {
-								try {
-									// notificacoes.addNotificacao(meusEncontros.getEncontros().get(pos));
-									// meusEncontros.delEncontroAtIndex(pos);
-								} catch (Exception e) {
-									// TODO: handle exception
-								}
-								adapterListView.notifyDataSetChanged();
+								newRest.desconfirmarPresenca(auxMeusEncontros.get(pos).getId(), PerfilFragment.getUser().getName());
+								new MeuAsyncTask().execute();
 							}
 						});
 				alertDialog.setButton2("Fechar",
@@ -100,7 +99,7 @@ public class MeusEncontrosFragment extends Fragment {
 	public List<Encontro> getMeusEncontros() {
 		String idUser = PerfilFragment.getUser().getId();
 		String nomeUser = PerfilFragment.getUser().getName();
-		ArrayList<Encontro> auxMeusEncontros = new ArrayList<Encontro>();
+		auxMeusEncontros = new ArrayList<Encontro>();
 		ClienteRest clientRest = new ClienteRest();
 		try {
 			meusEncontros = clientRest.getListaEncontro();

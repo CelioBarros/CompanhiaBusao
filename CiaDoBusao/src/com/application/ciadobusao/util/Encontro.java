@@ -28,6 +28,16 @@ public class Encontro {
 		return nomeDono;
 	}
 	
+	public void delPerfilConfirmado(String perfil){
+		int pos = -1;
+	     for (int i = 0; i < perfisConfirmados.size(); i++) {
+	         if (perfisConfirmados.get(i) == perfil){
+	             pos = i;
+	         }
+	     }
+	     perfisConfirmados.remove(pos);
+	}
+	
 	public void setNomeDono(String nomeDono) {
 		this.nomeDono = nomeDono;
 	}

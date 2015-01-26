@@ -31,7 +31,7 @@ public class MeusEncontrosFragment extends Fragment {
 	private List<Encontro> meusEncontros;
 	private AdapterListView myAdapter;
 	private ArrayList<Encontro> auxMeusEncontros;
-//	private SingletonDB notificacoes = SingletonDB.getInstance();
+	//	private SingletonDB notificacoes = SingletonDB.getInstance();
 
 
 	@Override
@@ -41,58 +41,8 @@ public class MeusEncontrosFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.fragment_meus_encontros,
 				container, false);
 		mListView = (ListView) rootView.findViewById(R.id.encontros);
-		
-		final ClienteRest newRest = new ClienteRest();
-		
+
 		new MeuAsyncTask().execute();
-
-//		mListView.setAdapter(adapterListView);
-
-		mListView.setOnItemClickListener(new OnItemClickListener() {
-			@SuppressWarnings("deprecation")
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				final int pos = position;
-				Encontro item = auxMeusEncontros.get(position);
-
-				AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
-						.create(); // Read Update
-				alertDialog.setTitle(item.getNome());
-				alertDialog.setMessage(item.getPonto()
-						+ "\n"
-						+ item.getLinha()
-						+ "\n"
-						+ item.getData().toString()
-						+ "\n"
-						+ item.getHorario().toString()
-						+ "\n"
-						+ item.getPerfisConfirmados());
-
-				alertDialog.setButton("Desconfirmar",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int which) {
-								if (auxMeusEncontros.get(pos).getIdDono().equals(PerfilFragment.getUser().getId())) {
-									newRest.deletarEncontro(auxMeusEncontros.get(pos).getId());
-								} else {
-									newRest.desconfirmarPresenca(auxMeusEncontros.get(pos).getId(), PerfilFragment.getUser().getName());
-									new MeuAsyncTask().execute();
-								}
-							}
-						});
-				alertDialog.setButton2("Fechar",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int which) {
-								// simplesmente fecha a janela
-							}
-						});
-
-				alertDialog.show();
-
-			}
-		});
 
 		return rootView;
 	}
@@ -128,9 +78,57 @@ public class MeusEncontrosFragment extends Fragment {
 		@Override
 		protected void onPostExecute(List<Encontro> result) {
 			super.onPostExecute(result);
-			AdapterListView myAdapter = new AdapterListView(getActivity()
-					.getApplicationContext(), (ArrayList<Encontro>) result);
+			myAdapter = new AdapterListView(getActivity().getApplicationContext(), (ArrayList<Encontro>) result);
 			mListView.setAdapter(myAdapter);
+
+			mListView.setOnItemClickListener(new OnItemClickListener() {
+				@SuppressWarnings("deprecation")
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					final int pos = position;
+					Encontro item = myAdapter.getItem(position);
+
+					AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+					.create(); // Read Update
+					alertDialog.setTitle(item.getNome());
+					alertDialog.setMessage(item.getPonto()
+							+ "\n"
+							+ item.getLinha()
+							+ "\n"
+							+ item.getData().toString()
+							+ "\n"
+							+ item.getHorario().toString()
+							+ "\n"
+							+ item.getPerfisConfirmados());
+
+					alertDialog.setButton("Desconfirmar",
+							new DialogInterface.OnClickListener() {
+
+						public void onClick(DialogInterface dialog,
+								int which) {
+							ClienteRest newRest = new ClienteRest();
+							if (myAdapter.getItem(pos).getIdDono().equals(PerfilFragment.getUser().getId())) {
+								newRest.deletarEncontro(myAdapter.getItem(pos).getId());
+								new MeuAsyncTask().execute();
+							} else {
+								newRest.desconfirmarPresenca(myAdapter.getItem(pos).getId(), PerfilFragment.getUser().getName());
+								new MeuAsyncTask().execute();
+							}
+						}
+					});
+					alertDialog.setButton2("Fechar",
+							new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,
+								int which) {
+							// simplesmente fecha a janela
+						}
+					});
+
+					alertDialog.show();
+
+				}
+			});
 		}
 	}
 

@@ -15,7 +15,8 @@ public class WebServiceCliente {
     public final String[] get(String url) {
 
      String[] result = new String[2];
-     HttpGet httpget = new HttpGet(url);
+     
+     HttpGet httpget = new HttpGet(url.replace(" ", "%20"));
      HttpResponse response;
 
      try {

@@ -60,8 +60,9 @@ public class ClienteRest {
         String[] resposta = new WebServiceCliente().get(URL_WS + "delete/" + id);
         return resposta[1];
        }
+    
     public String confirmaPresenca(int id, String nome){
-    	 String[] resposta = new WebServiceCliente().get(URL_WS + "delete/"+id+"/"+nome);
+    	 String[] resposta = new WebServiceCliente().get(URL_WS + "confirma/"+id+"/"+nome);
     	 return resposta[1];
     }
    

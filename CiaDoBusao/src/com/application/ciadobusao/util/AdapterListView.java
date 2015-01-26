@@ -72,6 +72,7 @@ public class AdapterListView extends BaseAdapter
         //ao item e definimos as informa��es.
       
         ((TextView) view.findViewById(R.id.nomeEncontro)).setText(item.getNome());
+        ((TextView) view.findViewById(R.id.nomeCriador)).setText(item.getNomeDono());
         ((TextView) view.findViewById(R.id.data)).setText(item.getData().toString());
         ((TextView) view.findViewById(R.id.hora)).setText(item.getHorario().toString());
         ((TextView) view.findViewById(R.id.ponto)).setText(item.getPonto());

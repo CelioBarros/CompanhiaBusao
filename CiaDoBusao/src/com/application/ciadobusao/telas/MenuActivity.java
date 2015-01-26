@@ -76,10 +76,9 @@ public class MenuActivity extends ActionBarActivity
         switch (number) {
          //Clique em H
         	case 1:
-                mTitle = getString(R.string.title_section1);
-                fragment = new HomeFragment();
-               
-                break;
+        		mTitle = getString(R.string.title_section5);
+               	fragment = new PerfilFragment(); 
+                break;                
             case 2:
                 mTitle = getString(R.string.title_section2);
                 fragment = new NovoEncontroFragment();
@@ -93,8 +92,8 @@ public class MenuActivity extends ActionBarActivity
               fragment = new NotificacoesFragment();
                 break;
             case 5:
-                mTitle = getString(R.string.title_section5);
-              	fragment = new PerfilFragment(); 
+            	mTitle = getString(R.string.title_section1);
+                fragment = new HomeFragment();               
                 break;
             case 6:
                 mTitle = getString(R.string.title_section6);

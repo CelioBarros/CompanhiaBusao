@@ -1,6 +1,8 @@
 package com.application.ciadobusao.util;
 import java.util.ArrayList;
 
+import com.application.ciadobusao.telas.PerfilFragment;
+
 public class Encontro {
 	
 	private String nome, linha, ponto;
@@ -8,9 +10,9 @@ public class Encontro {
 	private DataDoEncontro data;
 	private ArrayList<String> perfisConfirmados;
 	private int id;
-	
-	
-	
+	private String idDono;
+	private String nomeDono;
+
 	public Encontro() {
 
 		perfisConfirmados = new ArrayList<String> ();
@@ -21,7 +23,23 @@ public class Encontro {
 		return "Encontro [nome=" + nome + ", linha=" + linha + ", ponto="
 				+ ponto + ", horario=" + horario + ", data=" + data + "]";
 	}
+	
+	public String getNomeDono() {
+		return nomeDono;
+	}
+	
+	public void setNomeDono(String nomeDono) {
+		this.nomeDono = nomeDono;
+	}
 
+	public String getIdDono() {
+		return idDono;
+	}
+	
+	public void setIdDono(String idDono) {
+		this.idDono = idDono;
+	}
+	
 	public String getLinha() {
 		return linha;
 	}

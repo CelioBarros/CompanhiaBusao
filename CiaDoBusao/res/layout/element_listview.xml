@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Meu Encontro"
+        android:text=""
         android:id="@+id/nomeEncontro"
         android:textColor="#ff000000" />
 
@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="10:00"
+            android:text=""
             android:id="@+id/hora"
             android:textColor="#ffa8a8a8"
             android:layout_margin="2dp" />
@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="dd.mm.aaaa"
+            android:text=""
             android:id="@+id/data"
             android:textColor="#ffa8a8a8"
             android:layout_margin="2dp" />
@@ -63,7 +63,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Maria Jose"
+            android:text=""
             android:id="@+id/nomeCriador"
             android:layout_marginLeft="10dp"
             android:textColor="#ff898989" />
@@ -84,7 +84,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="UFCG"
+            android:text=""
             android:id="@+id/ponto"
             android:layout_marginLeft="10dp"
             android:textColor="#ff898989" />
@@ -105,7 +105,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="em frente"
+            android:text=""
             android:id="@+id/linha"
             android:layout_marginLeft="10dp"
             android:textColor="#ff898989" />

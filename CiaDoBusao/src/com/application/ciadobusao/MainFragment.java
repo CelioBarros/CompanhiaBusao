@@ -31,6 +31,7 @@ public class MainFragment extends Fragment {
 	    View view = inflater.inflate(R.layout.activity_main, container, false);
 	    LoginButton authButton = (LoginButton) view.findViewById(R.id.authButton);
 	    authButton.setReadPermissions(Arrays.asList("public_profile"));
+	    authButton.setReadPermissions(Arrays.asList("user_friends"));
 	    authButton.setFragment(this);
 	    inicioButton = (Button) view.findViewById(R.id.buttonInicio);
 	    visivel = View.VISIBLE;

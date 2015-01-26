@@ -123,6 +123,8 @@ public class NovoEncontroFragment extends Fragment{
 					encontro.setLinha(linhaEncontro);
 					encontro.setHorario(horario);
 					encontro.setData(data);
+					encontro.setIdDono(PerfilFragment.getUser().getId());
+					encontro.setNomeDono(PerfilFragment.getUser().getName());
 					ClienteRest cliREST = new ClienteRest();
 		             try {
 		                 String resposta = cliREST.inserirEncontro(encontro);

@@ -9,12 +9,13 @@ public class Encontro {
 	private HorarioDoEncontro horario;
 	private DataDoEncontro data;
 	private ArrayList<String> perfisConfirmados;
+	private ArrayList<String> perfisChegaram;		//----NOVO----
 	private int id;
 	private String idDono;
 	private String nomeDono;
 
 	public Encontro() {
-
+		perfisChegaram = new ArrayList<String>();
 		perfisConfirmados = new ArrayList<String> ();
 	}
 
@@ -64,6 +65,15 @@ public class Encontro {
 
 	public void addPerfisConfirmados(String perfil) {
 		perfisConfirmados.add(perfil);
+	}
+	
+	//----Adiciona um perfil a lista dos que chegaram e //retorna o nome para ser exibido nas notificações---- 
+	public void addPerfisChegados(String perfil) { 
+		perfisChegaram.add(perfil);
+	}
+	
+	public ArrayList<String> getPerfisChegaram() {
+		return perfisChegaram;
 	}
 
 	public String getPonto() {

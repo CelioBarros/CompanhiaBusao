@@ -121,7 +121,19 @@ public class MeusEncontrosFragment extends Fragment {
 							new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog,
 								int which) {
-							// simplesmente fecha a janela
+							//fecha a janela
+						}
+					});
+					
+					alertDialog.setButton3("Já cheguei!", 
+							new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,
+								int which) {
+							// CONFIRMAR A CHEGADA
+							ClienteRest newRest = new ClienteRest();
+							String resp = newRest.confirmaQueChegou(meusEncontros.get(pos).getId(), PerfilFragment.getUser().getName());
+							Toast.makeText(getActivity().getApplicationContext(), resp, Toast.LENGTH_SHORT).show(); 
+							new MeuAsyncTask().execute(); //Thread
 						}
 					});
 

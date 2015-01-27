@@ -10,6 +10,7 @@
     <string name="title_section4">Encontros</string>
     <string name="title_section5">Perfil</string>
     <string name="title_section6">Sair</string>
+    <string name="title_section7">Notificações</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>

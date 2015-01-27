@@ -88,18 +88,21 @@ public class MenuActivity extends ActionBarActivity
                 fragment = new MeusEncontrosFragment();
                 break;
             case 4:
-                mTitle = getString(R.string.title_section4);
-              fragment = new NotificacoesFragment();
+                mTitle = getString(R.string.title_section7);
+                fragment = new NotificacoesFragment();
                 break;
             case 5:
-            	mTitle = getString(R.string.title_section1);
-                fragment = new HomeFragment();               
+            	mTitle = getString(R.string.title_section4);
+                fragment = new EncontrosFragment();               
                 break;
             case 6:
+                mTitle = getString(R.string.title_section1);
+                fragment = new HomeFragment();
+                break;
+            case 7:
                 mTitle = getString(R.string.title_section6);
-              //fragment = new 
                 this.finish();
-                break;                
+                break;        
         }
         
         if (fragment != null) {

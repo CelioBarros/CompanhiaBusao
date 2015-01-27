@@ -6,7 +6,7 @@ import java.util.List;
 import com.application.ciadobusao.R;
 import com.application.ciadobusao.db.ClienteRest;
 import com.application.ciadobusao.db.SingletonDB;
-import com.application.ciadobusao.telas.NotificacoesFragment.MeuAsyncTask;
+import com.application.ciadobusao.telas.EncontrosFragment.MeuAsyncTask;
 import com.application.ciadobusao.util.AdapterListView;
 import com.application.ciadobusao.util.Encontro;
 import com.facebook.widget.LikeView.AuxiliaryViewPosition;
@@ -31,8 +31,6 @@ public class MeusEncontrosFragment extends Fragment {
 	private List<Encontro> meusEncontros;
 	private AdapterListView myAdapter;
 	private ArrayList<Encontro> auxMeusEncontros;
-	//	private SingletonDB notificacoes = SingletonDB.getInstance();
-
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -121,7 +119,6 @@ public class MeusEncontrosFragment extends Fragment {
 							new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog,
 								int which) {
-							//fecha a janela
 						}
 					});
 					
@@ -129,19 +126,15 @@ public class MeusEncontrosFragment extends Fragment {
 							new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog,
 								int which) {
-							// CONFIRMAR A CHEGADA
 							ClienteRest newRest = new ClienteRest();
 							String resp = newRest.confirmaQueChegou(meusEncontros.get(pos).getId(), PerfilFragment.getUser().getName());
 							Toast.makeText(getActivity().getApplicationContext(), resp, Toast.LENGTH_SHORT).show(); 
-							new MeuAsyncTask().execute(); //Thread
+							new MeuAsyncTask().execute(); 
 						}
 					});
-
 					alertDialog.show();
-
 				}
 			});
 		}
 	}
-
 }

@@ -1,9 +1,13 @@
 package com.application.ciadobusao.util;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.application.ciadobusao.telas.PerfilFragment;
 
-public class Encontro {
+public class Encontro implements Comparable<Date>{
 	
 	private String nome, linha, ponto;
 	private HorarioDoEncontro horario;
@@ -114,6 +118,23 @@ public class Encontro {
 	
 	public void setId(int id){
 		this.id = id;
+	}
+
+	@Override
+	public int compareTo(Date data) {
+		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");  
+		Date data2 = new Date();
+		try {
+			data2 = (Date)formatter.parse(this.getData().toString());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		if(data.before(data2)){
+			return 1;
+		}else if(data2.before(data)){
+			return -1;
+		}
+		return 0;
 	}
 
 }

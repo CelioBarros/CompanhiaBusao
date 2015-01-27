@@ -1,7 +1,10 @@
 package com.application.ciadobusao.telas;
 
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,6 +14,8 @@ import com.application.ciadobusao.db.SingletonDB;
 import com.application.ciadobusao.util.AdapterListView;
 import com.application.ciadobusao.util.Encontro;
 //import com.application.ciadobusao.util.NotificacoesAdapter;
+
+
 
 
 
@@ -126,7 +131,24 @@ public class NotificacoesFragment extends Fragment {
 	    	  ClienteRest clientRest = new ClienteRest();
 	    	  try {
 	    		  listaEncontros = clientRest.getListaEncontro();
-
+	    		  List<Encontro> auxListEnc = clientRest.getListaEncontro();
+	    		  List<Encontro> auxListResp = new ArrayList<Encontro>();
+	    		  DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+	    		  Encontro enc = new Encontro();
+	    		  for (int i = auxListEnc.size()-1; i >=0 ; i--) {
+	    			enc = auxListEnc.get(i);
+					for (int j = auxListEnc.size()-1; j >=0 ; j--) {
+						if(i!=j){
+							if(enc.compareTo((Date)formatter.parse(auxListEnc.get(j).getData().toString())) >0){
+								enc = auxListEnc.get(j);
+							}
+						}	
+					}
+					auxListResp.add(enc);
+					auxListEnc.remove(enc);
+				}
+				listaEncontros = auxListResp;
+	    		  
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

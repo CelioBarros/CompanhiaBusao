@@ -3,11 +3,11 @@ package com.application.ciadobusao.util;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-public class DataDoEncontro {
+public class DataDoEncontro implements Comparable<DataDoEncontro> {
 
 	private int dia, mes, ano;
-	
-	public DataDoEncontro(){
+
+	public DataDoEncontro() {
 	}
 
 	public DataDoEncontro(int dia, int mes, int ano) {
@@ -43,11 +43,32 @@ public class DataDoEncontro {
 	@Override
 	public String toString() {
 		NumberFormat formatter1 = new DecimalFormat("00");
-		NumberFormat formatter2 = new DecimalFormat("0000"); 
+		NumberFormat formatter2 = new DecimalFormat("0000");
 		String d = formatter1.format(dia);
-		String m = formatter1.format(mes);
+		String m = formatter1.format(mes+1);
 		String a = formatter2.format(ano);
 		return d + "/" + m + "/" + a;
 	}
 
+	@Override
+	public int compareTo(DataDoEncontro outra) {
+		if ((this.getAno() < outra.getAno())
+				|| (this.getAno() == outra.getAno() && this.getMes() < outra
+						.getMes())
+				|| (this.getAno() == outra.getAno()
+						&& this.getMes() == outra.getMes() && this.getDia() < outra
+						.getDia())) {
+			return -1;
+		} else if ((this.getAno() > outra.getAno())
+				|| (this.getAno() == outra.getAno() && this.getMes() > outra
+						.getMes())
+				|| (this.getAno() == outra.getAno()
+						&& this.getMes() == outra.getMes() && this.getDia() > outra
+						.getDia())) {
+			return 1;
+		}
+		return 0;
+	}
+
 }
+

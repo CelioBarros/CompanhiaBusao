@@ -1,7 +1,12 @@
 package com.application.ciadobusao.telas;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+
+
+import java.util.Date;
+import java.util.List;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -11,6 +16,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +27,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.application.ciadobusao.R;
-
 import com.application.ciadobusao.db.ClienteRest;
 import com.application.ciadobusao.db.SingletonDB;
 import com.application.ciadobusao.util.DataDoEncontro;
@@ -43,11 +48,15 @@ public class NovoEncontroFragment extends Fragment{
 	private TextView nomeEncontroTextView;
 	private TextView linhaEncontroTextView;
 	private TextView pontoEncontroTextView;
-	
+	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	Date date = new Date();
+	String dataAtual = new String();
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
+		dataAtual = dateFormat.format(date);
+		final String[] dataAtu = dataAtual.split("/");
 		rootView = inflater.inflate(R.layout.fragment_novo_encontro, container, false);
 
 		nomeEncontroTextView = (TextView) rootView.findViewById(R.id.nomeEdit);
@@ -109,7 +118,12 @@ public class NovoEncontroFragment extends Fragment{
 					count = count +1;
 					Toast.makeText(getActivity(), "Horario Invalido",Toast.LENGTH_LONG).show();
 				}
-				if(data == null){
+				if((data == null) || (data.getAno() < Integer.parseInt(dataAtu[2])) ||
+						(data.getAno() == Integer.parseInt(dataAtu[2]) &&
+						data.getMes() < (Integer.parseInt(dataAtu[1])-1)) ||
+						(data.getAno() == Integer.parseInt(dataAtu[2]) &&
+						data.getMes() == (Integer.parseInt(dataAtu[1])-1) &&
+						data.getDia() < (Integer.parseInt(dataAtu[0])))){
 					count = count +1;
 					Toast.makeText(getActivity(), "Data Invalida",Toast.LENGTH_LONG).show();
 				}

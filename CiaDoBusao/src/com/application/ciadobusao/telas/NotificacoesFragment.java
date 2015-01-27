@@ -2,6 +2,7 @@ package com.application.ciadobusao.telas;
 
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.application.ciadobusao.R;
@@ -11,11 +12,15 @@ import com.application.ciadobusao.util.AdapterListView;
 import com.application.ciadobusao.util.Encontro;
 //import com.application.ciadobusao.util.NotificacoesAdapter;
 
+
+
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +37,6 @@ import android.support.v4.app.FragmentManager;
 public class NotificacoesFragment extends Fragment {
 	private ListView listView;
 	 private List<Encontro> listaEncontros;
-	
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -121,7 +125,8 @@ public class NotificacoesFragment extends Fragment {
 	      protected List<Encontro> doInBackground(Void... params) {  
 	    	  ClienteRest clientRest = new ClienteRest();
 	    	  try {
-				listaEncontros = clientRest.getListaEncontro();
+	    		  listaEncontros = clientRest.getListaEncontro();
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -135,3 +140,12 @@ public class NotificacoesFragment extends Fragment {
 		 }  
 	 }  
 }
+
+
+/*(listaEncontros.get(j).getData().getAno() < enc.getData().getAno()) ||
+(listaEncontros.get(j).getData().getAno() == enc.getData().getAno() &&
+listaEncontros.get(j).getData().getMes() < enc.getData().getMes()) ||
+(listaEncontros.get(j).getData().getAno() == enc.getData().getAno() &&
+listaEncontros.get(j).getData().getMes() == enc.getData().getMes() &&
+listaEncontros.get(j).getData().getDia() <= enc.getData().getDia())
+*/

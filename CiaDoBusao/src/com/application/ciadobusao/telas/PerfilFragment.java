@@ -29,7 +29,7 @@ public class PerfilFragment extends Fragment {
 	private View view;
 	private static TextView userNameView;
 	private static TextView userNameGender;
-	private static GraphUser userMe;
+	protected static GraphUser userMe;
 	private ArrayList<GraphUser> friendlist = new ArrayList<GraphUser>();
 
 	@Override
@@ -38,12 +38,12 @@ public class PerfilFragment extends Fragment {
 		uiHelper = new UiLifecycleHelper(getActivity(), callback);
 		uiHelper.onCreate(savedInstanceState);
 	}
-	
+
 	public ArrayList<GraphUser> getFriendList() {
 		getFriends();
 		return friendlist;
 	}
-	
+
 	public static GraphUser getUser() {
 		makeMeRequest(Session.getActiveSession());
 		return userMe;
@@ -67,31 +67,31 @@ public class PerfilFragment extends Fragment {
 		}
 		return view;
 	}
-	
-	private void getFriends(){
-	    Session activeSession = Session.getActiveSession();
-	    if(activeSession.getState().isOpened()){
-	        Request friendRequest = Request.newMyFriendsRequest(activeSession, 
-	            new GraphUserListCallback(){
-	                @Override
-	                public void onCompleted(List<GraphUser> users,
-	                        Response response) {
-	                	if(response.getError() == null){
-	                        for (int i = 0; i < users.size(); i++) {
-	                            friendlist.add(users.get(i));
-	                        }
-	                    } else {
-	                        Toast.makeText(view.getContext(), 
-	                                       response.getError().getErrorMessage(), 
-	                                       Toast.LENGTH_SHORT).show();
-	                    }
-	                }
-	        });
-	        Bundle params = new Bundle();
-	        params.putString("fields", "id, name, picture");
-	        friendRequest.setParameters(params);
-	        friendRequest.executeAsync();
-	    }
+
+	private void getFriends() {
+		Session activeSession = Session.getActiveSession();
+		if (activeSession.getState().isOpened()) {
+			Request friendRequest = Request.newMyFriendsRequest(activeSession,
+					new GraphUserListCallback() {
+						@Override
+						public void onCompleted(List<GraphUser> users,
+								Response response) {
+							if (response.getError() == null) {
+								for (int i = 0; i < users.size(); i++) {
+									friendlist.add(users.get(i));
+								}
+							} else {
+								Toast.makeText(view.getContext(),
+										response.getError().getErrorMessage(),
+										Toast.LENGTH_SHORT).show();
+							}
+						}
+					});
+			Bundle params = new Bundle();
+			params.putString("fields", "id, name, picture");
+			friendRequest.setParameters(params);
+			friendRequest.executeAsync();
+		}
 	}
 
 	private static void makeMeRequest(final Session session) {

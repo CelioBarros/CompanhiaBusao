@@ -15,6 +15,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -137,10 +138,14 @@ public class NovoEncontroFragment extends Fragment{
 					encontro.setData(data);
 					encontro.setIdDono(PerfilFragment.getUser().getId());
 					encontro.setNomeDono(PerfilFragment.getUser().getName());
+					encontro.addPerfisConfirmados(PerfilFragment.getUser().getName());
+					
 					ClienteRest cliREST = new ClienteRest();
 		             try {
 		                 String resposta = cliREST.inserirEncontro(encontro);
-		                
+//		                 new MeuAsyncTask().execute();
+//		                 cliREST.confirmaPresenca(encontro.getId(), encontro.getNomeDono());
+							Log.d("Aqui", encontro.getPerfisConfirmados().toString()); 
 		             } catch (Exception e) {
 		                 e.printStackTrace();
 		                 gerarToast(e.getMessage());

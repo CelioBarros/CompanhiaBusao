@@ -8,7 +8,7 @@ import java.util.List;
 
 import com.application.ciadobusao.R;
 import com.application.ciadobusao.db.ClienteRest;
-import com.application.ciadobusao.util.AdapterListView;
+import com.application.ciadobusao.util.AdapterListEncontroView;
 import com.application.ciadobusao.util.Encontro;
 
 import android.app.AlertDialog;
@@ -27,7 +27,7 @@ import android.support.v4.app.Fragment;
 public class MeusEncontrosFragment extends Fragment {
 	private ListView mListView;
 	private List<Encontro> meusEncontros;
-	private AdapterListView myAdapter;
+	private AdapterListEncontroView myAdapter;
 	private ArrayList<Encontro> auxMeusEncontros;
 
 	@Override
@@ -82,7 +82,7 @@ public class MeusEncontrosFragment extends Fragment {
 		@Override
 		protected void onPostExecute(List<Encontro> result) {
 			super.onPostExecute(result);
-			myAdapter = new AdapterListView(getActivity().getApplicationContext(), (ArrayList<Encontro>) result);
+			myAdapter = new AdapterListEncontroView(getActivity().getApplicationContext(), (ArrayList<Encontro>) result);
 			mListView.setAdapter(myAdapter);
 
 			mListView.setOnItemClickListener(new OnItemClickListener() {

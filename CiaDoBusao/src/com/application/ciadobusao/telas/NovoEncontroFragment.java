@@ -138,12 +138,11 @@ public class NovoEncontroFragment extends Fragment{
 					encontro.setData(data);
 					encontro.setIdDono(PerfilFragment.getUser().getId());
 					encontro.setNomeDono(PerfilFragment.getUser().getName());
-					encontro.addPerfisConfirmados(PerfilFragment.getUser().getName());
+//					encontro.addPerfisConfirmados(PerfilFragment.getUser().getName());
 					
 					ClienteRest cliREST = new ClienteRest();
 		             try {
 		                 String resposta = cliREST.inserirEncontro(encontro);
-//		                 new MeuAsyncTask().execute();
 //		                 cliREST.confirmaPresenca(encontro.getId(), encontro.getNomeDono());
 							Log.d("Aqui", encontro.getPerfisConfirmados().toString()); 
 		             } catch (Exception e) {

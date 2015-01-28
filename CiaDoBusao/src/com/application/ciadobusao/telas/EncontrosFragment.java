@@ -119,6 +119,12 @@ public class EncontrosFragment extends Fragment {
 	    		  List<Encontro> auxListEnc = clientRest.getListaEncontro();
 	    		  List<Encontro> auxListResp = new ArrayList<Encontro>();
 	    		  DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+	      		  Date data = new Date(); 
+	    	      for (Encontro enc : listaEncontros) {
+	    	    	  if (enc.compareTo((Date)formatter.parse(formatter.format(data)))<0) {
+	    	    		  clientRest.deletarEncontro(enc.getId());
+	    	    	  }
+	    	      }
 	    		  Encontro enc = new Encontro();
 	    		  for (int i = auxListEnc.size()-1; i >=0 ; i--) {
 	    			enc = auxListEnc.get(i);

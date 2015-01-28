@@ -1,6 +1,9 @@
 package com.application.ciadobusao.telas;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.application.ciadobusao.R;
@@ -45,8 +48,16 @@ public class MeusEncontrosFragment extends Fragment {
 		String nomeUser = PerfilFragment.getUser().getName();
 		auxMeusEncontros = new ArrayList<Encontro>();
 		ClienteRest clientRest = new ClienteRest();
+
 		try {
 			meusEncontros = clientRest.getListaEncontro();
+  		  	DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+  		  	Date data = new Date(); 
+	        for (Encontro enc : meusEncontros) {
+	        	if (enc.compareTo((Date)formatter.parse(formatter.format(data)))<0) {
+					clientRest.deletarEncontro(enc.getId());
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

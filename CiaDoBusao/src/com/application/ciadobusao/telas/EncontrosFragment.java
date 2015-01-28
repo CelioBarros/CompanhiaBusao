@@ -107,7 +107,7 @@ public class EncontrosFragment extends Fragment {
 							}
 						}
 					}
-					if(!(listaEncontros.get(i).getPerfisConfirmados().contains(PerfilFragment.getUser().getName()) || listaEncontros.get(i).getNomeDono().equals(PerfilFragment.getUser().getName()))){
+					if(!listaEncontros.get(i).getPerfisConfirmados().contains(PerfilFragment.getUser().getName())){
 						auxListResp.add(enc);
 					}
 					auxListEnc.remove(enc);

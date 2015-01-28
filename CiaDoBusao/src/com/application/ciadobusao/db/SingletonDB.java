@@ -2,19 +2,15 @@ package com.application.ciadobusao.db;
 
 import java.util.ArrayList;
 
-import com.application.ciadobusao.util.DataDoEncontro;
 import com.application.ciadobusao.util.Encontro;
-import com.application.ciadobusao.util.HorarioDoEncontro;
 
 public class SingletonDB {
 	private static SingletonDB mInstance = null;
 
 	private ArrayList<Encontro> encontros;
 	private ArrayList<Encontro> notificacoes;
-	//abaixo provisorio pra criar notificacoes fake
-	private HorarioDoEncontro horario;
-	private DataDoEncontro data;
 
+	
 	private SingletonDB() {
 		encontros = new ArrayList<Encontro>();
 		notificacoes = new ArrayList<Encontro>();

@@ -6,7 +6,6 @@ import java.util.Calendar;
 
 
 import java.util.Date;
-import java.util.List;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -16,7 +15,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

@@ -5,23 +5,18 @@ import java.util.List;
 
 import com.application.ciadobusao.R;
 import com.application.ciadobusao.db.ClienteRest;
-import com.application.ciadobusao.db.SingletonDB;
-import com.application.ciadobusao.telas.EncontrosFragment.MeuAsyncTask;
 import com.application.ciadobusao.util.AdapterListView;
 import com.application.ciadobusao.util.Encontro;
-import com.facebook.widget.LikeView.AuxiliaryViewPosition;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.support.v4.app.Fragment;

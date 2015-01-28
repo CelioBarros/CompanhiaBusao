@@ -5,39 +5,24 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import com.application.ciadobusao.R;
 import com.application.ciadobusao.db.ClienteRest;
-import com.application.ciadobusao.db.SingletonDB;
 import com.application.ciadobusao.util.AdapterListView;
 import com.application.ciadobusao.util.Encontro;
-//import com.application.ciadobusao.util.NotificacoesAdapter;
-
-
-
-
-
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 
 public class EncontrosFragment extends Fragment {
 	private ListView listView;

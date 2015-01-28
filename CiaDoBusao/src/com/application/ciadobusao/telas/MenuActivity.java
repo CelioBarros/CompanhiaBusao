@@ -2,11 +2,6 @@ package com.application.ciadobusao.telas;
 
 import com.application.ciadobusao.NavigationDrawerFragment;
 import com.application.ciadobusao.R;
-import com.application.ciadobusao.NavigationDrawerFragment.NavigationDrawerCallbacks;
-import com.application.ciadobusao.R.id;
-import com.application.ciadobusao.R.layout;
-import com.application.ciadobusao.R.menu;
-import com.application.ciadobusao.R.string;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -23,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 
 public class MenuActivity extends ActionBarActivity

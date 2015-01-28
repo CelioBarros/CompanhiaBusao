@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.application.ciadobusao.telas.PerfilFragment;
 
 public class Encontro implements Comparable<Date>{
 	

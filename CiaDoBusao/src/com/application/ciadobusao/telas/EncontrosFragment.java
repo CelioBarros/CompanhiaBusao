@@ -107,9 +107,12 @@ public class EncontrosFragment extends Fragment {
 							}
 						}
 					}
-					auxListResp.add(enc);
+					if(!(listaEncontros.get(i).getPerfisConfirmados().contains(PerfilFragment.getUser().getName()) || listaEncontros.get(i).getNomeDono().equals(PerfilFragment.getUser().getName()))){
+						auxListResp.add(enc);
+					}
 					auxListEnc.remove(enc);
 				}
+				
 				listaEncontros = auxListResp;
 
 			} catch (Exception e) {

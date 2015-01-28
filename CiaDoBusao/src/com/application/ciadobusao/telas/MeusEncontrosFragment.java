@@ -28,7 +28,7 @@ public class MeusEncontrosFragment extends Fragment {
 	private ListView mListView;
 	private List<Encontro> meusEncontros;
 	private AdapterListEncontroView myAdapter;
-	private ArrayList<Encontro> auxMeusEncontros;
+	private List<Encontro> auxMeusEncontros;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,6 +67,39 @@ public class MeusEncontrosFragment extends Fragment {
 			} else if (encontro.getPerfisConfirmados().contains(nomeUser)) {
 				auxMeusEncontros.add(encontro);
 			}
+		}
+		List<Encontro> auxListEnc;
+		try {
+			
+			auxListEnc = auxMeusEncontros;
+			List<Encontro> auxListResp = new ArrayList<Encontro>();
+			DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+			Date data = new Date();
+			for (Encontro enc : auxMeusEncontros) {
+				if (enc.compareTo((Date) formatter.parse(formatter
+						.format(data))) < 0) {
+					clientRest.deletarEncontro(enc.getId());
+				}
+			}
+			Encontro enc = new Encontro();
+			for (int i = auxListEnc.size() - 1; i >= 0; i--) {
+				enc = auxListEnc.get(i);
+				for (int j = auxListEnc.size() - 1; j >= 0; j--) {
+					if (i != j) {
+						if (enc.compareTo((Date) formatter.parse(auxListEnc
+								.get(j).getData().toString())) > 0) {
+							enc = auxListEnc.get(j);
+						}
+					}
+				}
+				auxListResp.add(enc);
+				auxListEnc.remove(enc);
+			}
+			auxMeusEncontros = auxListResp;
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return auxMeusEncontros;
 	}

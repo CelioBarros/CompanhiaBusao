@@ -69,7 +69,7 @@ public class ClienteRest {
     //----NOVO----
     public String confirmaQueChegou(int id, String nome){
     	String[] resposta = new WebServiceCliente().get(URL_WS + "cheguei/"+id+"/"+nome);
-    	return resposta[1];  //resposta do métdo cheguei no webService
+    	return resposta[1];  //resposta do cheguei no webService
    }
     public String desconfirmarPresenca(int id, String nome){
    	 String[] resposta = new WebServiceCliente().get(URL_WS + "desconfirmar/"+id+"/"+nome);

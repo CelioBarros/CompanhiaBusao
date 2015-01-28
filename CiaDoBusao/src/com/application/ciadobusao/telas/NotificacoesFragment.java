@@ -46,7 +46,7 @@ public class NotificacoesFragment extends Fragment {
 						List<String> temp = listaEncontros.get(i).getPerfisConfirmados();
 						Log.d("Aqui",listaEncontros.get(i).getIdDono());
 						if (temp.contains(PerfilFragment.userMe.getName()) || listaEncontros.get(i).getNomeDono() == PerfilFragment.userMe.getName()) {
-							listaNotificacoes.add(temp.get(j) + " confirmou presen�a no encontro " + listaEncontros.get(i).getNome());
+							listaNotificacoes.add(temp.get(j) + " confirmou presença no encontro " + listaEncontros.get(i).getNome());
 						}
 					}
 					for (int j = 0; j < listaEncontros.get(i).getPerfisChegaram().size(); j++) {

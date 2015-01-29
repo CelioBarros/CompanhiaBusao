@@ -11,10 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.application.ciadobusao.R;
 import com.application.ciadobusao.db.ClienteRest;
+import com.application.ciadobusao.telas.EncontrosFragment.MeuAsyncTask;
 import com.application.ciadobusao.util.AdapterListNotificacoesView;
+import com.application.ciadobusao.util.CheckNetwork;
 import com.application.ciadobusao.util.Encontro;
 
 public class NotificacoesFragment extends Fragment {
@@ -30,7 +33,11 @@ public class NotificacoesFragment extends Fragment {
 				container, false);
 		listView = (ListView) rootView.findViewById(R.id.notificacoes);
 
-		new MeuAsyncTask().execute();
+		if (!CheckNetwork.isInternetAvailable(getActivity())) {
+			Toast.makeText(getActivity(),"Verifique sua conexão com a Internet e tente novamente.",1500).show();
+		} else {
+			new MeuAsyncTask().execute();
+		}
 		return rootView;
 	}
 

@@ -8,7 +8,9 @@ import java.util.List;
 
 import com.application.ciadobusao.R;
 import com.application.ciadobusao.db.ClienteRest;
+import com.application.ciadobusao.telas.MeusEncontrosFragment.MeuAsyncTask;
 import com.application.ciadobusao.util.AdapterListEncontroView;
+import com.application.ciadobusao.util.CheckNetwork;
 import com.application.ciadobusao.util.Encontro;
 
 import android.app.AlertDialog;
@@ -19,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.support.v4.app.Fragment;
@@ -35,7 +38,11 @@ public class EncontrosFragment extends Fragment {
 				container, false);
 		listView = (ListView) rootView.findViewById(R.id.notificacoes);
 
-		new MeuAsyncTask().execute();
+        if (!CheckNetwork.isInternetAvailable(getActivity())) {
+			Toast.makeText(getActivity(),"Verifique sua conexão com a Internet e tente novamente.",1500).show();
+		} else {
+			new MeuAsyncTask().execute();
+		}
 
 		final ClienteRest newRest = new ClienteRest();
 

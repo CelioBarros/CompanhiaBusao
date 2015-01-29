@@ -13,6 +13,7 @@ import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.ProfilePictureView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -73,6 +74,7 @@ public class PerfilFragment extends Fragment {
 		if (activeSession.getState().isOpened()) {
 			Request friendRequest = Request.newMyFriendsRequest(activeSession,
 					new GraphUserListCallback() {
+						@SuppressLint("ShowToast")
 						@Override
 						public void onCompleted(List<GraphUser> users,
 								Response response) {
@@ -81,9 +83,7 @@ public class PerfilFragment extends Fragment {
 									friendlist.add(users.get(i));
 								}
 							} else {
-								Toast.makeText(view.getContext(),
-										response.getError().getErrorMessage(),
-										Toast.LENGTH_SHORT).show();
+								Toast.makeText(getActivity(), "Verifique sua conexão com a Internet e tente novamente.", 1500).show();
 							}
 						}
 					});
@@ -114,7 +114,7 @@ public class PerfilFragment extends Fragment {
 								} else {
 									gender = "Indefinido";
 								}
-								userNameGender.setText("G�nero: " + gender);
+								userNameGender.setText("Gênero: " + gender);
 							}
 						}
 						if (response.getError() != null) {

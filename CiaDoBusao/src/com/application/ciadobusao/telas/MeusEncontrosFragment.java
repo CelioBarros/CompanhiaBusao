@@ -9,6 +9,7 @@ import java.util.List;
 import com.application.ciadobusao.R;
 import com.application.ciadobusao.db.ClienteRest;
 import com.application.ciadobusao.util.AdapterListEncontroView;
+import com.application.ciadobusao.util.CheckNetwork;
 import com.application.ciadobusao.util.Encontro;
 
 import android.app.AlertDialog;
@@ -37,9 +38,11 @@ public class MeusEncontrosFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.fragment_meus_encontros,
 				container, false);
 		mListView = (ListView) rootView.findViewById(R.id.encontros);
-
-		new MeuAsyncTask().execute();
-
+        if (!CheckNetwork.isInternetAvailable(getActivity())) {
+			Toast.makeText(getActivity(),"Verifique sua conexão com a Internet e tente novamente.",1500).show();
+		} else {
+			new MeuAsyncTask().execute();
+		}
 		return rootView;
 	}
 
@@ -102,13 +105,12 @@ public class MeusEncontrosFragment extends Fragment {
 			e.printStackTrace();
 		}
 		return auxMeusEncontros;
-	}
+    }
 
 	class MeuAsyncTask extends AsyncTask<Void, Void, List<Encontro>> {
 
 		@Override
 		protected List<Encontro> doInBackground(Void... params) {
-
 			return getMeusEncontros();
 		}
 

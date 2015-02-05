@@ -2,25 +2,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:layout_gravity="end"
+    android:layout_margin="@dimen/com_facebook_usersettingsfragment_profile_picture_width"
     android:background="@drawable/ic_launcher"
-    android:orientation="vertical">
-    
+    android:ignoreGravity="@drawable/cia_busao"
+    android:orientation="vertical" >
+
     <com.facebook.widget.LoginButton
         android:id="@+id/authButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        />
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
+
     <Button
         android:id="@+id/buttonInicio"
-        android:text="Inicio"
-        android:background="@android:color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/authButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false"
         android:layout_centerHorizontal="true"
         android:layout_margin="50dp"
-        />   
-    
+        android:layout_marginBottom="23dp"
+        android:background="@android:color/white"
+        android:text="@string/inicio"
+        tools:ignore="HardcodedText" />
 
 </RelativeLayout>

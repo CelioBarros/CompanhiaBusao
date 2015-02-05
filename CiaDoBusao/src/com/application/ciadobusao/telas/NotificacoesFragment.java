@@ -64,7 +64,7 @@ public class NotificacoesFragment extends Fragment {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				e.getMessage();
 			}
 			return listaNotificacoes;
 		}

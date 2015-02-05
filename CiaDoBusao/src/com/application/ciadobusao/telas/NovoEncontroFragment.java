@@ -146,7 +146,7 @@ public class NovoEncontroFragment extends Fragment{
 //		                 cliREST.confirmaPresenca(encontro.getId(), encontro.getNomeDono());
 							Log.d("Aqui", encontro.getPerfisConfirmados().toString()); 
 		             } catch (Exception e) {
-		                 e.printStackTrace();
+		                 e.getMessage();
 		                 gerarToast(e.getMessage());
 		             }
 					

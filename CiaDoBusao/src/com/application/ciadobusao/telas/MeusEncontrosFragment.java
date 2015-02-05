@@ -62,7 +62,7 @@ public class MeusEncontrosFragment extends Fragment {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			e.getMessage();
 		}
 		for (Encontro encontro : meusEncontros) {
 			if (encontro.getIdDono().equals(idUser)) {
@@ -102,7 +102,7 @@ public class MeusEncontrosFragment extends Fragment {
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e.getMessage();
 		}
 		return auxMeusEncontros;
     }

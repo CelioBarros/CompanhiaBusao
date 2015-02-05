@@ -123,7 +123,7 @@ public class EncontrosFragment extends Fragment {
 				listaEncontros = auxListResp;
 
 			} catch (Exception e) {
-				e.printStackTrace();
+				e.getMessage();
 			}
 			return listaEncontros;
 		}

@@ -1,9 +1,11 @@
 package com.application.ciadobusao.util;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 public class Encontro implements Comparable<Date>{
@@ -11,8 +13,8 @@ public class Encontro implements Comparable<Date>{
 	private String nome, linha, ponto;
 	private HorarioDoEncontro horario;
 	private DataDoEncontro data;
-	private ArrayList<String> perfisConfirmados;
-	private ArrayList<String> perfisChegaram;		//----NOVO----
+	private List<String> perfisConfirmados;
+	private List<String> perfisChegaram;		
 	private int id;
 	private String idDono;
 	private String nomeDono;
@@ -62,7 +64,7 @@ public class Encontro implements Comparable<Date>{
 		this.linha = linha;
 	}
 
-	public ArrayList<String> getPerfisConfirmados() {
+	public List<String> getPerfisConfirmados() {
 		return perfisConfirmados;
 	}
 
@@ -70,12 +72,11 @@ public class Encontro implements Comparable<Date>{
 		perfisConfirmados.add(perfil);
 	}
 	
-	//----Adiciona um perfil a lista dos que chegaram e //retorna o nome para ser exibido nas notificações---- 
 	public void addPerfisChegados(String perfil) { 
 		perfisChegaram.add(perfil);
 	}
 	
-	public ArrayList<String> getPerfisChegaram() {
+	public List<String> getPerfisChegaram() {
 		return perfisChegaram;
 	}
 
@@ -160,17 +161,17 @@ public class Encontro implements Comparable<Date>{
 
 	@Override
 	public boolean equals(Object obj) {
-		Date data = (Date)obj;
+		Date dataParaComparar = (Date)obj;
 		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");  
 		Date data2 = new Date();
 		try {
-			data2 = (Date)formatter.parse(this.getData().toString());
+			data2 = (Date) formatter.parse(this.getData().toString());
 		} catch (ParseException e) {
 			e.getMessage();
 		}
-		if(data.before(data2)){
+		if(dataParaComparar.before(data2)){
 			return false;
-		}else if(data2.before(data)){
+		}else if(data2.before(dataParaComparar)){
 			return false;
 		}
 		return true;

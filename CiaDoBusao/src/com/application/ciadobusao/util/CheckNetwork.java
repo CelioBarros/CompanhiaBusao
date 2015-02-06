@@ -3,17 +3,20 @@ package com.application.ciadobusao.util;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.v4.net.ConnectivityManagerCompat;
 import android.util.Log;
 
 public class CheckNetwork {
 
 	private static final String TAG = CheckNetwork.class.getSimpleName();
 
+	private CheckNetwork() {
+
+	}
+
 	public static boolean isInternetAvailable(Context context) {
-		@SuppressWarnings("unused")
-		ConnectivityManagerCompat aux = new ConnectivityManagerCompat();
-		NetworkInfo info = (NetworkInfo) ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
+		NetworkInfo info = ((ConnectivityManager) context
+				.getSystemService(Context.CONNECTIVITY_SERVICE))
+				.getActiveNetworkInfo();
 
 		if (info == null) {
 			Log.d(TAG, "no internet connection");

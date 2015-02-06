@@ -3,8 +3,6 @@ package com.application.ciadobusao.telas;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-
-
 import java.util.Date;
 
 import android.app.DatePickerDialog;
@@ -32,17 +30,16 @@ import com.application.ciadobusao.util.DataDoEncontro;
 import com.application.ciadobusao.util.Encontro;
 import com.application.ciadobusao.util.HorarioDoEncontro;
 
-
-public class NovoEncontroFragment extends Fragment{
+public class NovoEncontroFragment extends Fragment {
 	private Button dataButton;
 	private Button criarEncontroButton;
 	private Button horaButton;
 	private Button cancelarButton;
 	private DataDoEncontro data;
 	private HorarioDoEncontro horario;
-	private Encontro encontro; 
+	private Encontro encontro;
 	private SingletonDB meusEncontros = SingletonDB.getInstance();
-	
+
 	private View rootView;
 	private TextView nomeEncontroTextView;
 	private TextView linhaEncontroTextView;
@@ -56,81 +53,95 @@ public class NovoEncontroFragment extends Fragment{
 			Bundle savedInstanceState) {
 		dataAtual = dateFormat.format(date);
 		final String[] dataAtu = dataAtual.split("/");
-		rootView = inflater.inflate(R.layout.fragment_novo_encontro, container, false);
+		rootView = inflater.inflate(R.layout.fragment_novo_encontro, container,
+				false);
 
 		nomeEncontroTextView = (TextView) rootView.findViewById(R.id.nomeEdit);
-		linhaEncontroTextView = (TextView) rootView.findViewById(R.id.linhaEdit);
-		pontoEncontroTextView = (TextView) rootView.findViewById(R.id.pontoEdit);
-		
-		dataButton= (Button) rootView.findViewById(R.id.dataPickerButton);
+		linhaEncontroTextView = (TextView) rootView
+				.findViewById(R.id.linhaEdit);
+		pontoEncontroTextView = (TextView) rootView
+				.findViewById(R.id.pontoEdit);
+
+		dataButton = (Button) rootView.findViewById(R.id.dataPickerButton);
 		dataButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				DialogFragment newFragment = new DatePickerFragment();
-				newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");;
+				newFragment.show(getActivity().getSupportFragmentManager(),
+						"datePicker");
+				;
 			}
 		});
-		
-		horaButton= (Button) rootView.findViewById(R.id.horarioButton);
+
+		horaButton = (Button) rootView.findViewById(R.id.horarioButton);
 		horaButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				DialogFragment newFragment = new TimePickerFragment();
-			    newFragment.show(getActivity().getSupportFragmentManager(), "timePicker");
-			   
+				newFragment.show(getActivity().getSupportFragmentManager(),
+						"timePicker");
+
 			}
 		});
-		
+
 		cancelarButton = (Button) rootView.findViewById(R.id.cancelarButtonId);
 		cancelarButton.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+				FragmentManager fragmentManager = getActivity()
+						.getSupportFragmentManager();
 				fragmentManager.beginTransaction()
 						.replace(R.id.container, new HomeFragment()).commit();
-				
+
 			}
 		});
-		
-		criarEncontroButton= (Button) rootView.findViewById(R.id.botaocriar);
+
+		criarEncontroButton = (Button) rootView.findViewById(R.id.botaocriar);
 		criarEncontroButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				String nomeEncontro = ((TextView) rootView.findViewById(R.id.nomeEdit)).getText().toString();
-				String pontoEncontro = ((TextView) rootView.findViewById(R.id.pontoEdit)).getText().toString();
-				String linhaEncontro = ((TextView) rootView.findViewById(R.id.linhaEdit)).getText().toString();
+				String nomeEncontro = ((TextView) rootView
+						.findViewById(R.id.nomeEdit)).getText().toString();
+				String pontoEncontro = ((TextView) rootView
+						.findViewById(R.id.pontoEdit)).getText().toString();
+				String linhaEncontro = ((TextView) rootView
+						.findViewById(R.id.linhaEdit)).getText().toString();
 				int count = 0;
-				if(!isNomeEncontroValid(nomeEncontro)){
-						nomeEncontroTextView.setError("Nome Invalido");
-						count = count +1;
+				if (!isNomeEncontroValid(nomeEncontro)) {
+					nomeEncontroTextView.setError("Nome Invalido");
+					count = count + 1;
 				}
-				if(!isPontoEcontroValid(pontoEncontro)){
+				if (!isPontoEcontroValid(pontoEncontro)) {
 					pontoEncontroTextView.setError("Ponto Invalido");
-					count = count +1;
+					count = count + 1;
 				}
-				if(!isLinhaEncontroValid(linhaEncontro)){
+				if (!isLinhaEncontroValid(linhaEncontro)) {
 					linhaEncontroTextView.setError("Linha Invalida");
-					count = count +1;
+					count = count + 1;
 				}
-				if(horario==null){
-					count = count +1;
-					Toast.makeText(getActivity(), "Horario Invalido",Toast.LENGTH_LONG).show();
+				if (horario == null) {
+					count = count + 1;
+					Toast.makeText(getActivity(), "Horario Invalido",
+							Toast.LENGTH_LONG).show();
 				}
-				if((data == null) || (data.getAno() < Integer.parseInt(dataAtu[2])) ||
-						(data.getAno() == Integer.parseInt(dataAtu[2]) &&
-						data.getMes() < (Integer.parseInt(dataAtu[1])-1)) ||
-						(data.getAno() == Integer.parseInt(dataAtu[2]) &&
-						data.getMes() == (Integer.parseInt(dataAtu[1])-1) &&
-						data.getDia() < (Integer.parseInt(dataAtu[0])))){
-					count = count +1;
-					Toast.makeText(getActivity(), "Data Invalida",Toast.LENGTH_LONG).show();
+				if ((data == null)
+						|| (data.getAno() < Integer.parseInt(dataAtu[2]))
+						|| (data.getAno() == Integer.parseInt(dataAtu[2]) && data
+								.getMes() < (Integer.parseInt(dataAtu[1]) - 1))
+						|| (data.getAno() == Integer.parseInt(dataAtu[2])
+								&& data.getMes() == (Integer
+										.parseInt(dataAtu[1]) - 1) && data
+								.getDia() < (Integer.parseInt(dataAtu[0])))) {
+					count = count + 1;
+					Toast.makeText(getActivity(), "Data Invalida",
+							Toast.LENGTH_LONG).show();
 				}
-				
-				if(count==0){
-					
+
+				if (count == 0) {
+
 					encontro = new Encontro();
-					
+
 					encontro.setNome(nomeEncontro);
 					encontro.setPonto(pontoEncontro);
 					encontro.setLinha(linhaEncontro);
@@ -138,63 +149,62 @@ public class NovoEncontroFragment extends Fragment{
 					encontro.setData(data);
 					encontro.setIdDono(PerfilFragment.getUser().getId());
 					encontro.setNomeDono(PerfilFragment.getUser().getName());
-//					encontro.addPerfisConfirmados(PerfilFragment.getUser().getName());
-					
+
 					ClienteRest cliREST = new ClienteRest();
-		             try {
-		                 String resposta = cliREST.inserirEncontro(encontro);
-//		                 cliREST.confirmaPresenca(encontro.getId(), encontro.getNomeDono());
-							Log.d("Aqui", encontro.getPerfisConfirmados().toString()); 
-		             } catch (Exception e) {
-		                 e.getMessage();
-		                 gerarToast(e.getMessage());
-		             }
-					
-					FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+					try {
+						String resposta = cliREST.inserirEncontro(encontro);
+						Log.d("Aqui" + resposta, encontro
+								.getPerfisConfirmados().toString());
+					} catch (Exception e) {
+						e.getMessage();
+						gerarToast(e.getMessage());
+					}
+
+					FragmentManager fragmentManager = getActivity()
+							.getSupportFragmentManager();
 					fragmentManager.beginTransaction()
-							.replace(R.id.container, new HomeFragment()).commit();
+							.replace(R.id.container, new HomeFragment())
+							.commit();
 					gerarToast("Encontro Criado!");
-				
-				
+
 				}
-			   
+
 			}
 		});
 		return rootView;
-	}	
+	}
+
 	private void gerarToast(CharSequence message) {
-	     int duration = Toast.LENGTH_LONG;
-	     Toast toast = Toast
-	             .makeText(getActivity().getApplicationContext(), message, duration);
-	     toast.show();
-	    }
-	private boolean isPontoEcontroValid(String ponto){
-		if(ponto.length()>2  && ponto != null){
-			return true;
-		}
-		return false;
+		int duration = Toast.LENGTH_LONG;
+		Toast toast = Toast.makeText(getActivity().getApplicationContext(),
+				message, duration);
+		toast.show();
 	}
-	
-	private boolean isLinhaEncontroValid(String linha){
-		if(linha.length()>2 && linha != null){
-			return true;
-		}
-		return false;
-	}
-	private boolean isNomeEncontroValid(String nomeEncontro){
-		if(nomeEncontro.length()>3 && nomeEncontro != null){
+
+	private boolean isPontoEcontroValid(String ponto) {
+		if (ponto.length() > 2 && ponto != null) {
 			return true;
 		}
 		return false;
 	}
 
+	private boolean isLinhaEncontroValid(String linha) {
+		if (linha.length() > 2 && linha != null) {
+			return true;
+		}
+		return false;
+	}
 
+	private boolean isNomeEncontroValid(String nomeEncontro) {
+		if (nomeEncontro.length() > 3 && nomeEncontro != null) {
+			return true;
+		}
+		return false;
+	}
 
-	 
-
-	//=======================DATA PICKER =====================
-	public class DatePickerFragment extends DialogFragment
-	implements DatePickerDialog.OnDateSetListener {
+	// =======================DATA PICKER =====================
+	public class DatePickerFragment extends DialogFragment implements
+			DatePickerDialog.OnDateSetListener {
 
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -208,15 +218,16 @@ public class NovoEncontroFragment extends Fragment{
 			return new DatePickerDialog(getActivity(), this, year, month, day);
 		}
 
+		@Override
 		public void onDateSet(DatePicker view, int year, int month, int day) {
 			data = new DataDoEncontro(day, month, year);
 		}
 
-
 	};
-	//====================CLOCK PICKER=========================================
-	public class TimePickerFragment extends DialogFragment
-	implements TimePickerDialog.OnTimeSetListener {
+
+	// ====================CLOCK PICKER=========================================
+	public class TimePickerFragment extends DialogFragment implements
+			TimePickerDialog.OnTimeSetListener {
 
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -229,12 +240,10 @@ public class NovoEncontroFragment extends Fragment{
 			return new TimePickerDialog(getActivity(), this, hour, minute,
 					DateFormat.is24HourFormat(getActivity()));
 		}
-
+		
+		@Override
 		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 			horario = new HorarioDoEncontro(hourOfDay, minute);
 		}
 	};
 }
-
-
-

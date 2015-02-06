@@ -1,8 +1,6 @@
 package com.application.ciadobusao.util;
 
-import java.util.ArrayList;
-
-import com.application.ciadobusao.R;
+import java.util.List;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,27 +9,33 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.application.ciadobusao.R;
+
 public class AdapterListEncontroView extends BaseAdapter {
 	private LayoutInflater mInflater;
-	private ArrayList<Encontro> itens;
+	private List<Encontro> itens;
 
-	public AdapterListEncontroView(Context context, ArrayList<Encontro> itens) {
+	public AdapterListEncontroView(Context context, List<Encontro> itens) {
 		this.itens = itens;
 		mInflater = LayoutInflater.from(context);
 	}
 
+	@Override
 	public int getCount() {
 		return itens.size();
 	}
 
+	@Override
 	public Encontro getItem(int position) {
 		return itens.get(position);
 	}
 
+	@Override
 	public long getItemId(int position) {
 		return position;
 	}
 
+	@Override
 	public View getView(int position, View view, ViewGroup parent) {
 		Encontro item = itens.get(position);
 		view = mInflater.inflate(R.layout.element_encontrolistview, null);

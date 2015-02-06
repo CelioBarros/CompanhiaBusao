@@ -101,7 +101,6 @@ public class MeusEncontrosFragment extends Fragment {
 			auxMeusEncontros = auxListResp;
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.getMessage();
 		}
 		return auxMeusEncontros;

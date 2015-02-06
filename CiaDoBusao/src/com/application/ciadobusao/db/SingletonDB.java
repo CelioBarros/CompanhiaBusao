@@ -1,16 +1,16 @@
 package com.application.ciadobusao.db;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.application.ciadobusao.util.Encontro;
 
 public class SingletonDB {
 	private static SingletonDB mInstance = null;
 
-	private ArrayList<Encontro> encontros;
-	private ArrayList<Encontro> notificacoes;
+	private List<Encontro> encontros;
+	private List<Encontro> notificacoes;
 
-	
 	private SingletonDB() {
 		encontros = new ArrayList<Encontro>();
 		notificacoes = new ArrayList<Encontro>();
@@ -24,12 +24,8 @@ public class SingletonDB {
 		return mInstance;
 	}
 
-	public ArrayList<Encontro> getEncontros() {
+	public List<Encontro> getEncontros() {
 		return this.encontros;
-	}
-
-	public void setEncontro(Encontro encontro) {
-		// encontros.indexOf(encontro) = talcoisa;
 	}
 
 	public void addEncontro(Encontro encontro) {
@@ -41,14 +37,14 @@ public class SingletonDB {
 	}
 
 	public boolean contem(Encontro encontro) {
-		if(encontros.size() == 0 )
+		if (encontros.isEmpty())
 			return false;
-		
-		for (int i = 0; i < encontros.size(); i++){
+
+		for (int i = 0; i < encontros.size(); i++) {
 			if ((encontro.getNome() == encontros.get(i).getNome())
 					&& (encontro.getPonto() == encontros.get(i).getPonto())
 					&& (encontro.getLinha() == encontros.get(i).getLinha())
-					&& (encontro.getData() == encontros.get(i).getData()) 
+					&& (encontro.getData() == encontros.get(i).getData())
 					&& (encontro.getHorario() == encontros.get(i).getHorario()))
 				return true;
 		}
@@ -59,14 +55,10 @@ public class SingletonDB {
 		encontros.remove(position);
 
 	}
-	
-	
-	//notificaçoes
-	public ArrayList<Encontro> getNotificacoes() {
+
+	public List<Encontro> getNotificacoes() {
 		return this.notificacoes;
 	}
-
-	
 
 	public void addNotificacao(Encontro encontro) {
 		notificacoes.add(encontro);
@@ -75,6 +67,7 @@ public class SingletonDB {
 	public void delNotificacao(Encontro encontro) {
 		notificacoes.remove(encontro);
 	}
+
 	public void delNotificacaoAtIndex(int position) {
 		notificacoes.remove(position);
 

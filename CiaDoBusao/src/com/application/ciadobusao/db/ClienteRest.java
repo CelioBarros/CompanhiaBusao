@@ -82,4 +82,10 @@ public class ClienteRest {
 		return resposta[1];
 	}
 
+	public String criarUsuario(String id, String nome) {
+		String[] resposta = new WebServiceCliente().get(URL_WS
+				+ "criarusuario/" + id + "/" + nome);
+		return resposta[1];
+	}
+
 }

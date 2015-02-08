@@ -18,7 +18,8 @@ import br.com.droid.model.Encontro;
 
 @Path("/cliente")
 public class EncontroResource {
-    
+    //SELECIONAR
+	
     @GET
     @Path("/buscarTodos")
     @Produces("application/json")
@@ -31,6 +32,13 @@ public class EncontroResource {
     @Produces("application/json")
     public String selTodosGSON() throws SQLException{
      return new Gson().toJson(Banco.getBancoInstance().getListaEncontros());
+    }
+    @GET
+    @Path("/getMeusEncontros/{id}")
+    @Produces("application/json")
+    public String getMeusEncontros(@PathParam("id") String idUsuario){
+    	return new Gson().toJson(Banco.getBancoInstance().getMeusEncontros(idUsuario));
+    	
     }
     
     @GET
@@ -45,34 +53,62 @@ public class EncontroResource {
      return encontro;
     }
     
+    //DELETE
     @GET
     @Path("/delete/{id}")
     @Produces("application/json")
     public String deleteEncontro(@PathParam("id") int id) throws SQLException{
      return Banco.getBancoInstance().delete(id);
     }
-    
-    @GET
-    @Path("/confirma/{id}/{nome}")
-    @Produces("application/json")
-    public String confirmaPresenca(@PathParam("id") int id,@PathParam("nome") String nome){
-     return Banco.getBancoInstance().confirmaPresenca(id, nome);
-    }
-    
     @GET
     @Path("/desconfirmar/{id}/{nome}")
     @Produces("application/json")
-    public String desconfirmarPresenca(@PathParam("id") int id,@PathParam("nome") String nome){
-     return Banco.getBancoInstance().desconfirmarPresenca(id, nome);
+    public String desconfirmarPresenca(@PathParam("id") int idEncontro,@PathParam("nome") String idUsuario) throws SQLException{
+     return Banco.getBancoInstance().desconfirmarPresenca(idEncontro, idUsuario);
     }
     
+    //INSERT
+    /**
+     * Insere na lista de confirmados
+     * @param id
+     * Id do encontro
+     * @param nome
+     * Id Dono do encontro
+     * @return
+     * @throws SQLException 
+     */
+    @GET
+    @Path("/confirma/{id}/{nome}")
+    @Produces("application/json")
+    public String confirmaPresenca(@PathParam("id") int id,@PathParam("nome") String idUsuario) throws SQLException{
+     return Banco.getBancoInstance().confirmaPresenca(id, idUsuario);
+    }
+    
+    /**
+     * Confirma que u
+     * @param id 
+     * Id Do Encontro
+     * @param idDono
+     * Id Do Dono do Encontro
+     * @return
+     * @throws SQLException
+     */
     @GET
     @Path("/cheguei/{id}/{nome}")
     @Produces("application/json")
-    public String confirmaQueChegou(@PathParam("id") int id,@PathParam("nome") String nome){
-     return Banco.getBancoInstance().confirmaQueChegou(id, nome);
+    public String confirmaQueChegou(@PathParam("id") int id,@PathParam("nome") String idDono) throws SQLException{
+     return Banco.getBancoInstance().confirmaQueChegou(id, idDono);
     }
     
+    /**
+     * Cria Usuario;
+     * @param id
+     * Id do Usuario
+     * @param nome
+     * Nome do Usuario
+     * @return
+     * @throws SQLException
+     */
     @GET
     @Path("/criarusuario/{id}/{nome}")
     @Produces("application/json")
@@ -80,7 +116,13 @@ public class EncontroResource {
      return Banco.getBancoInstance().criarUsuario(id, nome);
     }
     
-    
+    /**
+     * Insere um encontro;
+     * @param encontro
+     * Encontro
+     * @return
+     * @throws SQLException
+     */
     @POST
     @Path("/inserir")
     @Produces("application/json")
@@ -88,6 +130,7 @@ public class EncontroResource {
     public String inserirEncontro(Encontro encontro) throws SQLException {
      return Banco.getBancoInstance().inserir(encontro);
     }
+    
     
 }
  

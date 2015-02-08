@@ -17,6 +17,8 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.Time;
 
+import com.google.gson.JsonElement;
+
 import br.com.droid.model.Encontro;
 
 public class Banco {
@@ -36,6 +38,73 @@ public class Banco {
 		return instance;
 	}
 
+	
+	public ArrayList<Encontro> getMeusEncontros(String idUsuario) {
+		ArrayList<Encontro> encontroList = new ArrayList<Encontro>();
+		Connection c;
+		try {
+			c = ConnectionMySQL.connectToDatabase();
+	
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = new Date();
+			
+			String queryDelete= "DELETE FROM encontro WHERE data_encontro < " + "'"+dateFormat.format(date)+"'";
+			Statement statementDelete = c.createStatement();
+			statementDelete.executeUpdate(queryDelete);
+			
+			statementDelete.close();	
+			
+			String query = "SELECT e.* FROM encontro e, perfisconfirmados pc WHERE e.id_dono="+idUsuario +" or (pc.id_encontro=e.id and pc.id_usuario="+idUsuario+") ORDER BY e.data_encontro";
+			Statement st = c.createStatement();
+			ResultSet rs = st.executeQuery(query);
+			Statement st2 = null;
+			ResultSet rs2 = null;
+			
+			while (rs.next())
+			{
+				Encontro encontro = new Encontro();
+				encontro.setId(rs.getInt("id"));
+				encontro.setNome(rs.getString("nome"));
+				encontro.setPonto(rs.getString("ponto"));
+				encontro.setLinha(rs.getString("linha"));
+
+				HorarioDoEncontro h = new HorarioDoEncontro();
+				h.setHora(rs.getTime("horario").getHours());
+				h.setMin(rs.getTime("horario").getMinutes());
+				encontro.setHorario(h);
+
+				DataDoEncontro d = new DataDoEncontro();
+				d.setAno(Integer.parseInt(rs.getDate("data_encontro").toString().substring(0,4)));
+				d.setMes(Integer.parseInt(rs.getDate("data_encontro").toString().substring(5,7)));
+			    d.setDia(Integer.parseInt(rs.getDate("data_encontro").toString().substring(8,10)));
+				encontro.setData(d);
+				d.toString();
+
+				encontro.setIdDono(rs.getString("id_dono"));
+				st2 = c.createStatement();
+				String queryDono = "SELECT nome FROM usuario WHERE id="+rs.getString("id_dono");
+				rs2 = st2.executeQuery(queryDono);
+				
+				rs2.next();
+				encontro.setNomeDono(rs2.getString("nome"));
+				encontroList.add(encontro);
+				rs2.close();
+				st2.close();
+			}
+			System.out.println(encontroList.toString());
+			
+			rs.close();
+			st.close();
+			c.close();
+			return encontroList;
+		
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		return encontroList;
+	}
+	
 	public ArrayList<Encontro> getListaEncontros() throws SQLException{
 		
 		
@@ -186,37 +255,43 @@ public class Banco {
 
 	}
 
-	public String confirmaPresenca(int id, String nome) {
-		Encontro encontro = buscar(id);
-		int pos = getPosition(id);
-		if(encontro == null || pos<0){
-			return "Encontro não encontrado!";
-		} else {
-			listaEncontros.get(pos).addPerfisConfirmados(nome);
+	public String confirmaPresenca(int id, String idUsuario) throws SQLException {
+		Connection c = ConnectionMySQL.connectToDatabase();
+		String queryInserir = "INSERT INTO perfisconfirmados VALUES(?,?)";
+		PreparedStatement p = c.prepareStatement(queryInserir);
+		p.setInt(1,id);
+		p.setString(2,idUsuario);
+		p.execute();
+		
+		p.close();
+		c.close();
 			return "Perfil Confirmado com Sucesso";
-		}
+		
 	}
 
-	public String desconfirmarPresenca(int id, String nome) {
-		Encontro encontro = buscar(id);
-		int pos = getPosition(id);
-		if(encontro == null || pos<0){
-			return "Encontro não encontrado!";
-		} else{
-			listaEncontros.get(pos).delPerfilConfirmado(nome);
+	public String desconfirmarPresenca(int idEncontro, String idUsuario) throws SQLException {
+		Connection c = ConnectionMySQL.connectToDatabase();
+		String queryInserir = "DELETE FROM perfisconfirmados WHERE id_encontro= ? and id_usuario=?";
+		PreparedStatement p = c.prepareStatement(queryInserir);
+		p.setInt(1,idEncontro);
+		p.setString(2, idUsuario);
+		p.execute();
 			return "Perfil desconfirmado com Sucesso";
-		}
+	
 	}
 
-	public String confirmaQueChegou(int id, String nome) {
-		Encontro encontro = buscar(id);
-		int pos = getPosition(id);
-		if(encontro == null || pos<0){
-			return "Encontro não encontrado!";
-		} else{
-			listaEncontros.get(pos).addPerfisChegados(nome);
-			return "Confirmado Chegada";
-		}
+	public String confirmaQueChegou(int id, String idDono) throws SQLException {
+		Connection c = ConnectionMySQL.connectToDatabase();
+		String queryInserir = "INSERT INTO perfischegaram VALUES(?,?)";
+		PreparedStatement p = c.prepareStatement(queryInserir);
+		p.setInt(1,id);
+		p.setString(2,idDono);
+		p.execute();
+		
+		p.close();
+		c.close();
+		
+		return "Confirmado com sucesso";
 	}
 
 	public String criarUsuario(String id, String nome) throws SQLException {
@@ -233,6 +308,8 @@ public class Banco {
 
 		return "Usuário criado";
 	}
+
+
 
 
 

@@ -13,7 +13,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +35,7 @@ public class EncontrosFragment extends Fragment {
 		listView = (ListView) rootView.findViewById(R.id.notificacoes);
 
         if (!CheckNetwork.isInternetAvailable(getActivity())) {
-			Toast.makeText(getActivity(),"Verifique sua conex√£o com a Internet e tente novamente.",1500).show();
+			Toast.makeText(getActivity(),"Verifique sua conex„o com a Internet e tente novamente.",1500).show();
 		} else {
 			new MeuAsyncTask().execute();
 		}
@@ -49,7 +48,12 @@ public class EncontrosFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					final int position, long id) {
-
+				String listaConfirmados = "";
+				try {
+					listaConfirmados = newRest.getPerfisConfirmados(""+listaEncontros.get(position).getId()).toString();
+				} catch (Exception e) {
+					e.getMessage();
+				}
 				AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
 						.create(); // Read Update
 				alertDialog.setTitle(listaEncontros.get(position).getNome());
@@ -58,7 +62,7 @@ public class EncontrosFragment extends Fragment {
 						+ listaEncontros.get(position).getData() + "\n"
 						+ listaEncontros.get(position).getHorario() + "\n"
 						+ "confirmados: "
-						+ listaEncontros.get(position).getPerfisConfirmados());
+						+ listaConfirmados);
 
 				alertDialog.setButton("Confirmar",
 						new DialogInterface.OnClickListener() {
@@ -66,7 +70,7 @@ public class EncontrosFragment extends Fragment {
 									int which) {
 								newRest.confirmaPresenca(
 										listaEncontros.get(position).getId(),
-										PerfilFragment.getUser().getName());
+										PerfilFragment.getUser().getId());
 								new MeuAsyncTask().execute();
 							}
 						});

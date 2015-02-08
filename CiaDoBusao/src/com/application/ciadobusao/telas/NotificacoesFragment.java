@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.application.ciadobusao.R;
 import com.application.ciadobusao.db.ClienteRest;
-import com.application.ciadobusao.telas.EncontrosFragment.MeuAsyncTask;
 import com.application.ciadobusao.util.AdapterListNotificacoesView;
 import com.application.ciadobusao.util.CheckNetwork;
 import com.application.ciadobusao.util.Encontro;

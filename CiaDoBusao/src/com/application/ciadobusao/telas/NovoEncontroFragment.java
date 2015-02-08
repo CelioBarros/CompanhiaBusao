@@ -30,7 +30,6 @@ import android.widget.Toast;
 
 import com.application.ciadobusao.R;
 import com.application.ciadobusao.db.ClienteRest;
-import com.application.ciadobusao.db.SingletonDB;
 import com.application.ciadobusao.util.DataDoEncontro;
 import com.application.ciadobusao.util.Encontro;
 import com.application.ciadobusao.util.HorarioDoEncontro;
@@ -43,7 +42,6 @@ public class NovoEncontroFragment extends Fragment {
 	private DataDoEncontro data;
 	private HorarioDoEncontro horario;
 	private Encontro encontro;
-	private SingletonDB meusEncontros = SingletonDB.getInstance();
 
 	private View rootView;
 	private TextView nomeEncontroTextView;
@@ -157,7 +155,6 @@ public class NovoEncontroFragment extends Fragment {
 
 					ClienteRest cliREST = new ClienteRest();
 					try {
-						String resposta2 = cliREST.criarUsuario(encontro.getIdDono()+"",encontro.getNomeDono());
 						String resposta = cliREST.inserirEncontro(encontro);
 						Log.d("Aqui" + resposta, encontro
 								.getPerfisConfirmados().toString());

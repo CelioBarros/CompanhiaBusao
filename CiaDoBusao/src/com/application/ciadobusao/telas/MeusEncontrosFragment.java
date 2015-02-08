@@ -26,7 +26,6 @@ public class MeusEncontrosFragment extends Fragment {
 	private ListView mListView;
 	private List<Encontro> meusEncontros;
 	private AdapterListEncontroView myAdapter;
-	private List<Encontro> auxMeusEncontros;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,

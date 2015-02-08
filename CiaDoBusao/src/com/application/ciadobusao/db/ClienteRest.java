@@ -127,6 +127,46 @@ public class ClienteRest {
 			throw new Exception(resposta[1]);
 		}
 	}
+	
+	public List<String> getPerfisChegaram(String idUsuario) throws Exception {
+
+		String[] resposta = new WebServiceCliente().get(URL_WS
+				+ "getPerfisChegaram/"+idUsuario); 
+
+		if ("200".equals(resposta[0])) {
+			Gson gson = new Gson();
+			List<String> pessoasChegaram = new ArrayList<String>();
+			JsonParser parser = new JsonParser();
+			JsonArray array = parser.parse(resposta[1]).getAsJsonArray();
+
+			for (int i = 0; i < array.size(); i++) {
+				pessoasChegaram.add(gson.fromJson(array.get(i), String.class));
+			}
+			return pessoasChegaram;
+		} else {
+			throw new Exception(resposta[1]);
+		}
+	}
+	
+	public List<String> getPerfisConfirmados(String idUsuario) throws Exception {
+
+		String[] resposta = new WebServiceCliente().get(URL_WS
+				+ "getPerfisConfirmados/"+idUsuario); 
+
+		if ("200".equals(resposta[0])) {
+			Gson gson = new Gson();
+			List<String> pessoasConfirmados = new ArrayList<String>();
+			JsonParser parser = new JsonParser();
+			JsonArray array = parser.parse(resposta[1]).getAsJsonArray();
+
+			for (int i = 0; i < array.size(); i++) {
+				pessoasConfirmados.add(gson.fromJson(array.get(i), String.class));
+			}
+			return pessoasConfirmados;
+		} else {
+			throw new Exception(resposta[1]);
+		}
+	}
  
 
 }

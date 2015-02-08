@@ -1,14 +1,10 @@
 package com.application.ciadobusao.telas;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.application.ciadobusao.R;
 import com.application.ciadobusao.db.ClienteRest;
-import com.application.ciadobusao.telas.MeusEncontrosFragment.MeuAsyncTask;
 import com.application.ciadobusao.util.AdapterListEncontroView;
 import com.application.ciadobusao.util.CheckNetwork;
 import com.application.ciadobusao.util.Encontro;
@@ -93,38 +89,7 @@ public class EncontrosFragment extends Fragment {
 		protected List<Encontro> doInBackground(Void... params) {
 			ClienteRest clientRest = new ClienteRest();
 			try {
-				listaEncontros = clientRest.getListaEncontro();
-					
-				
-				List<Encontro> auxListEnc = clientRest.getListaEncontro();
-				List<Encontro> auxListResp = new ArrayList<Encontro>();
-				DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-				Date data = new Date();
-				for (Encontro enc : listaEncontros) {
-					if (enc.compareTo((Date) formatter.parse(formatter
-							.format(data))) < 0) {
-						//clientRest.deletarEncontro(enc.getId());
-					}
-				}
-				Encontro enc = new Encontro();
-				for (int i = auxListEnc.size() - 1; i >= 0; i--) {
-					enc = auxListEnc.get(i);
-					for (int j = auxListEnc.size() - 1; j >= 0; j--) {
-						if (i != j) {
-							if (enc.compareTo((Date) formatter.parse(auxListEnc
-									.get(j).getData().toString())) > 0) {
-								enc = auxListEnc.get(j);
-							}
-						}
-					}
-					if(!listaEncontros.get(i).getPerfisConfirmados().contains(PerfilFragment.getUser().getName())){
-						auxListResp.add(enc);
-					}
-					auxListEnc.remove(enc);
-				}
-				
-				listaEncontros = auxListResp;
-
+				listaEncontros = clientRest.getEncontrosNaoParticipo(PerfilFragment.getUser().getId());
 			} catch (Exception e) {
 				e.getMessage();
 			}

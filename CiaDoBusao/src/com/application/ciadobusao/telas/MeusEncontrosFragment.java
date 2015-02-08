@@ -1,9 +1,6 @@
 package com.application.ciadobusao.telas;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.application.ciadobusao.R;
@@ -47,63 +44,15 @@ public class MeusEncontrosFragment extends Fragment {
 	}
 
 	public List<Encontro> getMeusEncontros() {
-		String idUser = PerfilFragment.getUser().getId();
-		String nomeUser = PerfilFragment.getUser().getName();
-		auxMeusEncontros = new ArrayList<Encontro>();
 		ClienteRest clientRest = new ClienteRest();
-
+		
 		try {
-			meusEncontros = clientRest.getListaEncontro();
-  		  	DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-  		  	Date data = new Date(); 
-	        for (Encontro enc : meusEncontros) {
-	        	if (enc.compareTo((Date)formatter.parse(formatter.format(data)))<0) {
-					//clientRest.deletarEncontro(enc.getId());
-				}
-			}
+			return clientRest.getMeusEncontros(PerfilFragment.getUser().getId());
 		} catch (Exception e) {
 			e.getMessage();
 		}
-		for (Encontro encontro : meusEncontros) {
-			if (encontro.getIdDono().equals(idUser)) {
-				auxMeusEncontros.add(encontro);
-			} else if (encontro.getPerfisConfirmados().contains(nomeUser)) {
-				auxMeusEncontros.add(encontro);
-			}
-		}
-		List<Encontro> auxListEnc;
-		try {
-			
-			auxListEnc = auxMeusEncontros;
-			List<Encontro> auxListResp = new ArrayList<Encontro>();
-			DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-			Date data = new Date();
-			for (Encontro enc : auxMeusEncontros) {
-				if (enc.compareTo((Date) formatter.parse(formatter
-						.format(data))) < 0) {
-					//clientRest.deletarEncontro(enc.getId());
-				}
-			}
-			Encontro enc = new Encontro();
-			for (int i = auxListEnc.size() - 1; i >= 0; i--) {
-				enc = auxListEnc.get(i);
-				for (int j = auxListEnc.size() - 1; j >= 0; j--) {
-					if (i != j) {
-						if (enc.compareTo((Date) formatter.parse(auxListEnc
-								.get(j).getData().toString())) > 0) {
-							enc = auxListEnc.get(j);
-						}
-					}
-				}
-				auxListResp.add(enc);
-				auxListEnc.remove(enc);
-			}
-			auxMeusEncontros = auxListResp;
+		return null;
 
-		} catch (Exception e) {
-			e.getMessage();
-		}
-		return auxMeusEncontros;
     }
 
 	class MeuAsyncTask extends AsyncTask<Void, Void, List<Encontro>> {

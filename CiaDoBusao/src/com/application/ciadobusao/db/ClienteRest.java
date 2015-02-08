@@ -87,5 +87,46 @@ public class ClienteRest {
 				+ "criarusuario/" + id + "/" + nome);
 		return resposta[1];
 	}
+	
+	public List<Encontro> getMeusEncontros(String idUsuario) throws Exception {
+
+		String[] resposta = new WebServiceCliente().get(URL_WS
+				+ "getMeusEncontros/"+idUsuario); 
+
+		if ("200".equals(resposta[0])) {
+			Gson gson = new Gson();
+			List<Encontro> listaCliente = new ArrayList<Encontro>();
+			JsonParser parser = new JsonParser();
+			JsonArray array = parser.parse(resposta[1]).getAsJsonArray();
+
+			for (int i = 0; i < array.size(); i++) {
+				listaCliente.add(gson.fromJson(array.get(i), Encontro.class));
+			}
+			return listaCliente;
+		} else {
+			throw new Exception(resposta[1]);
+		}
+	}
+	
+	public List<Encontro> getEncontrosNaoParticipo(String idUsuario) throws Exception {
+
+		String[] resposta = new WebServiceCliente().get(URL_WS
+				+ "getEncontrosNaoParticipo/"+idUsuario); 
+
+		if ("200".equals(resposta[0])) {
+			Gson gson = new Gson();
+			List<Encontro> listaCliente = new ArrayList<Encontro>();
+			JsonParser parser = new JsonParser();
+			JsonArray array = parser.parse(resposta[1]).getAsJsonArray();
+
+			for (int i = 0; i < array.size(); i++) {
+				listaCliente.add(gson.fromJson(array.get(i), Encontro.class));
+			}
+			return listaCliente;
+		} else {
+			throw new Exception(resposta[1]);
+		}
+	}
+ 
 
 }

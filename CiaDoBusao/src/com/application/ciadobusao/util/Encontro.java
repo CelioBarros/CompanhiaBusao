@@ -1,14 +1,10 @@
 package com.application.ciadobusao.util;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
-public class Encontro implements Comparable<Date>{
+public class Encontro{
 	
 	private String nome, linha, ponto;
 	private HorarioDoEncontro horario;
@@ -120,61 +116,5 @@ public class Encontro implements Comparable<Date>{
 		this.id = id;
 	}
 
-	@Override
-	public int compareTo(Date data) {
-		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");  
-		Date data2 = new Date();
-		try {
-			data2 = (Date)formatter.parse(this.getData().toString());
-		} catch (ParseException e) {
-			e.getMessage();
-		}
-		if(data.before(data2)){
-			return 1;
-		}else if(data2.before(data)){
-			return -1;
-		}
-		return 0;
-	}
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((data == null) ? 0 : data.hashCode());
-		result = prime * result + ((horario == null) ? 0 : horario.hashCode());
-		result = prime * result + id;
-		result = prime * result + ((idDono == null) ? 0 : idDono.hashCode());
-		result = prime * result + ((linha == null) ? 0 : linha.hashCode());
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-		result = prime * result
-				+ ((nomeDono == null) ? 0 : nomeDono.hashCode());
-		result = prime * result
-				+ ((perfisChegaram == null) ? 0 : perfisChegaram.hashCode());
-		result = prime
-				* result
-				+ ((perfisConfirmados == null) ? 0 : perfisConfirmados
-						.hashCode());
-		result = prime * result + ((ponto == null) ? 0 : ponto.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		Date dataParaComparar = (Date)obj;
-		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");  
-		Date data2 = new Date();
-		try {
-			data2 = (Date) formatter.parse(this.getData().toString());
-		} catch (ParseException e) {
-			e.getMessage();
-		}
-		if(dataParaComparar.before(data2)){
-			return false;
-		}else if(data2.before(dataParaComparar)){
-			return false;
-		}
-		return true;
-	}
 
 }

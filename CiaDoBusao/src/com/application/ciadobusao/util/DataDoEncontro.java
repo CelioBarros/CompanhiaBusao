@@ -3,7 +3,7 @@ package com.application.ciadobusao.util;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-public class DataDoEncontro implements Comparable<DataDoEncontro> {
+public class DataDoEncontro {
 
 	private int dia, mes, ano;
 
@@ -50,57 +50,6 @@ public class DataDoEncontro implements Comparable<DataDoEncontro> {
 		return d + "/" + m + "/" + a;
 	}
 
-	@Override
-	public int compareTo(DataDoEncontro outra) {
-		if ((this.getAno() < outra.getAno())
-				|| (this.getAno() == outra.getAno() && this.getMes() < outra
-						.getMes())
-				|| (this.getAno() == outra.getAno()
-						&& this.getMes() == outra.getMes() && this.getDia() < outra
-						.getDia())) {
-			return -1;
-		} else if ((this.getAno() > outra.getAno())
-				|| (this.getAno() == outra.getAno() && this.getMes() > outra
-						.getMes())
-				|| (this.getAno() == outra.getAno()
-						&& this.getMes() == outra.getMes() && this.getDia() > outra
-						.getDia())) {
-			return 1;
-		}
-		return 0;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ano;
-		result = prime * result + dia;
-		result = prime * result + mes;
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		DataDoEncontro outra = (DataDoEncontro)obj;
-		if ((this.getAno() < outra.getAno())
-				|| (this.getAno() == outra.getAno() && this.getMes() < outra
-						.getMes())
-				|| (this.getAno() == outra.getAno()
-						&& this.getMes() == outra.getMes() && this.getDia() < outra
-						.getDia())) {
-			return false;
-		} else if ((this.getAno() > outra.getAno())
-				|| (this.getAno() == outra.getAno() && this.getMes() > outra
-						.getMes())
-				|| (this.getAno() == outra.getAno()
-						&& this.getMes() == outra.getMes() && this.getDia() > outra
-						.getDia())) {
-			return false;
-		}
-
-		return true;
-	}
 	
 
 }

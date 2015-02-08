@@ -74,7 +74,13 @@ public class MeusEncontrosFragment extends Fragment {
 						int position, long id) {
 					final int pos = position;
 					Encontro item = myAdapter.getItem(position);
-
+					String perfisConfi = "";
+					ClienteRest newRest = new ClienteRest();
+					try {
+						perfisConfi= newRest.getPerfisConfirmados(""+item.getId()).toString();
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
 					AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
 					.create(); // Read Update
 					alertDialog.setTitle(item.getNome());
@@ -86,7 +92,7 @@ public class MeusEncontrosFragment extends Fragment {
 							+ "\n"
 							+ item.getHorario().toString()
 							+ "\n"
-							+ item.getPerfisConfirmados());
+							+ perfisConfi);
 
 					alertDialog.setButton("Desconfirmar",
 							new DialogInterface.OnClickListener() {

@@ -12,7 +12,7 @@ public class DataDoEncontro implements Comparable<DataDoEncontro> {
 
 	public DataDoEncontro(int dia, int mes, int ano) {
 		this.setDia(dia);
-		this.setMes(mes);
+		this.setMes(mes+1);
 		this.setAno(ano);
 	}
 
@@ -45,7 +45,7 @@ public class DataDoEncontro implements Comparable<DataDoEncontro> {
 		NumberFormat formatter1 = new DecimalFormat("00");
 		NumberFormat formatter2 = new DecimalFormat("0000");
 		String d = formatter1.format(dia);
-		String m = formatter1.format(mes+1);
+		String m = formatter1.format(mes);
 		String a = formatter2.format(ano);
 		return d + "/" + m + "/" + a;
 	}

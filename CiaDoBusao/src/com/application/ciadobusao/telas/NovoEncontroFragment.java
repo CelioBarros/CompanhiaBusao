@@ -133,10 +133,10 @@ public class NovoEncontroFragment extends Fragment {
 				if ((data == null)
 						|| (data.getAno() < Integer.parseInt(dataAtu[2]))
 						|| (data.getAno() == Integer.parseInt(dataAtu[2]) && data
-								.getMes() < (Integer.parseInt(dataAtu[1]) - 1))
+								.getMes() < (Integer.parseInt(dataAtu[1])))
 						|| (data.getAno() == Integer.parseInt(dataAtu[2])
 								&& data.getMes() == (Integer
-										.parseInt(dataAtu[1]) - 1) && data
+										.parseInt(dataAtu[1])) && data
 								.getDia() < (Integer.parseInt(dataAtu[0])))) {
 					count = count + 1;
 					Toast.makeText(getActivity(), "Data Invalida",

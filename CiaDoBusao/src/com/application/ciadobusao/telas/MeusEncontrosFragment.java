@@ -58,7 +58,7 @@ public class MeusEncontrosFragment extends Fragment {
   		  	Date data = new Date(); 
 	        for (Encontro enc : meusEncontros) {
 	        	if (enc.compareTo((Date)formatter.parse(formatter.format(data)))<0) {
-					clientRest.deletarEncontro(enc.getId());
+					//clientRest.deletarEncontro(enc.getId());
 				}
 			}
 		} catch (Exception e) {
@@ -81,7 +81,7 @@ public class MeusEncontrosFragment extends Fragment {
 			for (Encontro enc : auxMeusEncontros) {
 				if (enc.compareTo((Date) formatter.parse(formatter
 						.format(data))) < 0) {
-					clientRest.deletarEncontro(enc.getId());
+					//clientRest.deletarEncontro(enc.getId());
 				}
 			}
 			Encontro enc = new Encontro();
@@ -147,7 +147,7 @@ public class MeusEncontrosFragment extends Fragment {
 								int which) {
 							ClienteRest newRest = new ClienteRest();
 							if (myAdapter.getItem(pos).getIdDono().equals(PerfilFragment.getUser().getId())) {
-								newRest.deletarEncontro(myAdapter.getItem(pos).getId());
+								//newRest.deletarEncontro(myAdapter.getItem(pos).getId());
 								new MeuAsyncTask().execute();
 							} else {
 								newRest.desconfirmarPresenca(myAdapter.getItem(pos).getId(), PerfilFragment.getUser().getName());

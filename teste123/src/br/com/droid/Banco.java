@@ -1,9 +1,6 @@
 package br.com.droid;
 
 
-
-
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,58 +37,75 @@ public class Banco {
 	}
 
 	public ArrayList<Encontro> getListaEncontros() throws SQLException{
+		
+		
+		
 		ArrayList<Encontro> encontroList = new ArrayList<Encontro>();
 		Connection c;
 		try {
 			c = ConnectionMySQL.connectToDatabase();
 	
-		String query = "SELECT * FROM encontro";
-		Statement st = c.createStatement();
-		ResultSet rs = st.executeQuery(query);
-		Statement st2 = null;
-		ResultSet rs2 = null;
-		while (rs.next())
-		{
-			Encontro encontro = new Encontro();
-			encontro.setId(rs.getInt("id"));
-			encontro.setNome(rs.getString("nome"));
-			encontro.setPonto(rs.getString("ponto"));
-			encontro.setLinha(rs.getString("linha"));
-
-			HorarioDoEncontro h = new HorarioDoEncontro();
-			h.setHora(rs.getTime("horario").getHours());
-			h.setMin(rs.getTime("horario").getMinutes());
-			encontro.setHorario(h);
-
-			DataDoEncontro d = new DataDoEncontro();
-			d.setAno(rs.getDate("data_encontro").getYear());
-			d.setMes(rs.getDate("data_encontro").getMonth());
-			d.setDia(rs.getDate("data_encontro").getDay());
-			encontro.setData(d);
-
-			encontro.setIdDono(rs.getString("id_dono"));
-			st2 = c.createStatement();
-			String queryDono = "SELECT nome FROM usuario WHERE id="+rs.getString("id_dono");
-			rs2 = st2.executeQuery(queryDono);
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = new Date();
 			
-			rs2.next();
-			encontro.setNomeDono(rs2.getString("nome"));
-			encontroList.add(encontro);
-			rs2.close();
-			st2.close();
-		}
+			String queryDelete= "DELETE FROM encontro WHERE data_encontro < " + "'"+dateFormat.format(date)+"'";
+			Statement statementDelete = c.createStatement();
+			statementDelete.executeUpdate(queryDelete);
+			
+			statementDelete.close();	
+			
+			String query = "SELECT * FROM encontro";
+			Statement st = c.createStatement();
+			ResultSet rs = st.executeQuery(query);
+			Statement st2 = null;
+			ResultSet rs2 = null;
+			
+			while (rs.next())
+			{
+				Encontro encontro = new Encontro();
+				encontro.setId(rs.getInt("id"));
+				encontro.setNome(rs.getString("nome"));
+				encontro.setPonto(rs.getString("ponto"));
+				encontro.setLinha(rs.getString("linha"));
+
+				HorarioDoEncontro h = new HorarioDoEncontro();
+				h.setHora(rs.getTime("horario").getHours());
+				h.setMin(rs.getTime("horario").getMinutes());
+				encontro.setHorario(h);
+
+				DataDoEncontro d = new DataDoEncontro();
+				d.setAno(Integer.parseInt(rs.getDate("data_encontro").toString().substring(0,4)));
+				d.setMes(Integer.parseInt(rs.getDate("data_encontro").toString().substring(5,7)));
+			    d.setDia(Integer.parseInt(rs.getDate("data_encontro").toString().substring(8,10)));
+				encontro.setData(d);
+				d.toString();
+
+				encontro.setIdDono(rs.getString("id_dono"));
+				st2 = c.createStatement();
+				String queryDono = "SELECT nome FROM usuario WHERE id="+rs.getString("id_dono");
+				rs2 = st2.executeQuery(queryDono);
+				
+				rs2.next();
+				encontro.setNomeDono(rs2.getString("nome"));
+				encontroList.add(encontro);
+				rs2.close();
+				st2.close();
+			}
+			System.out.println(encontroList.toString());
+			
+			rs.close();
+			st.close();
+			c.close();
+			return encontroList;
 		
-		rs.close();
-		st.close();
-		c.close();
-	
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		return encontroList;
+		}
 		
-	}
+	
 
 	public String inserir(Encontro encontro) throws SQLException{
 		Connection c = ConnectionMySQL.connectToDatabase();

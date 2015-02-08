@@ -17,6 +17,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,6 +94,8 @@ public class EncontrosFragment extends Fragment {
 			ClienteRest clientRest = new ClienteRest();
 			try {
 				listaEncontros = clientRest.getListaEncontro();
+					
+				
 				List<Encontro> auxListEnc = clientRest.getListaEncontro();
 				List<Encontro> auxListResp = new ArrayList<Encontro>();
 				DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -100,7 +103,7 @@ public class EncontrosFragment extends Fragment {
 				for (Encontro enc : listaEncontros) {
 					if (enc.compareTo((Date) formatter.parse(formatter
 							.format(data))) < 0) {
-						clientRest.deletarEncontro(enc.getId());
+						//clientRest.deletarEncontro(enc.getId());
 					}
 				}
 				Encontro enc = new Encontro();

@@ -38,9 +38,56 @@ public class Banco {
 		return instance;
 	}
 
+	public ArrayList<String> getPerfisChegaram(int idEncontro) {
+		ArrayList<String> nomes = new ArrayList<String>();
+		String query = "select u.nome from usuario u, perfischegaram pc where pc.id_usuario = u.id and pc.id_encontro=" + idEncontro;
+		Connection c;
+		try {
+			c = ConnectionMySQL.connectToDatabase();
+			Statement st = c.createStatement();
+			ResultSet rs = st.executeQuery(query);
+			while (rs.next())
+			{
+			nomes.add(rs.getString(1));
+			}
+			
+			rs.close();
+			st.close();
+			c.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return nomes;
+	}
+	
+	public ArrayList<String> getPerfisConfirmados(int idEncontro) {
+		ArrayList<String> nomes = new ArrayList<String>();
+		String query = "select u.nome from usuario u, perfisconfirmados pc where pc.id_usuario = u.id and pc.id_encontro=" + idEncontro;
+		Connection c;
+		try {
+			c = ConnectionMySQL.connectToDatabase();
+			Statement st = c.createStatement();
+			ResultSet rs = st.executeQuery(query);
+			while (rs.next())
+			{
+			nomes.add(rs.getString(1));
+			}
+			
+			rs.close();
+			st.close();
+			c.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return nomes;
+	}
 	
 	public ArrayList<Encontro> getMeusEncontros(String idUsuario) {
-		ArrayList<Encontro> encontroList = new ArrayList<Encontro>();
+		String query = null;
 		Connection c;
 		try {
 			c = ConnectionMySQL.connectToDatabase();
@@ -54,63 +101,70 @@ public class Banco {
 			
 			statementDelete.close();	
 			
-			String query = "SELECT e.* FROM encontro e, perfisconfirmados pc WHERE e.id_dono="+idUsuario +" or (pc.id_encontro=e.id and pc.id_usuario="+idUsuario+") ORDER BY e.data_encontro";
 			Statement st = c.createStatement();
-			ResultSet rs = st.executeQuery(query);
-			Statement st2 = null;
-			ResultSet rs2 = null;
-			
-			while (rs.next())
-			{
-				Encontro encontro = new Encontro();
-				encontro.setId(rs.getInt("id"));
-				encontro.setNome(rs.getString("nome"));
-				encontro.setPonto(rs.getString("ponto"));
-				encontro.setLinha(rs.getString("linha"));
-
-				HorarioDoEncontro h = new HorarioDoEncontro();
-				h.setHora(rs.getTime("horario").getHours());
-				h.setMin(rs.getTime("horario").getMinutes());
-				encontro.setHorario(h);
-
-				DataDoEncontro d = new DataDoEncontro();
-				d.setAno(Integer.parseInt(rs.getDate("data_encontro").toString().substring(0,4)));
-				d.setMes(Integer.parseInt(rs.getDate("data_encontro").toString().substring(5,7)));
-			    d.setDia(Integer.parseInt(rs.getDate("data_encontro").toString().substring(8,10)));
-				encontro.setData(d);
-				d.toString();
-
-				encontro.setIdDono(rs.getString("id_dono"));
-				st2 = c.createStatement();
-				String queryDono = "SELECT nome FROM usuario WHERE id="+rs.getString("id_dono");
-				rs2 = st2.executeQuery(queryDono);
-				
-				rs2.next();
-				encontro.setNomeDono(rs2.getString("nome"));
-				encontroList.add(encontro);
-				rs2.close();
-				st2.close();
+			ResultSet rs = st.executeQuery("SELECT count(*) FROM perfisconfirmados");
+			rs.next();
+			if(rs.getInt(1) == 0){
+				query = "SELECT * FROM encontro WHERE id_dono="+idUsuario;
+			}else{
+				query = "SELECT DISTINCT e.* FROM encontro e, perfisconfirmados pc WHERE e.id_dono="+idUsuario +" or (pc.id_encontro=e.id and pc.id_usuario="+idUsuario+") ORDER BY e.data_encontro";
 			}
-			System.out.println(encontroList.toString());
-			
 			rs.close();
 			st.close();
-			c.close();
-			return encontroList;
+			
+
 		
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		return encontroList;
+		return getAuxEncontros(query);
 	}
+	
+	
+	
+	public ArrayList<Encontro> getEncontrosNaoParticipo(String idUsuario) {
+		String query = null;
+		Connection c;
+		try {
+			c = ConnectionMySQL.connectToDatabase();
+	
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = new Date();
+			
+			String queryDelete= "DELETE FROM encontro WHERE data_encontro < " + "'"+dateFormat.format(date)+"'";
+			Statement statementDelete = c.createStatement();
+			statementDelete.executeUpdate(queryDelete);
+			
+			statementDelete.close();	
+			
+			c = ConnectionMySQL.connectToDatabase();
+			
+			Statement st = c.createStatement();
+			ResultSet rs = st.executeQuery("SELECT count(*) FROM perfisconfirmados");
+			rs.next();
+			if(rs.getInt(1) == 0){
+				query = "SELECT * FROM encontro WHERE id_dono!="+idUsuario;
+			}else{
+				query = "SELECT DISTINCT e.* FROM encontro e, perfisconfirmados pc WHERE e.id_dono!="+idUsuario +" or (pc.id_encontro=e.id and pc.id_usuario!="+idUsuario+") ORDER BY e.data_encontro";
+			}
+			rs.close();
+			st.close();
+
+		
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		return getAuxEncontros(query);
+	}
+
 	
 	public ArrayList<Encontro> getListaEncontros() throws SQLException{
 		
 		
-		
-		ArrayList<Encontro> encontroList = new ArrayList<Encontro>();
 		Connection c;
+		String query = null;
 		try {
 			c = ConnectionMySQL.connectToDatabase();
 	
@@ -123,58 +177,71 @@ public class Banco {
 			
 			statementDelete.close();	
 			
-			String query = "SELECT * FROM encontro";
-			Statement st = c.createStatement();
-			ResultSet rs = st.executeQuery(query);
-			Statement st2 = null;
-			ResultSet rs2 = null;
-			
-			while (rs.next())
-			{
-				Encontro encontro = new Encontro();
-				encontro.setId(rs.getInt("id"));
-				encontro.setNome(rs.getString("nome"));
-				encontro.setPonto(rs.getString("ponto"));
-				encontro.setLinha(rs.getString("linha"));
-
-				HorarioDoEncontro h = new HorarioDoEncontro();
-				h.setHora(rs.getTime("horario").getHours());
-				h.setMin(rs.getTime("horario").getMinutes());
-				encontro.setHorario(h);
-
-				DataDoEncontro d = new DataDoEncontro();
-				d.setAno(Integer.parseInt(rs.getDate("data_encontro").toString().substring(0,4)));
-				d.setMes(Integer.parseInt(rs.getDate("data_encontro").toString().substring(5,7)));
-			    d.setDia(Integer.parseInt(rs.getDate("data_encontro").toString().substring(8,10)));
-				encontro.setData(d);
-				d.toString();
-
-				encontro.setIdDono(rs.getString("id_dono"));
-				st2 = c.createStatement();
-				String queryDono = "SELECT nome FROM usuario WHERE id="+rs.getString("id_dono");
-				rs2 = st2.executeQuery(queryDono);
-				
-				rs2.next();
-				encontro.setNomeDono(rs2.getString("nome"));
-				encontroList.add(encontro);
-				rs2.close();
-				st2.close();
-			}
-			System.out.println(encontroList.toString());
-			
-			rs.close();
-			st.close();
-			c.close();
-			return encontroList;
-		
+			query = "SELECT * FROM encontro ORDER BY data_encontro";
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		return encontroList;
+		return getAuxEncontros(query);
 		}
 		
+	private ArrayList<Encontro> getAuxEncontros(String query) {
+		ArrayList<Encontro> encontroList = new ArrayList<Encontro>();
+
+		Connection c;
+		try {
+			c = ConnectionMySQL.connectToDatabase();
 	
+		Statement st = c.createStatement();
+		ResultSet rs = st.executeQuery(query);
+		Statement st2 = null;
+		ResultSet rs2 = null;
+		
+		while (rs.next())
+		{
+			Encontro encontro = new Encontro();
+			encontro.setId(rs.getInt("id"));
+			encontro.setNome(rs.getString("nome"));
+			encontro.setPonto(rs.getString("ponto"));
+			encontro.setLinha(rs.getString("linha"));
+
+			HorarioDoEncontro h = new HorarioDoEncontro();
+			h.setHora(rs.getTime("horario").getHours());
+			h.setMin(rs.getTime("horario").getMinutes());
+			encontro.setHorario(h);
+
+			DataDoEncontro d = new DataDoEncontro();
+			d.setAno(Integer.parseInt(rs.getDate("data_encontro").toString().substring(0,4)));
+			d.setMes(Integer.parseInt(rs.getDate("data_encontro").toString().substring(5,7)));
+		    d.setDia(Integer.parseInt(rs.getDate("data_encontro").toString().substring(8,10)));
+			encontro.setData(d);
+			d.toString();
+
+			encontro.setIdDono(rs.getString("id_dono"));
+			st2 = c.createStatement();
+			String queryDono = "SELECT nome FROM usuario WHERE id="+rs.getString("id_dono");
+			rs2 = st2.executeQuery(queryDono);
+			
+			rs2.next();
+			encontro.setNomeDono(rs2.getString("nome"));
+			encontroList.add(encontro);
+			rs2.close();
+			st2.close();
+		}
+		System.out.println(encontroList.toString());
+		
+		rs.close();
+		st.close();
+		c.close();
+		return encontroList;
+	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	return encontroList;
+
+	}
 
 	public String inserir(Encontro encontro) throws SQLException{
 		Connection c = ConnectionMySQL.connectToDatabase();
@@ -309,6 +376,8 @@ public class Banco {
 		return "Usuário criado";
 	}
 
+
+	
 
 
 

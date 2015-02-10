@@ -33,11 +33,34 @@ public class EncontroResource {
     public String selTodosGSON() throws SQLException{
      return new Gson().toJson(Banco.getBancoInstance().getListaEncontros());
     }
+    
     @GET
     @Path("/getMeusEncontros/{id}")
     @Produces("application/json")
     public String getMeusEncontros(@PathParam("id") String idUsuario){
     	return new Gson().toJson(Banco.getBancoInstance().getMeusEncontros(idUsuario));
+    	
+    }
+    
+    @GET
+    @Path("/getPerfisConfirmados/{id}")
+    @Produces("application/json")
+    public String getPerfisConfirmados(@PathParam("id") int idEncontro){
+    	return new Gson().toJson(Banco.getBancoInstance().getPerfisConfirmados(idEncontro));
+    }
+    
+    @GET
+    @Path("/getPerfisChegaram/{id}")
+    @Produces("application/json")
+    public String getPerfisChegaram(@PathParam("id") int idEncontro){
+    	return new Gson().toJson(Banco.getBancoInstance().getPerfisChegaram(idEncontro));
+    }
+    
+    @GET
+    @Path("/getEncontrosNaoParticipo/{id}")
+    @Produces("application/json")
+    public String getEncontrosNaoParticipo(@PathParam("id") String idUsuario){
+    	return new Gson().toJson(Banco.getBancoInstance().getEncontrosNaoParticipo(idUsuario));
     	
     }
     

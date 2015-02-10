@@ -146,7 +146,7 @@ public class Banco {
 			if(rs.getInt(1) == 0){
 				query = "SELECT * FROM encontro WHERE id_dono!="+idUsuario;
 			}else{
-				query = "SELECT DISTINCT e.* FROM encontro e, perfisconfirmados pc WHERE e.id_dono!="+idUsuario +" or (pc.id_encontro=e.id and pc.id_usuario!="+idUsuario+") ORDER BY e.data_encontro";
+				query = "SELECT DISTINCT e.* FROM encontro e WHERE "+idUsuario +" not in (SELECT pc.id_usuario FROM perfisconfirmados pc WHERE pc.id_encontro=e.id) and e.id_dono !="+idUsuario +" ORDER BY e.data_encontro";
 			}
 			rs.close();
 			st.close();
@@ -375,11 +375,5 @@ public class Banco {
 
 		return "Usuário criado";
 	}
-
-
-	
-
-
-
 
 }

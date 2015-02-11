@@ -81,9 +81,9 @@ public class ClienteRest {
 		return resposta[1];
 	}
 
-	public String desconfirmarPresenca(int id, String nome) {
+	public String desconfirmarPresenca(int id, String idUser) {
 		String[] resposta = new WebServiceCliente().get(URL_WS
-				+ "desconfirmar/" + id + "/" + nome);
+				+ "desconfirmar/" + id + "/" + idUser);
 		return resposta[1];
 	}
 

@@ -7,6 +7,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.InputFilter.LengthFilter;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -40,7 +41,14 @@ public class GcmMessageHandler extends IntentService {
 		if (mes.equals("")){
 			NotificationCustomUtil.novoEncontroNotificacao(GcmMessageHandler.this.getApplicationContext(), "Um novo encontro foi criado!", titulo);
 		} else {
-			NotificationCustomUtil.novoEncontroNotificacao(GcmMessageHandler.this.getApplicationContext(), "Novo participante no encontro " + mes, titulo + " confirmou presença no encontro " + mes);
+			char key = titulo.charAt(titulo.length()-1); 
+			if (key == 'C'){
+				titulo = titulo.substring(0, titulo.length()-1);
+				NotificationCustomUtil.novoEncontroNotificacao(GcmMessageHandler.this.getApplicationContext(), "Novo participante no encontro " + mes, titulo + " confirmou presença no encontro " + mes);
+			} else if (key == 'G'){
+				titulo = titulo.substring(0, titulo.length()-1);
+				NotificationCustomUtil.novoEncontroNotificacao(GcmMessageHandler.this.getApplicationContext(), "Alguém chegou! " + mes, titulo + " chegou no encontro " + mes);
+			}
 		}
 		
 		Log.i("GCM","Received : (" + messageType + ")  " + extras.getString("title"));

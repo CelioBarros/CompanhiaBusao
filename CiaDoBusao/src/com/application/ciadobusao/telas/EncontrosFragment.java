@@ -26,7 +26,7 @@ import android.support.v4.app.Fragment;
 
 public class EncontrosFragment extends Fragment {
 	private ListView listView;
-	private List<Encontro> listaEncontros = new ArrayList<Encontro>();
+	private List<Encontro> listaEncontros;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -95,6 +95,7 @@ public class EncontrosFragment extends Fragment {
 		protected List<Encontro> doInBackground(Void... params) {
 			ClienteRest clientRest = new ClienteRest();
 			List<Encontro> auxListaEncontros = new ArrayList<Encontro>();
+			listaEncontros = new ArrayList<Encontro>();
 			try {
 				auxListaEncontros = clientRest.getEncontrosNaoParticipo(PerfilFragment.getUser().getId());
 			} catch (Exception e) {

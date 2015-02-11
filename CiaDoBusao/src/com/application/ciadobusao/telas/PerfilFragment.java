@@ -31,7 +31,7 @@ public class PerfilFragment extends Fragment {
 	private static TextView userNameView;
 	private static TextView userNameGender;
 	protected static GraphUser userMe;
-	private static List<GraphUser> friendlist = new ArrayList<GraphUser>();
+	private static List<GraphUser> friendlist;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -70,6 +70,7 @@ public class PerfilFragment extends Fragment {
 
 	private void getFriends() {
 		Session activeSession = Session.getActiveSession();
+		friendlist = new ArrayList<GraphUser>();
 		if (activeSession.getState().isOpened()) {
 			Request friendRequest = Request.newMyFriendsRequest(activeSession,
 					new GraphUserListCallback() {

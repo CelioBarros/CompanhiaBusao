@@ -121,7 +121,7 @@ public class MeusEncontrosFragment extends Fragment {
 						public void onClick(DialogInterface dialog,
 								int which) {
 							ClienteRest newRest = new ClienteRest();
-							String resp = newRest.confirmaQueChegou(meusEncontros.get(pos).getId(), PerfilFragment.getUser().getName());
+							String resp = newRest.confirmaQueChegou(meusEncontros.get(pos).getId(), PerfilFragment.getUser().getId());
 							Toast.makeText(getActivity().getApplicationContext(), resp, Toast.LENGTH_SHORT).show(); 
 							new MeuAsyncTask().execute(); 
 						}

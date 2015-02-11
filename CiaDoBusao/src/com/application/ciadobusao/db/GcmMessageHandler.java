@@ -40,7 +40,7 @@ public class GcmMessageHandler extends IntentService {
 		if (mes.equals("")){
 			NotificationCustomUtil.novoEncontroNotificacao(GcmMessageHandler.this.getApplicationContext(), "Um novo encontro foi criado!", titulo);
 		} else {
-			NotificationCustomUtil.novoEncontroNotificacao(GcmMessageHandler.this.getApplicationContext(), "Novo participante no encontro " + mes, titulo + "confirmou presença no encontro " + mes);
+			NotificationCustomUtil.novoEncontroNotificacao(GcmMessageHandler.this.getApplicationContext(), "Novo participante no encontro " + mes, titulo + " confirmou presença no encontro " + mes);
 		}
 		
 		Log.i("GCM","Received : (" + messageType + ")  " + extras.getString("title"));

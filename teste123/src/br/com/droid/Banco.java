@@ -2,6 +2,7 @@ package br.com.droid;
 
 
 import java.text.DateFormat;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,20 +24,6 @@ import br.com.droid.model.Encontro;
 
 public class Banco {
 
-	private static Banco instance;
-	private ArrayList<Encontro> listaEncontros;
-	private int idCliente;
-
-	private Banco() {
-		idCliente = 1;
-		listaEncontros = new ArrayList<Encontro>();
-	}
-
-	public static Banco getBancoInstance(){
-		if(instance==null)
-			instance = new Banco();
-		return instance;
-	}
 
 	public ArrayList<String> getPerfisChegaram(int idEncontro) {
 		ArrayList<String> nomes = new ArrayList<String>();
@@ -289,26 +276,20 @@ public class Banco {
 	}
 
 	public Encontro buscar(int id){
-		Encontro cliente = null;
-		for (int i = 0; i < listaEncontros.size(); i++) {
-			if (listaEncontros.get(i).getId() == id){
-				cliente = new Encontro();
-				cliente = listaEncontros.get(i);
-				break;
-			}
-		}
-		return cliente;
+	//TODO CRIAR USANDO O BD
+		//	Encontro cliente = null;
+		//for (int i = 0; i < listaEncontros.size(); i++) {
+		//	if (listaEncontros.get(i).getId() == id){
+		//		cliente = new Encontro();
+		//		cliente = listaEncontros.get(i);
+		//		break;
+		//	}
+		//}
+	//	return cliente ;
+		return null;
 	}
 
-	private int getPosition(int id) {
-		int pos = -1;
-		for (int i = 0; i < listaEncontros.size(); i++) {
-			if (listaEncontros.get(i).getId() == id){
-				pos = i;
-			}
-		}
-		return pos;
-	}
+	
 
 	public String delete(int id) throws SQLException{
 		

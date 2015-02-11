@@ -1,4 +1,6 @@
 package com.application.ciadobusao.db;
+
+import com.application.ciadobusao.util.NotificationCustomUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import android.app.IntentService;
@@ -10,41 +12,43 @@ import android.widget.Toast;
 
 public class GcmMessageHandler extends IntentService {
 
-     String mes;
-     private Handler handler;
-    public GcmMessageHandler() {
-        super("GcmMessageHandler");
-    }
+	String mes;
+//	private Handler handler;
 
-    @Override
-    public void onCreate() {
-        // TODO Auto-generated method stub
-        super.onCreate();
-        handler = new Handler();
-    }
-    @Override
-    protected void onHandleIntent(Intent intent) {
-        Bundle extras = intent.getExtras();
+	public GcmMessageHandler() {
+		super("GcmMessageHandler");
+	}
 
-        GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
-        // The getMessageType() intent parameter must be the intent you received
-        // in your BroadcastReceiver.
-        String messageType = gcm.getMessageType(intent);
+	@Override
+	public void onCreate() {
+		// TODO Auto-generated method stub
+		super.onCreate();
+//		handler = new Handler();
+	}
 
-       mes = extras.getString("title");
-       showToast();
-       Log.i("GCM", "Received : (" +messageType+")  "+extras.getString("title"));
+	@Override
+	protected void onHandleIntent(Intent intent) {
+		Bundle extras = intent.getExtras();
 
-        GcmBroadcastReceiver.completeWakefulIntent(intent);
+		GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
 
-    }
+		String messageType = gcm.getMessageType(intent);
 
-    public void showToast(){
-        handler.post(new Runnable() {
-            public void run() {
-                Toast.makeText(getApplicationContext(),mes , Toast.LENGTH_LONG).show();
-            }
-         });
+		mes = extras.getString("title");
+		NotificationCustomUtil.novoEncontroNotificacao(GcmMessageHandler.this.getApplicationContext(),"Um novo encontro foi criado!", mes);
+		Log.i("GCM","Received : (" + messageType + ")  " + extras.getString("title"));
 
-    }
+		GcmBroadcastReceiver.completeWakefulIntent(intent);
+
+	}
+
+//	public void showToast() {
+//		handler.post(new Runnable() {
+//			public void run() {
+//				Toast.makeText(getApplicationContext(), mes, Toast.LENGTH_LONG)
+//						.show();
+//			}
+//		});
+//
+//	}
 }

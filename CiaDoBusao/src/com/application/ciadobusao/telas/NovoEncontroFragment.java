@@ -172,7 +172,6 @@ public class NovoEncontroFragment extends Fragment {
 							.replace(R.id.container, new HomeFragment())
 							.commit();
 					gerarToast("Encontro Criado!");
-					gerarNotificacao();
 				}
 
 			}
@@ -180,37 +179,6 @@ public class NovoEncontroFragment extends Fragment {
 		return rootView;
 	}
 	
-	private void gerarNotificacao(){
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(super.getActivity())
-                .setSmallIcon(R.drawable.ic_launcher)
-                .setContentTitle("Novo encontro")
-                .setContentText("Um novo encontro foi criado!");
-        // Creates an explicit intent for an Activity in your app
-        Intent resultIntent = new Intent(super.getActivity(), MenuActivity.class);
-
-        // The stack builder object will contain an artificial back stack for the
-        // started Activity.
-        // This ensures that navigating backward from the Activity leads out of
-        // your application to the Home screen.
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(super.getActivity());
-        // Adds the back stack for the Intent (but not the Intent itself)
-        stackBuilder.addParentStack(MenuActivity.class);
-        // Adds the Intent that starts the Activity to the top of the stack
-        stackBuilder.addNextIntent(resultIntent);
-        PendingIntent resultPendingIntent =
-                stackBuilder.getPendingIntent(
-                    0,
-                    PendingIntent.FLAG_UPDATE_CURRENT
-                );
-        mBuilder.setContentIntent(resultPendingIntent);
-        NotificationManager mNotificationManager =
-            (NotificationManager) super.getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-        // mId allows you to update the notification later on.
-        int mId = 001;
-        mNotificationManager.notify(mId, mBuilder.build());
-	}
-
 	private void gerarToast(CharSequence message) {
 		int duration = Toast.LENGTH_LONG;
 		Toast toast = Toast.makeText(getActivity().getApplicationContext(),

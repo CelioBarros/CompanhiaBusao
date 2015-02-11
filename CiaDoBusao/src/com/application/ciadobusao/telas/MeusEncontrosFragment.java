@@ -104,7 +104,7 @@ public class MeusEncontrosFragment extends Fragment {
 								//newRest.deletarEncontro(myAdapter.getItem(pos).getId());
 								new MeuAsyncTask().execute();
 							} else {
-								newRest.desconfirmarPresenca(myAdapter.getItem(pos).getId(), PerfilFragment.getUser().getName());
+								newRest.desconfirmarPresenca(myAdapter.getItem(pos).getId(), PerfilFragment.getUser().getId());
 								new MeuAsyncTask().execute();
 							}
 						}

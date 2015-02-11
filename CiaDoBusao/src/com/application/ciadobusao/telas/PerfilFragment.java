@@ -31,7 +31,7 @@ public class PerfilFragment extends Fragment {
 	private static TextView userNameView;
 	private static TextView userNameGender;
 	protected static GraphUser userMe;
-	private List<GraphUser> friendlist = new ArrayList<GraphUser>();
+	private static List<GraphUser> friendlist = new ArrayList<GraphUser>();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -40,8 +40,7 @@ public class PerfilFragment extends Fragment {
 		uiHelper.onCreate(savedInstanceState);
 	}
 
-	public List<GraphUser> getFriendList() {
-		getFriends();
+	public static List<GraphUser> getFriendList() {
 		return friendlist;
 	}
 

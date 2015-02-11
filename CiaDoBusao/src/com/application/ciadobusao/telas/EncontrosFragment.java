@@ -8,11 +8,13 @@ import com.application.ciadobusao.db.ClienteRest;
 import com.application.ciadobusao.util.AdapterListEncontroView;
 import com.application.ciadobusao.util.CheckNetwork;
 import com.application.ciadobusao.util.Encontro;
+import com.facebook.model.GraphUser;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +26,7 @@ import android.support.v4.app.Fragment;
 
 public class EncontrosFragment extends Fragment {
 	private ListView listView;
-	private List<Encontro> listaEncontros;
+	private List<Encontro> listaEncontros = new ArrayList<Encontro>();
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -92,10 +94,19 @@ public class EncontrosFragment extends Fragment {
 		@Override
 		protected List<Encontro> doInBackground(Void... params) {
 			ClienteRest clientRest = new ClienteRest();
+			List<Encontro> auxListaEncontros = new ArrayList<Encontro>();
 			try {
-				listaEncontros = clientRest.getEncontrosNaoParticipo(PerfilFragment.getUser().getId());
+				auxListaEncontros = clientRest.getEncontrosNaoParticipo(PerfilFragment.getUser().getId());
 			} catch (Exception e) {
 				e.getMessage();
+			}
+			for (Encontro encontro : auxListaEncontros) {
+				for (GraphUser user : PerfilFragment.getFriendList()) {
+					if (user.getId().equals(encontro.getIdDono())) {
+						Log.i("leo", user.getId());
+						listaEncontros.add(encontro);
+					}
+				}
 			}
 			return listaEncontros;
 		}

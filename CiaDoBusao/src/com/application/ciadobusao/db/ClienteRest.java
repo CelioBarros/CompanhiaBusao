@@ -75,6 +75,11 @@ public class ClienteRest {
 				+ id + "/" + nome);
 		return resposta[1]; // resposta do cheguei no webService
 	}
+	public String criarUsuario(String id, String nome, String idgcm) {
+		String[] resposta = new WebServiceCliente().get(URL_WS
+				+ "criarusuario/" + id + "/" + nome+ "/" + idgcm);
+		return resposta[1];
+	}
 
 	public String desconfirmarPresenca(int id, String nome) {
 		String[] resposta = new WebServiceCliente().get(URL_WS
@@ -82,11 +87,7 @@ public class ClienteRest {
 		return resposta[1];
 	}
 
-	public String criarUsuario(String id, String nome) {
-		String[] resposta = new WebServiceCliente().get(URL_WS
-				+ "criarusuario/" + id + "/" + nome);
-		return resposta[1];
-	}
+	
 	
 	public List<Encontro> getMeusEncontros(String idUsuario) throws Exception {
 

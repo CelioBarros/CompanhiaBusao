@@ -155,6 +155,9 @@ public class NovoEncontroFragment extends Fragment {
 
 					ClienteRest cliREST = new ClienteRest();
 					try {
+						
+						
+						
 						String resposta = cliREST.inserirEncontro(encontro);
 						Log.d("Aqui" + resposta, encontro
 								.getPerfisConfirmados().toString());

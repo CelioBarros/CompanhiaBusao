@@ -1,10 +1,15 @@
 package com.application.ciadobusao.telas;
 
+import java.io.IOException;
+
 import com.application.ciadobusao.NavigationDrawerFragment;
 import com.application.ciadobusao.R;
+import com.application.ciadobusao.db.ClienteRest;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
@@ -23,6 +28,13 @@ import android.view.ViewGroup;
 public class MenuActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
+	
+	GoogleCloudMessaging gcm;
+	String regid;
+	String PROJECT_NUMBER = "622595980917";
+
+	
+	
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -51,8 +63,36 @@ public class MenuActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+        criaUsuarioERegID();
     }
  
+    public void criaUsuarioERegID(){
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                String msg = "";
+                try {
+                    if (gcm == null) {
+                        gcm = GoogleCloudMessaging.getInstance(getApplicationContext());
+                    }
+                    regid = gcm.register(PROJECT_NUMBER);
+                    msg = regid;
+                    Log.i("GCM",  msg);
+
+                } catch (IOException ex) {
+                    msg = "Error :" + ex.getMessage();
+
+                }
+                return msg;
+            }
+
+            @Override
+            protected void onPostExecute(String msg) {
+            	ClienteRest cliREST = new ClienteRest();
+            	cliREST.criarUsuario(PerfilFragment.getUser().getId()+ "", PerfilFragment.getUser().getName(), msg);
+            }
+        }.execute(null, null, null);
+    }
    
 
     @Override

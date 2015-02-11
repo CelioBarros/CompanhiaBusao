@@ -4,12 +4,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -30,6 +32,7 @@ import android.widget.Toast;
 
 import com.application.ciadobusao.R;
 import com.application.ciadobusao.db.ClienteRest;
+import com.application.ciadobusao.telas.MeusEncontrosFragment.MeuAsyncTask;
 import com.application.ciadobusao.util.DataDoEncontro;
 import com.application.ciadobusao.util.Encontro;
 import com.application.ciadobusao.util.HorarioDoEncontro;
@@ -50,6 +53,12 @@ public class NovoEncontroFragment extends Fragment {
 	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	Date date = new Date();
 	String dataAtual = new String();
+
+	private String nomeEncontro;
+	private String pontoEncontro;
+	private String linhaEncontro;
+	private int count;
+	private boolean cria = false;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -104,13 +113,15 @@ public class NovoEncontroFragment extends Fragment {
 		criarEncontroButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				String nomeEncontro = ((TextView) rootView
+
+				 nomeEncontro = ((TextView) rootView
 						.findViewById(R.id.nomeEdit)).getText().toString();
-				String pontoEncontro = ((TextView) rootView
+				 pontoEncontro = ((TextView) rootView
 						.findViewById(R.id.pontoEdit)).getText().toString();
-				String linhaEncontro = ((TextView) rootView
+				 linhaEncontro = ((TextView) rootView
 						.findViewById(R.id.linhaEdit)).getText().toString();
-				int count = 0;
+
+				 count = 0;
 				if (!isNomeEncontroValid(nomeEncontro)) {
 					nomeEncontroTextView.setError("Nome Invalido");
 					count = count + 1;
@@ -134,51 +145,78 @@ public class NovoEncontroFragment extends Fragment {
 								.getMes() < (Integer.parseInt(dataAtu[1])))
 						|| (data.getAno() == Integer.parseInt(dataAtu[2])
 								&& data.getMes() == (Integer
-										.parseInt(dataAtu[1])) && data
-								.getDia() < (Integer.parseInt(dataAtu[0])))) {
+										.parseInt(dataAtu[1])) && data.getDia() < (Integer
+								.parseInt(dataAtu[0])))) {
 					count = count + 1;
 					Toast.makeText(getActivity(), "Data Invalida",
 							Toast.LENGTH_LONG).show();
 				}
 
-				if (count == 0) {
+				AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+						.create(); // Read Update
+				alertDialog.setTitle("Criar Encontro");
+				alertDialog.setMessage("Nome:" + nomeEncontro + "\n"
+						+ "Ponto de Referencia:" + pontoEncontro + "\n"
+						+ "Linha: " + linhaEncontro + "\n" + "Data: "
+						+ data.toString() + "\n" + "Horario: "
+						+ horario.toString() + "\n");
 
-					encontro = new Encontro();
+				alertDialog.setButton("OK",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int which) {
+								if (count == 0) {
 
-					encontro.setNome(nomeEncontro);
-					encontro.setPonto(pontoEncontro);
-					encontro.setLinha(linhaEncontro);
-					encontro.setHorario(horario);
-					encontro.setData(data);
-					encontro.setIdDono(PerfilFragment.getUser().getId());
-					encontro.setNomeDono(PerfilFragment.getUser().getName());
+									encontro = new Encontro();
 
-					ClienteRest cliREST = new ClienteRest();
-					try {
-						
-						
-						
-						String resposta = cliREST.inserirEncontro(encontro);
-						Log.d("Aqui" + resposta, encontro
-								.getPerfisConfirmados().toString());
-					} catch (Exception e) {
-						e.getMessage();
-						gerarToast(e.getMessage());
-					}
+									encontro.setNome(nomeEncontro);
+									encontro.setPonto(pontoEncontro);
+									encontro.setLinha(linhaEncontro);
+									encontro.setHorario(horario);
+									encontro.setData(data);
+									encontro.setIdDono(PerfilFragment.getUser()
+											.getId());
+									encontro.setNomeDono(PerfilFragment
+											.getUser().getName());
 
-					FragmentManager fragmentManager = getActivity()
-							.getSupportFragmentManager();
-					fragmentManager.beginTransaction()
-							.replace(R.id.container, new HomeFragment())
-							.commit();
-					gerarToast("Encontro Criado!");
-				}
+									ClienteRest cliREST = new ClienteRest();
+									try {
+
+										String resposta = cliREST
+												.inserirEncontro(encontro);
+										Log.d("Aqui" + resposta, encontro
+												.getPerfisConfirmados()
+												.toString());
+									} catch (Exception e) {
+										e.getMessage();
+										gerarToast(e.getMessage());
+									}
+
+									FragmentManager fragmentManager = getActivity()
+											.getSupportFragmentManager();
+									fragmentManager
+											.beginTransaction()
+											.replace(R.id.container,
+													new HomeFragment())
+											.commit();
+									gerarToast("Encontro Criado!");
+								}
+							}
+						});
+
+				alertDialog.setButton2("Editar",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int which) {
+							}
+						});
+				alertDialog.show();
 
 			}
 		});
 		return rootView;
 	}
-	
+
 	private void gerarToast(CharSequence message) {
 		int duration = Toast.LENGTH_LONG;
 		Toast toast = Toast.makeText(getActivity().getApplicationContext(),
@@ -245,7 +283,7 @@ public class NovoEncontroFragment extends Fragment {
 			return new TimePickerDialog(getActivity(), this, hour, minute,
 					DateFormat.is24HourFormat(getActivity()));
 		}
-		
+
 		@Override
 		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 			horario = new HorarioDoEncontro(hourOfDay, minute);

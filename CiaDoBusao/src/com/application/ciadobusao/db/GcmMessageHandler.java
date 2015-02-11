@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 public class GcmMessageHandler extends IntentService {
 
-	String mes;
+	String titulo, mes;
 //	private Handler handler;
 
 	public GcmMessageHandler() {
@@ -34,21 +34,19 @@ public class GcmMessageHandler extends IntentService {
 
 		String messageType = gcm.getMessageType(intent);
 
-		mes = extras.getString("title");
-		NotificationCustomUtil.novoEncontroNotificacao(GcmMessageHandler.this.getApplicationContext(),"Um novo encontro foi criado!", mes);
+		titulo = extras.getString("title");
+		mes = extras.getString("message");
+		
+		if (mes.equals("")){
+			NotificationCustomUtil.novoEncontroNotificacao(GcmMessageHandler.this.getApplicationContext(), "Um novo encontro foi criado!", titulo);
+		} else {
+			NotificationCustomUtil.novoEncontroNotificacao(GcmMessageHandler.this.getApplicationContext(), "Novo participante no encontro " + mes, titulo + "confirmou presença no encontro " + mes);
+		}
+		
 		Log.i("GCM","Received : (" + messageType + ")  " + extras.getString("title"));
 
 		GcmBroadcastReceiver.completeWakefulIntent(intent);
 
 	}
 
-//	public void showToast() {
-//		handler.post(new Runnable() {
-//			public void run() {
-//				Toast.makeText(getApplicationContext(), mes, Toast.LENGTH_LONG)
-//						.show();
-//			}
-//		});
-//
-//	}
 }

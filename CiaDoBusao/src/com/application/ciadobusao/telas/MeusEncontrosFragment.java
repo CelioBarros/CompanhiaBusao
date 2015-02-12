@@ -129,7 +129,6 @@ public class MeusEncontrosFragment extends Fragment {
 							ClienteRest newRest = new ClienteRest();
 							
 							String resp = newRest.confirmaQueChegou(myAdapter.getItem(pos).getId(), PerfilFragment.getUser().getId()+ "");
-							Toast.makeText(getActivity().getApplicationContext(), resp, Toast.LENGTH_SHORT).show(); 
 							new MeuAsyncTask().execute(); 
 						}
 					});

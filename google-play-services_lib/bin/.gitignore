@@ -1,0 +1,10 @@
+/.project
+/.settings/
+/AndroidManifest.xml
+/README.txt
+/gen/
+/libs/
+/proguard.txt
+/project.properties
+/res/
+/src/

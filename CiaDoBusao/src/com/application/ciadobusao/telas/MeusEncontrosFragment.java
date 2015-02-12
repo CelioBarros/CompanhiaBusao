@@ -101,7 +101,7 @@ public class MeusEncontrosFragment extends Fragment {
 								int which) {
 							ClienteRest newRest = new ClienteRest();
 							if (myAdapter.getItem(pos).getIdDono().equals(PerfilFragment.getUser().getId())) {
-								//newRest.deletarEncontro(myAdapter.getItem(pos).getId());
+								newRest.deletarEncontro(myAdapter.getItem(pos).getId());
 								new MeuAsyncTask().execute();
 							} else {
 								newRest.desconfirmarPresenca(myAdapter.getItem(pos).getId(), PerfilFragment.getUser().getId());

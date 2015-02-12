@@ -18,6 +18,8 @@ import com.application.ciadobusao.db.ClienteRest;
 import com.application.ciadobusao.util.AdapterListNotificacoesView;
 import com.application.ciadobusao.util.CheckNetwork;
 import com.application.ciadobusao.util.Encontro;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 
 public class NotificacoesFragment extends Fragment {
 
@@ -31,49 +33,20 @@ public class NotificacoesFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.fragment_notificacoes,
 				container, false);
 		listView = (ListView) rootView.findViewById(R.id.notificacoes);
+		
+		 MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+		 
+		 GoogleMap map = mapFragment.getMap();
+		       
+		 map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+
 
 		if (!CheckNetwork.isInternetAvailable(getActivity())) {
 			Toast.makeText(getActivity(),"Verifique sua conexão com a Internet e tente novamente.",1500).show();
-		} else {
-			new MeuAsyncTask().execute();
-		}
+		} 
 		return rootView;
 	}
+	
+	
 
-	class MeuAsyncTask extends AsyncTask<Void, Void, List<String>> {
-
-		@Override
-		protected List<String> doInBackground(Void... params) {
-			ClienteRest clientRest = new ClienteRest();
-			try {
-				listaEncontros = clientRest.getListaEncontro();
-				for (int i = 0; i < listaEncontros.size(); i++) {
-					for (int j = 0; j < listaEncontros.get(i).getPerfisConfirmados().size(); j++) {
-						List<String> temp = listaEncontros.get(i).getPerfisConfirmados();
-						Log.d("Aqui",listaEncontros.get(i).getIdDono());
-						if (temp.contains(PerfilFragment.userMe.getName()) || listaEncontros.get(i).getNomeDono() == PerfilFragment.userMe.getName()) {
-							listaNotificacoes.add(temp.get(j) + " confirmou presença no encontro " + listaEncontros.get(i).getNome());
-						}
-					}
-					for (int j = 0; j < listaEncontros.get(i).getPerfisChegaram().size(); j++) {
-						List<String> temp = listaEncontros.get(i).getPerfisChegaram();
-						if (temp.contains(PerfilFragment.userMe.getName()) || listaEncontros.get(i).getIdDono() == PerfilFragment.userMe.getName()) {
-							listaNotificacoes.add(listaEncontros.get(i).getPerfisChegaram().get(j) + " chegou ao encontro " + listaEncontros.get(i).getNome());
-						}
-					}
-				}
-			} catch (Exception e) {
-				e.getMessage();
-			}
-			return listaNotificacoes;
-		}
-
-		@Override
-		protected void onPostExecute(List<String> result) {
-			super.onPostExecute(result);
-			AdapterListNotificacoesView myAdapter = new AdapterListNotificacoesView(getActivity()
-					.getApplicationContext(), (ArrayList<String>) result);
-			listView.setAdapter(myAdapter);
-		}
-	}
 }

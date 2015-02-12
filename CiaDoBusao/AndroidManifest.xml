@@ -96,7 +96,7 @@
 
            android:name="com.google.android.maps.v2.API_KEY"
 
-           android:value="AIzaSyBZ8jVMd-Go6K8dCm5ak_7-jBB56-xWiwA" 
+           android:value="AIzaSyCHWRf4nFf5yIakoX5jO8GlCuLj4x1pdDI" 
            />
         
     </application>

@@ -123,7 +123,7 @@ public class MenuActivity extends ActionBarActivity
                 break;
             case 4:
                 mTitle = getString(R.string.title_section7);
-                fragment = new NotificacoesFragment();
+                fragment = new MapFragment();
                 break;
             case 5:
             	mTitle = getString(R.string.title_section4);

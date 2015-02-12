@@ -1,6 +1,7 @@
 package com.application.ciadobusao.telas;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import android.os.AsyncTask;
@@ -13,13 +14,14 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
+
 import com.application.ciadobusao.R;
 import com.application.ciadobusao.db.ClienteRest;
 import com.application.ciadobusao.util.AdapterListNotificacoesView;
 import com.application.ciadobusao.util.CheckNetwork;
 import com.application.ciadobusao.util.Encontro;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.SupportMapFragment;
 
 public class NotificacoesFragment extends Fragment {
 
@@ -30,11 +32,10 @@ public class NotificacoesFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_notificacoes,
+		View rootView = inflater.inflate(R.layout.fragment_map,
 				container, false);
-		listView = (ListView) rootView.findViewById(R.id.notificacoes);
 		
-		 MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+		SupportMapFragment mapFragment = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.map);
 		 
 		 GoogleMap map = mapFragment.getMap();
 		       

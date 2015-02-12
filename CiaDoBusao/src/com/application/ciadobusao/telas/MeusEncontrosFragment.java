@@ -13,6 +13,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,15 +85,20 @@ public class MeusEncontrosFragment extends Fragment {
 					AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
 					.create(); // Read Update
 					alertDialog.setTitle(item.getNome());
-					alertDialog.setMessage(item.getPonto()
-							+ "\n"
-							+ item.getLinha()
-							+ "\n"
-							+ item.getData().toString()
-							+ "\n"
-							+ item.getHorario().toString()
-							+ "\n"
-							+ perfisConfi);
+					try {
+						alertDialog.setMessage(item.getPonto()
+								+ "\n"
+								+ item.getLinha()
+								+ "\n"
+								+ item.getData().toString()
+								+ "\n"
+								+ item.getHorario().toString()
+								+ "\n"
+								+ newRest.getPerfisChegaram(item.getId()+"").toString());
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 
 					alertDialog.setButton("Desconfirmar",
 							new DialogInterface.OnClickListener() {
@@ -121,7 +127,8 @@ public class MeusEncontrosFragment extends Fragment {
 						public void onClick(DialogInterface dialog,
 								int which) {
 							ClienteRest newRest = new ClienteRest();
-							String resp = newRest.confirmaQueChegou(meusEncontros.get(pos).getId(), PerfilFragment.getUser().getId());
+							
+							String resp = newRest.confirmaQueChegou(myAdapter.getItem(pos).getId(), PerfilFragment.getUser().getId()+ "");
 							Toast.makeText(getActivity().getApplicationContext(), resp, Toast.LENGTH_SHORT).show(); 
 							new MeuAsyncTask().execute(); 
 						}

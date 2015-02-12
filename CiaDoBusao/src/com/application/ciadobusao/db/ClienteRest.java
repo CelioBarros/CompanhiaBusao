@@ -70,9 +70,9 @@ public class ClienteRest {
 	}
 
 	// ----NOVO----
-	public String confirmaQueChegou(int id, String nome) {
+	public String confirmaQueChegou(int idEncontro, String idUsuario) {
 		String[] resposta = new WebServiceCliente().get(URL_WS + "cheguei/"
-				+ id + "/" + nome);
+				+ idEncontro + "/" + idUsuario);
 		return resposta[1]; // resposta do cheguei no webService
 	}
 	public String criarUsuario(String id, String nome, String idgcm) {

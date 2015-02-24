@@ -435,7 +435,7 @@ public void gcmChegada(int idEncontro, String idUsuario) throws SQLException{
 
 		Connection c = ConnectionMySQL.connectToDatabase();
 
-		String queryInserir = "INSERT INTO encontro VALUES(0,?,?,?,?, ?, ?)";
+		String queryInserir = "INSERT INTO encontro VALUES(0,?,?,?,?, ?, ?,?,?)";
 
 		PreparedStatement p = c.prepareStatement(queryInserir);
 
@@ -470,6 +470,8 @@ public void gcmChegada(int idEncontro, String idUsuario) throws SQLException{
 		}
 
 		p.setString(6, encontro.getIdDono()+ "");
+		p.setDouble(7, 10);
+		p.setDouble(8, 10);
 
 		p.executeUpdate();
 		p.close();

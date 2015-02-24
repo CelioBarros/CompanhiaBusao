@@ -3,8 +3,11 @@ package com.application.ciadobusao.telas;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
@@ -13,11 +16,19 @@ import com.application.ciadobusao.util.CheckNetwork;
 import com.application.ciadobusao.util.MyLocation;
 import com.application.ciadobusao.util.MyLocation.LocationResult;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
+import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapFragment extends Fragment {
 
 	private View rootView;
+	private LocationResult locationResult;
+	private double latitude;
+	private double longitude;
+	private GoogleMap map;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,14 +39,26 @@ public class MapFragment extends Fragment {
 		SupportMapFragment mapFragment = (SupportMapFragment) getFragmentManager()
 				.findFragmentById(R.id.map);
 
-		final GoogleMap map = mapFragment.getMap();
+		map = mapFragment.getMap();
 
 		map.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+		
+		map.setOnMapClickListener(new OnMapClickListener() {
+			
+			@Override
+			public void onMapClick(LatLng location) {
+				latitude = location.latitude;
+				longitude = location.longitude;
+				onMapReady(map);
+			}
+		});
 
-		LocationResult locationResult = new LocationResult() {
+		locationResult = new LocationResult() {
 			@Override
 			public void gotLocation(Location location) {
 				map.setMyLocationEnabled(true);
+				latitude = location.getLatitude();
+				longitude = location.getLongitude();
 			}
 		};
 		MyLocation myLocation = new MyLocation();
@@ -47,6 +70,13 @@ public class MapFragment extends Fragment {
 					1500).show();
 		}
 		return rootView;
+	}
+	
+	public void onMapReady(GoogleMap map) {
+		map.clear();
+	    map.addMarker(new MarkerOptions()
+	        .position(new LatLng(latitude, longitude))
+	        .title("Encontro"));
 	}
 	
 	@Override

@@ -16,7 +16,7 @@ public class ConnectionMySQL {
 			e.printStackTrace();
 		}
 		
-		return DriverManager.getConnection("jdbc:mysql://rnnvp.ddns.net/ciabusao_db", "root", "159753");
+		return DriverManager.getConnection("jdbc:mysql://74.206.181.168/ciabusao_db", "root", "159753");
 		
 	}
 

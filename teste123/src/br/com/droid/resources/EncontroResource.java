@@ -286,24 +286,64 @@ public class EncontroResource {
 
 		p.close();
 		c.close();
-		//gcmConfirma(id);
+		gcmConfirma(id, idUsuario);
 		return "Perfil Confirmado com Sucesso";
 
 	}
 	
 	public void gcmConfirma(int idEncontro, String idUsuario) throws SQLException{
 		
+		String usuario = "";
+		
 		Connection c = ConnectionMySQL.connectToDatabase();
-		String query = "SELECT DISTINCT u.nome as nome_usuario, u.id_gcm,e.nome as nome_encontro FROM usuario u, perfisconfirmados pc, encontro e WHERE (u.id=pc.id_usuario or u.id=e.id_dono) and e.id=pc.id_encontro and pc.id_encontro="+idEncontro;
+		
+		String query1 = "SELECT nome FROM usuario WHERE id="+idUsuario;
 		Statement st = c.createStatement();
-		ResultSet rs = st.executeQuery(query);
+		ResultSet rs1 = st.executeQuery(query1);
+		rs1.next();
+		usuario = rs1.getString("nome");
+		st.close();
+		c.close();
+		
+		c = ConnectionMySQL.connectToDatabase();
+		String query2 = "SELECT DISTINCT u.id_gcm,e.nome as nome_encontro FROM usuario u, perfisconfirmados pc, encontro e WHERE (u.id=pc.id_usuario or u.id=e.id_dono) and e.id=pc.id_encontro and pc.id_encontro="+idEncontro;
+		Statement st2 = c.createStatement();
+		ResultSet rs = st2.executeQuery(query2);
 		while (rs.next())
 		{
-			testGCM(rs.getString("id_gcm"),rs.getString("nome_usuario") , rs.getString("nome_encontro") );
+			testGCM(rs.getString("id_gcm"), usuario + "C" , rs.getString("nome_encontro") );
 			
 		}
 		rs.close();
+		st2.close();
+		c.close();
+	}
+	
+public void gcmChegada(int idEncontro, String idUsuario) throws SQLException{
+		
+		String usuario = "";
+		
+		Connection c = ConnectionMySQL.connectToDatabase();
+		
+		String query1 = "SELECT nome FROM usuario WHERE id="+idUsuario;
+		Statement st = c.createStatement();
+		ResultSet rs1 = st.executeQuery(query1);
+		rs1.next();
+		usuario = rs1.getString("nome");
 		st.close();
+		c.close();
+		
+		c = ConnectionMySQL.connectToDatabase();
+		String query2 = "SELECT DISTINCT u.id_gcm,e.nome as nome_encontro FROM usuario u, perfischegaram pc, encontro e WHERE (u.id=pc.id_usuario or u.id=e.id_dono) and e.id=pc.id_encontro and pc.id_encontro="+idEncontro;
+		Statement st2 = c.createStatement();
+		ResultSet rs = st2.executeQuery(query2);
+		while (rs.next())
+		{
+			testGCM(rs.getString("id_gcm"), usuario + "G" , rs.getString("nome_encontro") );
+			
+		}
+		rs.close();
+		st2.close();
 		c.close();
 	}
 
@@ -331,7 +371,7 @@ public class EncontroResource {
 
 		p.close();
 		c.close();
-
+		gcmChegada(id, idDono);
 		return "Confirmado com sucesso";
 	}
 

@@ -7,16 +7,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:paddingTop="15dp" >
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:imeActionId="@+id/login"
             android:imeActionLabel="teste"
-            android:inputType="text"
             android:imeOptions="flagNoExtractUi"
+            android:inputType="text"
             android:maxLines="1"
             android:singleLine="true"
             android:text="Nome Do Encontro:" />
@@ -25,11 +27,12 @@
             android:id="@+id/nomeEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:ems="10"
+            android:inputType="textPersonName"
             android:maxLines="1"
-            android:singleLine="true"
-            android:inputType="textPersonName" />
+            android:singleLine="true" />
     </LinearLayout>
 
     <LinearLayout
@@ -41,18 +44,19 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:text="Linha De Ônibus:" />
 
         <EditText
             android:id="@+id/linhaEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:ems="10"
-            android:maxLines="1"
-            android:singleLine="true"
             android:inputType="textPersonName"
-            />
+            android:maxLines="1"
+            android:singleLine="true" />
     </LinearLayout>
 
     <LinearLayout
@@ -64,20 +68,22 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:text="Ponto de Referencia:" />
 
         <EditText
             android:id="@+id/pontoEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:ems="10"
+            android:inputType="textPersonName"
             android:maxLines="1"
-            android:singleLine="true"
-            android:inputType="textPersonName"/>
+            android:singleLine="true" />
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
@@ -86,13 +92,20 @@
             android:id="@+id/horarioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/buttonblack"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/btn_white_matte"
             android:text="Horário"
-            android:textColor="#FFFFFF" />
+            android:textColor="#000000" />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/textViewHora"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
@@ -101,16 +114,25 @@
             android:id="@+id/dataPickerButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/buttonblack"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/btn_white_matte"
             android:text="Data"
-            android:textColor="#FFFFFF"/>
+            android:textColor="#000000" />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/textViewData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
+        android:layout_height="154dp"
+        android:layout_weight="1.54"
+        android:gravity="center_horizontal|bottom"
         android:orientation="horizontal"
         android:paddingTop="40dp" >
 
@@ -118,23 +140,22 @@
             android:id="@+id/botaocriar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:layout_weight="1"
-            android:background="#FFD8D8D8"
+            android:background="@drawable/btn_green_matte"
             android:text="Criar"
-            android:textColor="#000000"
-            android:layout_margin="10dp" />
+            android:textColor="#ffffff" />
 
         <Button
             android:id="@+id/cancelarButtonId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#FFD8D8D8"
-            android:text="Cancelar"
-            android:textColor="#000000"
+            android:layout_margin="10dp"
             android:layout_marginLeft="30dp"
-            android:layout_margin="10dp" />
-
+            android:layout_weight="1"
+            android:background="@drawable/btn_red_matte"
+            android:text="Cancelar"
+            android:textColor="#ffffff" />
     </LinearLayout>
 
 </LinearLayout>

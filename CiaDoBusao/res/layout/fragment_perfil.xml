@@ -7,9 +7,9 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="20dp"
-        android:gravity="center_horizontal"
+        android:gravity="center_vertical|center_horizontal"
         android:orientation="vertical" >
 
         <com.facebook.widget.ProfilePictureView
@@ -25,17 +25,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:paddingTop="10dp"
             android:textColor="#333"
-            android:textSize="25sp"
-            android:paddingTop="10dp" />
+            android:text="adsdsd"
+            android:textSize="25sp" />
+
         <TextView
             android:id="@+id/selection_gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:paddingTop="10dp"
             android:textColor="#333"
-            android:textSize="25sp"
-            android:paddingTop="10dp" />
+            android:textSize="25sp" />
     </LinearLayout>
 
 </LinearLayout>

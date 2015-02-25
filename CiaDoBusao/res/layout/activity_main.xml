@@ -27,7 +27,7 @@
         android:layout_centerHorizontal="true"
         android:layout_margin="50dp"
         android:layout_marginBottom="23dp"
-        android:background="@android:color/white"
+        android:background="@drawable/btn_white_matte"
         android:text="@string/inicio"
         tools:ignore="HardcodedText" />
 

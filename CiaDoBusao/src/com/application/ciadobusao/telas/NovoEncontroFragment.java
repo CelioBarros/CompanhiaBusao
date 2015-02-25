@@ -50,6 +50,7 @@ public class NovoEncontroFragment extends Fragment {
 	private TextView nomeEncontroTextView;
 	private TextView linhaEncontroTextView;
 	private TextView pontoEncontroTextView;
+	private TextView horaTextView, dataTextView;
 	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	Date date = new Date();
 	String dataAtual = new String();
@@ -69,6 +70,9 @@ public class NovoEncontroFragment extends Fragment {
 				false);
 
 		nomeEncontroTextView = (TextView) rootView.findViewById(R.id.nomeEdit);
+		horaTextView = (TextView) rootView.findViewById(R.id.textViewHora);
+		dataTextView = (TextView) rootView.findViewById(R.id.textViewData);
+		
 		linhaEncontroTextView = (TextView) rootView
 				.findViewById(R.id.linhaEdit);
 		pontoEncontroTextView = (TextView) rootView
@@ -263,7 +267,10 @@ public class NovoEncontroFragment extends Fragment {
 
 		@Override
 		public void onDateSet(DatePicker view, int year, int month, int day) {
+			
 			data = new DataDoEncontro(day, month, year);
+			dataTextView.setText(data.toString());
+			
 		}
 
 	};
@@ -287,6 +294,7 @@ public class NovoEncontroFragment extends Fragment {
 		@Override
 		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 			horario = new HorarioDoEncontro(hourOfDay, minute);
+			horaTextView.setText(horario.toString());
 		}
 	};
 }

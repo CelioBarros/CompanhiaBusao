@@ -3,6 +3,8 @@ package com.application.ciadobusao.test;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.ViewAsserts;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import com.application.ciadobusao.MainActivity;
@@ -28,13 +30,21 @@ public class TelaInicioTest extends ActivityInstrumentationTestCase2<MainActivit
 
 	}
 
-	public void test(){
+	/**
+	 * Testes que verificam se o botão "Inicio" está apto na tela principal
+	 */
+	public void testButtonInicio(){
 		assertEquals(getActivity(), mButton.getContext());
-		//assertEquals(1, mButton.getVisibility());
+//		assertEquals(1, mButton.getVisibility());
 		
 		final View decorView = mActivity.getWindow().getDecorView();
 		
 		ViewAsserts.assertOnScreen(decorView, mButton);
+		
+		final ViewGroup.LayoutParams layoutParams = mButton.getLayoutParams();
+		assertNotNull(layoutParams);
+//	    assertEquals(layoutParams.width, WindowManager.LayoutParams.MATCH_PARENT);
+	    assertEquals(layoutParams.height, WindowManager.LayoutParams.WRAP_CONTENT);
 	}
 	
 

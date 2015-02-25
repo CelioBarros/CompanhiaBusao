@@ -1,9 +1,11 @@
 package com.application.ciadobusao.telas;
 
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,7 +26,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapFragment extends Fragment {
 
-	private View rootView;
+	private static View rootView;
 	private LocationResult locationResult;
 	private double latitude;
 	private double longitude;
@@ -33,8 +35,16 @@ public class MapFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		
+		if(rootView != null){
+			 ViewGroup parent = (ViewGroup) rootView.getParent();
+		        if (parent != null)
+		            parent.removeView(rootView);
+		}
+		try {
 		rootView = inflater.inflate(R.layout.fragment_map, container, false);
+		 } catch (InflateException e) {
+		        /* map is already there, just return view as it is */
+		 }
 
 		SupportMapFragment mapFragment = (SupportMapFragment) getFragmentManager()
 				.findFragmentById(R.id.map);

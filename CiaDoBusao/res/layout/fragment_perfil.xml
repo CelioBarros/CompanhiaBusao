@@ -27,7 +27,7 @@
             android:layout_gravity="center"
             android:paddingTop="10dp"
             android:textColor="#333"
-            android:text="adsdsd"
+            android:text=""
             android:textSize="25sp" />
 
         <TextView

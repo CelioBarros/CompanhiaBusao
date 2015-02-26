@@ -2,6 +2,7 @@ package com.application.ciadobusao.test;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.ViewAsserts;
+import android.test.suitebuilder.annotation.SmallTest;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -12,8 +13,8 @@ import com.application.ciadobusao.R;
 
 public class TelaInicioTest extends ActivityInstrumentationTestCase2<MainActivity>{
 
-	private MainActivity mActivity;
-	private Button mButton;
+	private MainActivity activity;
+	private Button button;
 
 	public TelaInicioTest() {
 		super(MainActivity.class);
@@ -22,32 +23,41 @@ public class TelaInicioTest extends ActivityInstrumentationTestCase2<MainActivit
 	protected void setUp() throws Exception {
 		super.setUp();
 		
-		setActivityInitialTouchMode(false);
+		setActivityInitialTouchMode(true);
 
-	    mActivity = getActivity();
+	    activity = getActivity();
 	    
-	    mButton =  (Button) mActivity.findViewById(R.id.buttonInicio);
+	    button =  (Button) activity.findViewById(R.id.buttonInicio);
 
-	}
-
-	/**
-	 * Testes que verificam se o botão "Inicio" está apto na tela principal
-	 */
-	public void testButtonInicio(){
-		assertEquals(getActivity(), mButton.getContext());
-//		assertEquals(1, mButton.getVisibility());
-		
-		final View decorView = mActivity.getWindow().getDecorView();
-		
-		ViewAsserts.assertOnScreen(decorView, mButton);
-		
-		final ViewGroup.LayoutParams layoutParams = mButton.getLayoutParams();
-		assertNotNull(layoutParams);
-//	    assertEquals(layoutParams.width, WindowManager.LayoutParams.MATCH_PARENT);
-	    assertEquals(layoutParams.height, WindowManager.LayoutParams.WRAP_CONTENT);
 	}
 	
+	@SmallTest
+	public void testPreConditions(){
+		assertNotNull(activity);
+		assertNotNull(activity.findViewById(R.id.buttonInicio));
+		assertNotNull(activity.findViewById(R.id.authButton));
+	}
 
+	@SmallTest
+	public void testButtonInicio(){
+		//testa se a activity eh a atual
+		assertEquals(getActivity(), button.getContext());
+		//testa se o texto do botao buttonInicio esta correto
+		Button view = (Button) activity.findViewById(R.id.buttonInicio);
+		assertEquals("Incorrect label of the button", "Inicio", view.getText());
+		//testa se o botao "Inicio" esta visivel 
+		assertEquals(0, button.getVisibility());
+
+		final View decorView = activity.getWindow().getDecorView();
+		
+		ViewAsserts.assertOnScreen(decorView, button);
+		
+		final ViewGroup.LayoutParams layoutParams = button.getLayoutParams();
+		assertNotNull(layoutParams);	    
+//		assertEquals(layoutParams.width, WindowManager.LayoutParams.MATCH_PARENT);
+		assertEquals(layoutParams.height, WindowManager.LayoutParams.WRAP_CONTENT);
+	}
+	
 	protected void tearDown() throws Exception {
 		super.tearDown();
 	}

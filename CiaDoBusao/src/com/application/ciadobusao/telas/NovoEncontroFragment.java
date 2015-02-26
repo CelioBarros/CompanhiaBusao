@@ -42,6 +42,7 @@ public class NovoEncontroFragment extends Fragment {
 	private Button criarEncontroButton;
 	private Button horaButton;
 	private Button cancelarButton;
+	private Button localButton;
 	private DataDoEncontro data;
 	private HorarioDoEncontro horario;
 	private Encontro encontro;
@@ -77,7 +78,18 @@ public class NovoEncontroFragment extends Fragment {
 				.findViewById(R.id.linhaEdit);
 		pontoEncontroTextView = (TextView) rootView
 				.findViewById(R.id.pontoEdit);
-
+		localButton = (Button) rootView.findViewById(R.id.buttonLocal);
+		//Acao Botao Local
+		localButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		
 		dataButton = (Button) rootView.findViewById(R.id.dataPickerButton);
 		dataButton.setOnClickListener(new View.OnClickListener() {
 			@Override

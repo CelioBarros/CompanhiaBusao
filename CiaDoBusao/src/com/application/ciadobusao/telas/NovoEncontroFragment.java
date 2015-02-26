@@ -10,9 +10,7 @@ import android.app.Dialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -55,16 +53,19 @@ public class NovoEncontroFragment extends Fragment {
 	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	Date date = new Date();
 	String dataAtual = new String();
+	public static boolean novoEncontro = false;
 
-	private String nomeEncontro;
-	private String pontoEncontro;
-	private String linhaEncontro;
+	private static String nomeEncontro = "";
+	private static String pontoEncontro = "";
+	private static String linhaEncontro = "";
+	public static double latitudeEncontro, longitudeEncontro;
 	private int count;
 	private boolean cria = false;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+			final Bundle savedInstanceState) {
+		novoEncontro = false;
 		dataAtual = dateFormat.format(date);
 		final String[] dataAtu = dataAtual.split("/");
 		rootView = inflater.inflate(R.layout.fragment_novo_encontro, container,
@@ -78,14 +79,28 @@ public class NovoEncontroFragment extends Fragment {
 				.findViewById(R.id.linhaEdit);
 		pontoEncontroTextView = (TextView) rootView
 				.findViewById(R.id.pontoEdit);
+		
+		nomeEncontroTextView.setText(nomeEncontro);
+		linhaEncontroTextView.setText(linhaEncontro);
+		pontoEncontroTextView.setText(pontoEncontro);
+		
 		localButton = (Button) rootView.findViewById(R.id.buttonLocal);
+		
 		//Acao Botao Local
 		localButton.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
+				nomeEncontro = ((TextView) rootView
+						.findViewById(R.id.nomeEdit)).getText().toString();
+				pontoEncontro = ((TextView) rootView
+						.findViewById(R.id.pontoEdit)).getText().toString();
+				linhaEncontro = ((TextView) rootView
+						.findViewById(R.id.linhaEdit)).getText().toString();
+				novoEncontro = true;
+				MapFragment mapFragment = new MapFragment();
+				FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+				fragmentManager.beginTransaction().replace(R.id.container, mapFragment).commit();
 			}
 		});
 		
@@ -129,15 +144,22 @@ public class NovoEncontroFragment extends Fragment {
 		criarEncontroButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				if (nomeEncontro.equals("") ) {
+					nomeEncontro = ((TextView) rootView
+							.findViewById(R.id.nomeEdit)).getText().toString();
+				}
+				
+				if (pontoEncontro.equals("")) {
+					pontoEncontro = ((TextView) rootView
+							.findViewById(R.id.pontoEdit)).getText().toString();
+				}
+				
+				if (linhaEncontro.equals("")) {
+					linhaEncontro = ((TextView) rootView
+							.findViewById(R.id.linhaEdit)).getText().toString();
 
-				 nomeEncontro = ((TextView) rootView
-						.findViewById(R.id.nomeEdit)).getText().toString();
-				 pontoEncontro = ((TextView) rootView
-						.findViewById(R.id.pontoEdit)).getText().toString();
-				 linhaEncontro = ((TextView) rootView
-						.findViewById(R.id.linhaEdit)).getText().toString();
-
-				 count = 0;
+				}
+				count = 0;
 				if (!isNomeEncontroValid(nomeEncontro)) {
 					nomeEncontroTextView.setError("Nome Invalido");
 					count = count + 1;
@@ -182,7 +204,7 @@ public class NovoEncontroFragment extends Fragment {
 							public void onClick(DialogInterface dialog,
 									int which) {
 								if (count == 0) {
-
+									Log.v("mapa", "qnty = " + getFragmentManager().getBackStackEntryCount());
 									encontro = new Encontro();
 
 									encontro.setNome(nomeEncontro);
@@ -194,6 +216,8 @@ public class NovoEncontroFragment extends Fragment {
 											.getId());
 									encontro.setNomeDono(PerfilFragment
 											.getUser().getName());
+									encontro.setLatitude(latitudeEncontro);
+									encontro.setLongitude(longitudeEncontro);
 
 									ClienteRest cliREST = new ClienteRest();
 									try {
@@ -207,6 +231,10 @@ public class NovoEncontroFragment extends Fragment {
 										e.getMessage();
 										gerarToast(e.getMessage());
 									}
+									novoEncontro = false;
+									nomeEncontro = "";
+									linhaEncontro = "";
+									pontoEncontro = "";
 
 									FragmentManager fragmentManager = getActivity()
 											.getSupportFragmentManager();
@@ -232,7 +260,13 @@ public class NovoEncontroFragment extends Fragment {
 		});
 		return rootView;
 	}
-
+	
+	@Override
+	public void onResume() {
+		novoEncontro = false;
+		super.onResume();
+	}
+	
 	private void gerarToast(CharSequence message) {
 		int duration = Toast.LENGTH_LONG;
 		Toast toast = Toast.makeText(getActivity().getApplicationContext(),

@@ -470,8 +470,8 @@ public void gcmChegada(int idEncontro, String idUsuario) throws SQLException{
 		}
 
 		p.setString(6, encontro.getIdDono()+ "");
-		p.setDouble(7, 10);
-		p.setDouble(8, 10);
+		p.setDouble(7, encontro.getLatitude());
+		p.setDouble(8, encontro.getLongitude());
 
 		p.executeUpdate();
 		p.close();
@@ -518,6 +518,8 @@ public void gcmChegada(int idEncontro, String idUsuario) throws SQLException{
 				encontro.setNome(rs.getString("nome"));
 				encontro.setPonto(rs.getString("ponto"));
 				encontro.setLinha(rs.getString("linha"));
+				encontro.setLatitude(rs.getDouble("latitude"));
+				encontro.setLongitude(rs.getDouble("longitude"));
 
 				HorarioDoEncontro h = new HorarioDoEncontro();
 				h.setHora(rs.getTime("horario").getHours());

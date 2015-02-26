@@ -43,7 +43,7 @@ public class MeusEncontrosFragment extends Fragment {
 		return rootView;
 	}
 
-	public List<Encontro> getMeusEncontros() {
+	public static List<Encontro> getMeusEncontros() {
 		ClienteRest clientRest = new ClienteRest();
 		
 		try {

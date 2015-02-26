@@ -24,6 +24,7 @@ public class Encontro implements Comparable<Date>{
 	private int id;
 	private String idDono;
 	private String nomeDono;
+	private double latitude, longitude;
 
 	public Encontro() {
 		perfisChegaram = new ArrayList<String>();
@@ -125,6 +126,22 @@ public class Encontro implements Comparable<Date>{
 	
 	public void setId(int id){
 		this.id = id;
+	}
+	
+	public double getLatitude() {
+		return latitude;
+	}
+	
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+	
+	public double getLongitude() {
+		return longitude;
+	}
+	
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
 	}
 
 	@Override

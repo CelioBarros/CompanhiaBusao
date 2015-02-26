@@ -1,9 +1,11 @@
 package com.application.ciadobusao.telas;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.application.ciadobusao.R;
+import com.application.ciadobusao.db.ClienteRest;
 import com.facebook.Request;
 import com.facebook.Request.GraphUserListCallback;
 import com.facebook.Response;
@@ -12,11 +14,14 @@ import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.ProfilePictureView;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +37,10 @@ public class PerfilFragment extends Fragment {
 	private static TextView userNameGender;
 	protected static GraphUser userMe;
 	private static List<GraphUser> friendlist;
+	GoogleCloudMessaging gcm;
+	String regid;
+	String PROJECT_NUMBER = "622595980917";
+	int primeiravez =0;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -39,9 +48,40 @@ public class PerfilFragment extends Fragment {
 		uiHelper = new UiLifecycleHelper(getActivity(), callback);
 		uiHelper.onCreate(savedInstanceState);
 	}
+	
+	
 
 	public static List<GraphUser> getFriendList() {
 		return friendlist;
+	}
+	public void criaUsuarioERegID(){
+		new AsyncTask<Void, Void, String>() {
+			@Override
+			protected String doInBackground(Void... params) {
+				String msg = "";
+				try {
+					if (gcm == null) {
+						gcm = GoogleCloudMessaging.getInstance(getActivity().getApplicationContext());
+					}
+					regid = gcm.register(PROJECT_NUMBER);
+					msg = regid;
+					Log.i("GCM",  msg);
+
+				} catch (IOException ex) {
+					msg = "Error :" + ex.getMessage();
+
+				}
+				return msg;
+			}
+
+			@Override
+			protected void onPostExecute(String msg) {
+
+				ClienteRest cliREST = new ClienteRest();
+				cliREST.criarUsuario(PerfilFragment.getUser().getId()+ "", PerfilFragment.getUser().getName(), msg);            		
+
+			}
+		}.execute(null,null,null);
 	}
 
 	public static GraphUser getUser() {
@@ -64,6 +104,10 @@ public class PerfilFragment extends Fragment {
 		if (session != null && session.isOpened()) {
 			makeMeRequest(session);
 			getFriends();
+			if(primeiravez ==0){
+				criaUsuarioERegID();
+				primeiravez =+ primeiravez +1;
+			}
 		}
 		return view;
 	}
@@ -124,6 +168,7 @@ public class PerfilFragment extends Fragment {
 		request.executeAsync();
 	}
 
+	
 	private void onSessionStateChange(final Session session,
 			SessionState state, Exception exception) {
 		if (session != null && session.isOpened()) {

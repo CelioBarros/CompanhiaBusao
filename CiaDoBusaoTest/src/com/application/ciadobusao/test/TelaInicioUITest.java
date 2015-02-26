@@ -2,6 +2,7 @@ package com.application.ciadobusao.test;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.ViewAsserts;
+import android.test.suitebuilder.annotation.MediumTest;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +12,12 @@ import android.widget.Button;
 import com.application.ciadobusao.MainActivity;
 import com.application.ciadobusao.R;
 
-public class TelaInicioTest extends ActivityInstrumentationTestCase2<MainActivity>{
+public class TelaInicioUITest extends ActivityInstrumentationTestCase2<MainActivity>{
 
 	private MainActivity activity;
 	private Button button;
 
-	public TelaInicioTest() {
+	public TelaInicioUITest() {
 		super(MainActivity.class);
 	}
 
@@ -56,6 +57,13 @@ public class TelaInicioTest extends ActivityInstrumentationTestCase2<MainActivit
 		assertNotNull(layoutParams);	    
 //		assertEquals(layoutParams.width, WindowManager.LayoutParams.MATCH_PARENT);
 		assertEquals(layoutParams.height, WindowManager.LayoutParams.WRAP_CONTENT);
+	}
+	
+	@MediumTest
+	public void testInfoTextView_layout() {
+	    final View decorView = activity.getWindow().getDecorView();
+//	    ViewAsserts.assertOnScreen(decorView, mInfoTextView);
+//	    assertTrue(View.GONE == mInfoTextView.getVisibility());
 	}
 	
 	protected void tearDown() throws Exception {

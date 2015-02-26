@@ -2,6 +2,7 @@ package com.application.ciadobusao.test;
 
 import com.application.ciadobusao.util.HorarioDoEncontro;
 
+import junit.framework.Assert;
 import junit.framework.TestCase;
 
 public class HorarioDoEncontroTeste extends TestCase {
@@ -15,6 +16,14 @@ public class HorarioDoEncontroTeste extends TestCase {
 	}
 	
 	private void test(){
+		int hora = 5;
+		int min = 45;
+		
+		horario.setHora(hora);
+		Assert.assertEquals(hora,horario.getHora());
+		
+		horario.setMin(min);
+		Assert.assertEquals(min,horario.getMin());
 		
 	}
 

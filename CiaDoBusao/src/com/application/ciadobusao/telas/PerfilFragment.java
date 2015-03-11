@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.application.ciadobusao.MainActivity;
 import com.application.ciadobusao.R;
 import com.application.ciadobusao.db.ClienteRest;
 import com.facebook.Request;
@@ -21,10 +22,12 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +37,7 @@ public class PerfilFragment extends Fragment {
 	private static ProfilePictureView profilePictureView;
 	private View view;
 	private static TextView userNameView;
-	private static TextView userNameGender;
+//	private static TextView userNameGender;
 	protected static GraphUser userMe;
 	private static List<GraphUser> friendlist;
 	GoogleCloudMessaging gcm;
@@ -99,7 +102,7 @@ public class PerfilFragment extends Fragment {
 				.findViewById(R.id.selection_profile_pic);
 		profilePictureView.setCropped(true);
 		userNameView = (TextView) view.findViewById(R.id.selection_user_name);
-		userNameGender = (TextView) view.findViewById(R.id.selection_gender);
+		//userNameGender = (TextView) view.findViewById(R.id.selection_gender);
 		Session session = Session.getActiveSession();
 		if (session != null && session.isOpened()) {
 			makeMeRequest(session);
@@ -109,6 +112,81 @@ public class PerfilFragment extends Fragment {
 				primeiravez =+ primeiravez +1;
 			}
 		}
+		
+		Button criaEncontro = (Button) view.findViewById(R.id.criaEncontro);
+		criaEncontro.setOnClickListener(new View.OnClickListener() {
+
+		@Override
+			public void onClick(View v) {
+				FragmentManager fragmentManager = getActivity()
+						.getSupportFragmentManager();
+				fragmentManager.beginTransaction()
+						.replace(R.id.container, new NovoEncontroFragment()).commit();
+
+			}
+		});
+		
+		Button meusEncontros = (Button) view.findViewById(R.id.meusEncontros);
+		meusEncontros.setOnClickListener(new View.OnClickListener() {
+
+		@Override
+			public void onClick(View v) {
+				FragmentManager fragmentManager = getActivity()
+						.getSupportFragmentManager();
+				fragmentManager.beginTransaction()
+						.replace(R.id.container, new MeusEncontrosFragment()).commit();
+
+			}
+		});
+		
+		Button mapa = (Button) view.findViewById(R.id.mapa);
+		mapa.setOnClickListener(new View.OnClickListener() {
+
+		@Override
+			public void onClick(View v) {
+				FragmentManager fragmentManager = getActivity()
+						.getSupportFragmentManager();
+				fragmentManager.beginTransaction()
+						.replace(R.id.container, new MapFragment()).commit();
+
+			}
+		});
+		
+		Button encontros = (Button) view.findViewById(R.id.encontros);
+		encontros.setOnClickListener(new View.OnClickListener() {
+
+		@Override
+			public void onClick(View v) {
+				FragmentManager fragmentManager = getActivity()
+						.getSupportFragmentManager();
+				fragmentManager.beginTransaction()
+						.replace(R.id.container, new EncontrosFragment()).commit();
+
+			}
+		});
+		
+		Button sobre = (Button) view.findViewById(R.id.sobre);
+		sobre.setOnClickListener(new View.OnClickListener() {
+
+		@Override
+			public void onClick(View v) {
+				FragmentManager fragmentManager = getActivity()
+						.getSupportFragmentManager();
+				fragmentManager.beginTransaction()
+						.replace(R.id.container, new AboutFragment()).commit();
+
+			}
+		});
+		
+		Button sair = (Button) view.findViewById(R.id.sair);
+		sair.setOnClickListener(new View.OnClickListener() {
+
+		@Override
+			public void onClick(View v) {
+	        getActivity().finish();
+	        }
+		});
+		
 		return view;
 	}
 
@@ -148,7 +226,7 @@ public class PerfilFragment extends Fragment {
 							if (userMe != null) {
 								profilePictureView.setProfileId(userMe.getId());
 								userNameView.setText(userMe.getName());
-								String gender = "";
+/*								String gender = "";
 								if (userMe.asMap().get("gender").toString()
 										.equals("male")) {
 									gender = "Masculino";
@@ -158,7 +236,7 @@ public class PerfilFragment extends Fragment {
 								} else {
 									gender = "Indefinido";
 								}
-								userNameGender.setText("Genero: " + gender);
+								userNameGender.setText("Genero: " + gender);*/
 							}
 						}
 						if (response.getError() != null) {

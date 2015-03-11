@@ -4,7 +4,7 @@
     <string name="app_name">CiaDoBusao</string>
     <string name="hello_world">Hello world!</string>
     <string name="facebook_app_id" value="1508683749392269">1508683749392269</string>
-	<string name="title_section1">Início</string>
+	<string name="title_section1">Sobre</string>
     <string name="title_section2">Criar Encontro</string>
     <string name="title_section3">Meus Encontros</string>
     <string name="title_section4">Encontros</string>

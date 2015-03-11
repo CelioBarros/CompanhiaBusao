@@ -44,10 +44,10 @@ public class GcmMessageHandler extends IntentService {
 			char key = titulo.charAt(titulo.length()-1); 
 			if (key == 'C'){
 				titulo = titulo.substring(0, titulo.length()-1);
-				NotificationCustomUtil.novoEncontroNotificacao(GcmMessageHandler.this.getApplicationContext(), "Novo participante no encontro " + mes, titulo + " confirmou presenÃ§a no encontro " + mes);
+				NotificationCustomUtil.novoEncontroNotificacao(GcmMessageHandler.this.getApplicationContext(), "Novo participante no encontro " + mes, titulo + " confirmou presença no encontro " + mes);
 			} else if (key == 'G'){
 				titulo = titulo.substring(0, titulo.length()-1);
-				NotificationCustomUtil.novoEncontroNotificacao(GcmMessageHandler.this.getApplicationContext(), "AlguÃ©m chegou! " + mes, titulo + " chegou no encontro " + mes);
+				NotificationCustomUtil.novoEncontroNotificacao(GcmMessageHandler.this.getApplicationContext(), "Alguém chegou! " + mes, titulo + " chegou no encontro " + mes);
 			}
 		}
 		

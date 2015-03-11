@@ -133,7 +133,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 			break;
 		case 6:
 			mTitle = getString(R.string.title_section1);
-			fragment = new HomeFragment();
+			fragment = new AboutFragment();
 			break;
 		case 7:
 			mTitle = getString(R.string.title_section6);

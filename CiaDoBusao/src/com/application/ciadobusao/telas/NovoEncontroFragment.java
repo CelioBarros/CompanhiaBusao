@@ -135,7 +135,7 @@ public class NovoEncontroFragment extends Fragment {
 				FragmentManager fragmentManager = getActivity()
 						.getSupportFragmentManager();
 				fragmentManager.beginTransaction()
-						.replace(R.id.container, new HomeFragment()).commit();
+						.replace(R.id.container, new AboutFragment()).commit();
 
 			}
 		});
@@ -241,7 +241,7 @@ public class NovoEncontroFragment extends Fragment {
 									fragmentManager
 											.beginTransaction()
 											.replace(R.id.container,
-													new HomeFragment())
+													new MeusEncontrosFragment())
 											.commit();
 									gerarToast("Encontro Criado!");
 								}

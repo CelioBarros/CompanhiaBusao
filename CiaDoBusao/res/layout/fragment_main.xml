@@ -4,14 +4,17 @@
     android:layout_height="fill_parent"
     android:background="#ffffff"
     android:orientation="vertical" >
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="@dimen/abc_action_bar_default_height"
-    android:background="@drawable/cia_busao"
-    android:gravity="end"
-    android:ignoreGravity="@drawable/cia_busao"
-    android:orientation="vertical" >
-    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/sobre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="55dp"
+        android:background="@drawable/cia_busao"
+        android:inputType="textMultiLine"
+        android:text="Um projeto desenvolvido para a disciplina de Laboratório de Engenharia de Software - UFCG. Um projeto para tentar aumentar e interação entre os amigos que pegam o mesmo ônibus, melhorando assim a qualidade da viagem de alguma forma.\nEquipe de desenvolvimento:\n  Célio Barros\n  João Targino\n  Leonardo Avelino\n  Paulo César\n  Ramon Bezerra\n  Rennan Marques " >
+
+    </EditText>
+
 </LinearLayout>
 

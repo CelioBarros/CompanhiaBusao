@@ -12,7 +12,7 @@
         android:layout_marginBottom="55dp"
         android:background="@drawable/cia_busao"
         android:inputType="textMultiLine"
-        android:text="Um projeto desenvolvido para a disciplina de Laboratório de Engenharia de Software - UFCG. Um projeto para tentar aumentar e interação entre os amigos que pegam o mesmo ônibus, melhorando assim a qualidade da viagem de alguma forma.\nEquipe de desenvolvimento:\n  Célio Barros\n  João Targino\n  Leonardo Avelino\n  Paulo César\n  Ramon Bezerra\n  Rennan Marques " >
+        android:text="Um projeto desenvolvido para a disciplina de Laboratório de Engenharia de Software - UFCG, objetivando aumentar a interação entre os amigos que utilizam o mesmo transporte público, melhorando assim a qualidade da viagem de alguma forma.\nEquipe de desenvolvimento:\n  Célio Barros\n  João Targino\n  Leonardo Avelino\n  Paulo César\n  Ramon Bezerra\n  Rennan Marques " >
 
     </EditText>
 

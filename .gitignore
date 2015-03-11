@@ -1,0 +1,13 @@
+*.class
+R.java
+R.txt
+*~
+CiaDoBusao/bin/**/*
+FacebookSDK/**/*
+appcompat_v7/**/*
+Thumbs.db
+bin/**
+tmp/**
+tmp/**/* 
+.classpath
+/bin/

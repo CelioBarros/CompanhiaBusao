@@ -74,6 +74,7 @@ public class MapFragment extends Fragment {
 				public void onClick(View v) {
 					NovoEncontroFragment.latitudeEncontro = latitude;
 					NovoEncontroFragment.longitudeEncontro = longitude;
+					NovoEncontroFragment.localEncontro = "Local definido";
 					NovoEncontroFragment novoEncontroFragment = new NovoEncontroFragment();
 					FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 					fragmentManager.beginTransaction().replace(R.id.container, novoEncontroFragment).commit();
@@ -114,7 +115,7 @@ public class MapFragment extends Fragment {
 		for (Encontro encontro : MeusEncontrosFragment.getMeusEncontros()) {
 			if (encontro.getLatitude()!= 0) {
 				map.addMarker(new MarkerOptions().position(
-				new LatLng(encontro.getLatitude(), encontro.getLongitude())).title(encontro.getNome()));
+				new LatLng(encontro.getLatitude(), encontro.getLongitude())).title(encontro.getNome() + "\n" + encontro.getHorario()));
 			}
 		}
 	}

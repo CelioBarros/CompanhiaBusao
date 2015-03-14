@@ -82,17 +82,30 @@
             android:maxLines="1"
             android:singleLine="true" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/buttonLocal"
-        android:layout_width="wrap_content"
+	
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/buttonblack"
-        android:text="Local"
-        android:textColor="#FFFFFF" />
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/buttonLocal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/buttonblack"
+            android:text="Local"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/textViewLocal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -104,6 +117,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/buttonblack"
             android:text="Horário"
             android:textColor="#FFFFFF" />

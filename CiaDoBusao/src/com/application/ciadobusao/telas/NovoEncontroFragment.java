@@ -49,6 +49,7 @@ public class NovoEncontroFragment extends Fragment {
 	private TextView nomeEncontroTextView;
 	private TextView linhaEncontroTextView;
 	private TextView pontoEncontroTextView;
+	private TextView localEncontroTextView;
 	private TextView horaTextView, dataTextView;
 	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	Date date = new Date();
@@ -58,6 +59,7 @@ public class NovoEncontroFragment extends Fragment {
 	private static String nomeEncontro = "";
 	private static String pontoEncontro = "";
 	private static String linhaEncontro = "";
+	public static String localEncontro = "";
 	public static double latitudeEncontro, longitudeEncontro;
 	private int count;
 	private boolean cria = false;
@@ -74,6 +76,7 @@ public class NovoEncontroFragment extends Fragment {
 		nomeEncontroTextView = (TextView) rootView.findViewById(R.id.nomeEdit);
 		horaTextView = (TextView) rootView.findViewById(R.id.textViewHora);
 		dataTextView = (TextView) rootView.findViewById(R.id.textViewData);
+		localEncontroTextView = (TextView) rootView.findViewById(R.id.textViewLocal);
 		
 		linhaEncontroTextView = (TextView) rootView
 				.findViewById(R.id.linhaEdit);
@@ -83,6 +86,7 @@ public class NovoEncontroFragment extends Fragment {
 		nomeEncontroTextView.setText(nomeEncontro);
 		linhaEncontroTextView.setText(linhaEncontro);
 		pontoEncontroTextView.setText(pontoEncontro);
+		localEncontroTextView.setText(localEncontro);
 		
 		localButton = (Button) rootView.findViewById(R.id.buttonLocal);
 		

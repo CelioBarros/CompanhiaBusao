@@ -158,7 +158,34 @@ public class EncontroResource {
 	@Produces("application/json")
 	public String getPerfisChegaram(@PathParam("id") int idEncontro) {
 		ArrayList<String> nomes = new ArrayList<String>();
-		String query = "select u.nome from usuario u, perfischegaram pc where pc.id_usuario = u.id and pc.id_encontro=" + idEncontro;
+		String query = "select u.nome from usuario u, perfischegaram pc, perfisconfirmados pco where pc.id_usuario = u.id and pco.id_usuario = u.id and pc.id_encontro=" + idEncontro  + " and pco.id_encontro=" + idEncontro;
+		Connection c;
+		try {
+			c = ConnectionMySQL.connectToDatabase();
+			Statement st = c.createStatement();
+			ResultSet rs = st.executeQuery(query);
+			while (rs.next())
+			{
+				nomes.add(rs.getString(1));
+			}
+
+			rs.close();
+			st.close();
+			c.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return new Gson().toJson(nomes);
+	}
+	
+	@GET
+	@Path("/getPerfisNaoChegaram/{id}")
+	@Produces("application/json")
+	public String getPerfisNaoChegaram(@PathParam("id") int idEncontro) {
+		ArrayList<String> nomes = new ArrayList<String>();
+		String query = "select u.nome from usuario u, perfisconfirmados pc where pc.id_encontro="+idEncontro+" and pc.id_usuario=u.id and pc.id_usuario not in (select u.id from usuario u, perfischegaram pch where pch.id_usuario = u.id and pch.id_encontro="+idEncontro+")";
 		Connection c;
 		try {
 			c = ConnectionMySQL.connectToDatabase();

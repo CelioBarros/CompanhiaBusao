@@ -13,7 +13,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +24,6 @@ import android.support.v4.app.Fragment;
 
 public class MeusEncontrosFragment extends Fragment {
 	private ListView mListView;
-	private List<Encontro> meusEncontros;
 	private AdapterListEncontroView myAdapter;
 
 	@Override
@@ -75,13 +73,8 @@ public class MeusEncontrosFragment extends Fragment {
 						int position, long id) {
 					final int pos = position;
 					Encontro item = myAdapter.getItem(position);
-					String perfisConfi = "";
 					ClienteRest newRest = new ClienteRest();
-					try {
-						perfisConfi= newRest.getPerfisConfirmados(""+item.getId()).toString();
-					} catch (Exception e) {
-						// TODO: handle exception
-					}
+
 					AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
 					.create(); // Read Update
 					alertDialog.setTitle(item.getNome());
@@ -94,7 +87,11 @@ public class MeusEncontrosFragment extends Fragment {
 								+ "\n"
 								+ item.getHorario().toString()
 								+ "\n"
-								+ newRest.getPerfisChegaram(item.getId()+"").toString());
+								+ "Chegaram: "
+								+ newRest.getPerfisChegaram(item.getId()+"").toString()
+								+ "\n"
+								+ "Não chegaram: "
+								+ newRest.getPerfisNaoChegaram(item.getId()+"").toString());
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

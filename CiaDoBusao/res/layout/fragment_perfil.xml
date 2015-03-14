@@ -9,10 +9,8 @@
             android:id="@+id/selection_profile_pic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
             android:gravity="center_horizontal"
             facebook:preset_size="normal" >
         </com.facebook.widget.ProfilePictureView>
@@ -21,73 +19,79 @@
             android:id="@+id/selection_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/selection_profile_pic"
-            android:layout_marginBottom="27dp"
-            android:layout_marginLeft="27dp"
-            android:layout_toRightOf="@+id/criaEncontro"
-            android:paddingTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_toRightOf="@+id/selection_profile_pic"
+            android:paddingTop="45dp"
+            android:paddingLeft="10dp"
             android:text=""
             android:textColor="#333"
             android:textSize="25sp" />
 
         <Button
             android:id="@+id/criaEncontro"
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/selection_profile_pic"
+            android:layout_marginLeft="18dp"
             android:layout_centerVertical="true"
-            android:background="@drawable/btn_white_matte"
-            android:text="Criar encontro" />
+            android:background="@drawable/buttonblack"
+            android:text="Criar encontro"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/meusEncontros"
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/criaEncontro"
-            android:layout_alignLeft="@+id/selection_user_name"
-            android:background="@drawable/btn_white_matte"
-            android:text="Meus encontros" />
+            android:layout_marginLeft="18dp"
+            android:layout_toRightOf="@+id/criaEncontro"
+            android:background="@drawable/buttonblack"
+            android:text="Meus encontros"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/mapa"
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/criaEncontro"
             android:layout_alignRight="@+id/criaEncontro"
             android:layout_below="@+id/criaEncontro"
             android:layout_marginTop="31dp"
-            android:background="@drawable/btn_white_matte"
-            android:text="Mapa" />
+            android:background="@drawable/buttonblack"
+            android:text="Mapa"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/encontros"
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/mapa"
             android:layout_alignRight="@+id/mapa"
             android:layout_below="@+id/mapa"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/btn_white_matte"
-            android:text="Encontros" />
+            android:layout_marginTop="31dp"
+            android:background="@drawable/buttonblack"
+            android:text="Encontros"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/sobre"
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/meusEncontros"
             android:layout_alignRight="@+id/meusEncontros"
             android:layout_alignTop="@+id/mapa"
-            android:background="@drawable/btn_white_matte"
-            android:text="Sobre" />
+            android:background="@drawable/buttonblack"
+            android:text="Sobre"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/sair"
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/sobre"
             android:layout_alignRight="@+id/sobre"
             android:layout_alignTop="@+id/encontros"
-            android:background="@drawable/btn_white_matte"
-            android:text="Sair" />
+            android:background="@drawable/buttonblack"
+            android:text="Sair"
+            android:textColor="#FFFFFF" />
 
 </RelativeLayout>

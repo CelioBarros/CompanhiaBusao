@@ -135,7 +135,7 @@ public class NovoEncontroFragment extends Fragment {
 				FragmentManager fragmentManager = getActivity()
 						.getSupportFragmentManager();
 				fragmentManager.beginTransaction()
-						.replace(R.id.container, new AboutFragment()).commit();
+						.replace(R.id.container, new PerfilFragment()).commit();
 
 			}
 		});

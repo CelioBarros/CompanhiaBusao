@@ -90,9 +90,9 @@
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/btn_white_matte"
+        android:background="@drawable/buttonblack"
         android:text="Local"
-        android:textColor="#000000" />
+        android:textColor="#FFFFFF" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -104,9 +104,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/btn_white_matte"
+            android:background="@drawable/buttonblack"
             android:text="Horário"
-            android:textColor="#000000" />
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:id="@+id/textViewHora"
@@ -127,9 +127,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/btn_white_matte"
+            android:background="@drawable/buttonblack"
             android:text="Data"
-            android:textColor="#000000" />
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:id="@+id/textViewData"
@@ -148,24 +148,24 @@
         android:paddingTop="40dp" >
 
         <Button
-            android:id="@+id/botaocriar"
+            android:id="@+id/cancelarButtonId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:background="@drawable/btn_green_matte"
-            android:text="Criar"
+            android:background="@drawable/btn_red_matte"
+            android:text="Cancelar"
             android:textColor="#ffffff" />
 
         <Button
-            android:id="@+id/cancelarButtonId"
+            android:id="@+id/botaocriar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_marginLeft="30dp"
             android:layout_weight="1"
-            android:background="@drawable/btn_red_matte"
-            android:text="Cancelar"
+            android:background="@drawable/btn_green_matte"
+            android:text="Criar"
             android:textColor="#ffffff" />
     </LinearLayout>
 

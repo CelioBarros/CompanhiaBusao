@@ -113,11 +113,14 @@ public class PerfilFragment extends Fragment {
 			}
 		}
 		
+		getActivity().getActionBar().setTitle(R.string.title_section5);
+		
 		Button criaEncontro = (Button) view.findViewById(R.id.criaEncontro);
 		criaEncontro.setOnClickListener(new View.OnClickListener() {
 
-		@Override
+		@SuppressLint("NewApi") @Override
 			public void onClick(View v) {
+				getActivity().getActionBar().setTitle(R.string.title_section2);
 				FragmentManager fragmentManager = getActivity()
 						.getSupportFragmentManager();
 				fragmentManager.beginTransaction()
@@ -129,8 +132,9 @@ public class PerfilFragment extends Fragment {
 		Button meusEncontros = (Button) view.findViewById(R.id.meusEncontros);
 		meusEncontros.setOnClickListener(new View.OnClickListener() {
 
-		@Override
+		@SuppressLint("NewApi") @Override
 			public void onClick(View v) {
+				getActivity().getActionBar().setTitle(R.string.title_section3);
 				FragmentManager fragmentManager = getActivity()
 						.getSupportFragmentManager();
 				fragmentManager.beginTransaction()
@@ -142,8 +146,9 @@ public class PerfilFragment extends Fragment {
 		Button mapa = (Button) view.findViewById(R.id.mapa);
 		mapa.setOnClickListener(new View.OnClickListener() {
 
-		@Override
+		@SuppressLint("NewApi") @Override
 			public void onClick(View v) {
+				getActivity().getActionBar().setTitle(R.string.title_section7);
 				FragmentManager fragmentManager = getActivity()
 						.getSupportFragmentManager();
 				fragmentManager.beginTransaction()
@@ -155,8 +160,9 @@ public class PerfilFragment extends Fragment {
 		Button encontros = (Button) view.findViewById(R.id.encontros);
 		encontros.setOnClickListener(new View.OnClickListener() {
 
-		@Override
+		@SuppressLint("NewApi") @Override
 			public void onClick(View v) {
+				getActivity().getActionBar().setTitle(R.string.title_section4);
 				FragmentManager fragmentManager = getActivity()
 						.getSupportFragmentManager();
 				fragmentManager.beginTransaction()
@@ -168,8 +174,9 @@ public class PerfilFragment extends Fragment {
 		Button sobre = (Button) view.findViewById(R.id.sobre);
 		sobre.setOnClickListener(new View.OnClickListener() {
 
-		@Override
+		@SuppressLint("NewApi") @Override
 			public void onClick(View v) {
+				getActivity().getActionBar().setTitle(R.string.title_section1);
 				FragmentManager fragmentManager = getActivity()
 						.getSupportFragmentManager();
 				fragmentManager.beginTransaction()

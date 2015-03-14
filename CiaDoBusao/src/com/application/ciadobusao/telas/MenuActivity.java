@@ -183,6 +183,14 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 		//}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	@Override
+	public void onBackPressed() {
+		if ((getActionBar().getTitle().equals(R.string.title_section5))) {
+		} else {
+			onSectionAttached(1);
+		}
+	}
 
 
 

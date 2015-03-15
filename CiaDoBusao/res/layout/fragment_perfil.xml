@@ -38,17 +38,6 @@
             android:textColor="#FFFFFF" />
 
         <Button
-            android:id="@+id/meusEncontros"
-            android:layout_width="130dp"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/criaEncontro"
-            android:layout_marginLeft="18dp"
-            android:layout_toRightOf="@+id/criaEncontro"
-            android:background="@drawable/buttonblack"
-            android:text="Meus encontros"
-            android:textColor="#FFFFFF" />
-
-        <Button
             android:id="@+id/mapa"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
@@ -92,6 +81,17 @@
             android:layout_alignTop="@+id/encontros"
             android:background="@drawable/buttonblack"
             android:text="Sair"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/meusEncontros"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/mapa"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/buttonblack"
+            android:text="Meus encontros"
             android:textColor="#FFFFFF" />
 
 </RelativeLayout>

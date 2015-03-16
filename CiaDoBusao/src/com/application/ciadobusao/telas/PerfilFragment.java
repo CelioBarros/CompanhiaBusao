@@ -1,5 +1,6 @@
 package com.application.ciadobusao.telas;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 import com.application.ciadobusao.MainActivity;
 import com.application.ciadobusao.R;
 import com.application.ciadobusao.db.ClienteRest;
+import com.application.ciadobusao.util.Usuario;
 import com.facebook.Request;
 import com.facebook.Request.GraphUserListCallback;
 import com.facebook.Response;
@@ -19,10 +21,12 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,12 +38,13 @@ import android.widget.Toast;
 public class PerfilFragment extends Fragment {
 
 	private static final int REAUTH_ACTIVITY_CODE = 100;
-	private static ProfilePictureView profilePictureView;
+	public static ProfilePictureView profilePictureView;
 	private View view;
 	private static TextView userNameView;
 //	private static TextView userNameGender;
 	protected static GraphUser userMe;
 	private static List<GraphUser> friendlist;
+	public static String encodedImage;
 	GoogleCloudMessaging gcm;
 	String regid;
 	String PROJECT_NUMBER = "622595980917";
@@ -79,9 +84,22 @@ public class PerfilFragment extends Fragment {
 
 			@Override
 			protected void onPostExecute(String msg) {
-
-				ClienteRest cliREST = new ClienteRest();
-				cliREST.criarUsuario(PerfilFragment.getUser().getId()+ "", PerfilFragment.getUser().getName(), msg);            		
+				Usuario usuario = new Usuario();
+				usuario.setIdFace(PerfilFragment.getUser().getId()+"");
+				usuario.setNome(PerfilFragment.getUser().getName());
+				usuario.setId_gcm(msg);
+				usuario.setFoto(encodedImage);
+				if (userMe != null) {
+					ClienteRest cliREST = new ClienteRest();
+					try {
+						cliREST.criarUsuario(usuario);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}            		
+				} else {
+					makeMeRequest(Session.getActiveSession());
+				}
 
 			}
 		}.execute(null,null,null);
@@ -101,6 +119,7 @@ public class PerfilFragment extends Fragment {
 		profilePictureView = (ProfilePictureView) view
 				.findViewById(R.id.selection_profile_pic);
 		profilePictureView.setCropped(true);
+		
 		userNameView = (TextView) view.findViewById(R.id.selection_user_name);
 		//userNameGender = (TextView) view.findViewById(R.id.selection_gender);
 		Session session = Session.getActiveSession();
@@ -232,6 +251,12 @@ public class PerfilFragment extends Fragment {
 						if (session == Session.getActiveSession()) {
 							if (userMe != null) {
 								profilePictureView.setProfileId(userMe.getId());
+								profilePictureView.setDrawingCacheEnabled(true);
+								Bitmap foto = profilePictureView.getDrawingCache();
+								ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+								foto.compress(Bitmap.CompressFormat.JPEG, 100, baos);  
+								byte[] b = baos.toByteArray();
+								encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
 								userNameView.setText(userMe.getName());
 /*								String gender = "";
 								if (userMe.asMap().get("gender").toString()

@@ -239,7 +239,7 @@ public class NovoEncontroFragment extends Fragment {
 									nomeEncontro = "";
 									linhaEncontro = "";
 									pontoEncontro = "";
-
+									getActivity().getActionBar().setTitle(R.string.title_section3);
 									FragmentManager fragmentManager = getActivity()
 											.getSupportFragmentManager();
 									fragmentManager

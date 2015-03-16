@@ -1,14 +1,17 @@
 package com.application.ciadobusao.telas;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import com.application.ciadobusao.NavigationDrawerFragment;
 import com.application.ciadobusao.R;
 import com.application.ciadobusao.db.ClienteRest;
+import com.application.ciadobusao.util.Usuario;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -17,6 +20,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -88,9 +92,23 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
 			@Override
 			protected void onPostExecute(String msg) {
-
+				Bitmap foto = PerfilFragment.profilePictureView.getDrawingCache();
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+				foto.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object   
+				byte[] b = baos.toByteArray();
+				String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+				Usuario usuario = new Usuario();
+				usuario.setIdFace(PerfilFragment.getUser().getId()+"");
+				usuario.setNome(PerfilFragment.getUser().getName());
+				usuario.setId_gcm(msg);
+				usuario.setFoto(encodedImage);
 				ClienteRest cliREST = new ClienteRest();
-				cliREST.criarUsuario(PerfilFragment.getUser().getId()+ "", PerfilFragment.getUser().getName(), msg);            		
+				try {
+					cliREST.criarUsuario(usuario);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}            		
 
 			}
 		}.execute(null,null,null);

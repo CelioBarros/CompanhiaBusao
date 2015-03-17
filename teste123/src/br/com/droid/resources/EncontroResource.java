@@ -413,7 +413,6 @@ public void gcmChegada(int idEncontro, String idUsuario) throws SQLException{
 	 * @return
 	 * @throws SQLException
 	 */
-	
 	@POST
 	@Path("/criarusuario")
 	@Produces("application/json")
@@ -430,6 +429,13 @@ public void gcmChegada(int idEncontro, String idUsuario) throws SQLException{
 		p.executeUpdate();
 		p.close();
 		c.close();
+		
+		Connection c2 = ConnectionMySQL.connectToDatabase();
+		String queryUpdate = "UPDATE usuario SET foto ="+ blob + " " + "where id=" + usuario.getIdFace();
+		PreparedStatement p2 = c2.prepareStatement(queryUpdate);
+		p2.executeUpdate();
+		p2.close();
+		c2.close();
 
 		return "Usuário criado";
 

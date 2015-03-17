@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.application.ciadobusao.util.Encontro;
+import com.application.ciadobusao.util.Usuario;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
@@ -75,10 +76,16 @@ public class ClienteRest {
 				+ idEncontro + "/" + idUsuario);
 		return resposta[1]; // resposta do cheguei no webService
 	}
-	public String criarUsuario(String id, String nome, String idgcm) {
-		String[] resposta = new WebServiceCliente().get(URL_WS
-				+ "criarusuario/" + id + "/" + nome+ "/" + idgcm);
-		return resposta[1];
+	public String criarUsuario(Usuario usuario) throws Exception{
+		Gson gson = new Gson();
+		String usuarioJSON = gson.toJson(usuario);
+		String[] resposta = new WebServiceCliente().post(URL_WS + "criarusuario",
+				usuarioJSON);
+		if ("200".equals(resposta[0])) {
+			return resposta[1];
+		} else {
+			throw new Exception(resposta[1]);
+		}
 	}
 
 	public String desconfirmarPresenca(int id, String idUser) {

@@ -1,5 +1,6 @@
 package br.com.droid.resources;
 
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.sql.rowset.serial.SerialBlob;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -29,6 +31,7 @@ import br.com.droid.HorarioDoEncontro;
 import br.com.droid.POST2GCM;
 import br.com.droid.exception.NoContentException;
 import br.com.droid.model.Encontro;
+import br.com.droid.model.Usuario;
 
 @Path("/cliente")
 public class EncontroResource {
@@ -405,32 +408,33 @@ public void gcmChegada(int idEncontro, String idUsuario) throws SQLException{
 	/**
 	 * Cria Usuario;
 	 * 
-	 * @param id
-	 *            Id do Usuario
-	 * @param nome
-	 *            Nome do Usuario
+	 * @param usuario
+	 * 				Objeto com os dados do usuario
 	 * @return
 	 * @throws SQLException
 	 */
-	@GET
-	@Path("/criarusuario/{id}/{nome}/{idgcm}")
+	
+	@POST
+	@Path("/criarusuario")
 	@Produces("application/json")
-	public String criarUsuario(@PathParam("id") String id,
-			@PathParam("nome") String nome, @PathParam("idgcm")String idgcm) throws SQLException {
-		Connection c;
-
-		c = ConnectionMySQL.connectToDatabase();
-		String queryInserir = "INSERT INTO usuario VALUES(?,?,?)";
+	@Consumes("application/json")
+	public String criarUsuario(Usuario usuario) throws SQLException {
+		Connection c = ConnectionMySQL.connectToDatabase();
+		String queryInserir = "INSERT INTO usuario VALUES(?,?,?,?)";
 		PreparedStatement p = c.prepareStatement(queryInserir);
-		p.setString(1,id);
-		p.setString(2,nome);
-		p.setString(3,idgcm);
+		p.setString(1,usuario.getIdFace());
+		p.setString(2,usuario.getNome());
+		p.setString(3,usuario.getId_gcm());
+		Blob blob = new SerialBlob(usuario.getFoto().getBytes());
+		p.setBlob(4, blob);
 		p.executeUpdate();
 		p.close();
 		c.close();
 
 		return "Usuário criado";
+
 	}
+	
 	@GET
 	@Path("/gcmTeste/{id}")
 	@Produces("application/json")

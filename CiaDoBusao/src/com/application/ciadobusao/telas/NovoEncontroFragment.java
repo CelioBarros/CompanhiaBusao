@@ -60,7 +60,7 @@ public class NovoEncontroFragment extends Fragment {
 	private static String pontoEncontro = "";
 	private static String linhaEncontro = "";
 	public static String localEncontro = "";
-	public static double latitudeEncontro, longitudeEncontro;
+	public static double latitudeEncontro, longitudeEncontro = 0;
 	private int count;
 	private boolean cria = false;
 
@@ -95,6 +95,7 @@ public class NovoEncontroFragment extends Fragment {
 			
 			@Override
 			public void onClick(View v) {
+				latitudeEncontro = 0; longitudeEncontro = 0;
 				nomeEncontro = ((TextView) rootView
 						.findViewById(R.id.nomeEdit)).getText().toString();
 				pontoEncontro = ((TextView) rootView
@@ -136,6 +137,11 @@ public class NovoEncontroFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
+				novoEncontro = false;
+				nomeEncontro = "";
+				linhaEncontro = "";
+				pontoEncontro = "";
+				localEncontro = "";
 				FragmentManager fragmentManager = getActivity()
 						.getSupportFragmentManager();
 				fragmentManager.beginTransaction()
@@ -239,6 +245,7 @@ public class NovoEncontroFragment extends Fragment {
 									nomeEncontro = "";
 									linhaEncontro = "";
 									pontoEncontro = "";
+									localEncontro = "";
 									getActivity().getActionBar().setTitle(R.string.title_section3);
 									FragmentManager fragmentManager = getActivity()
 											.getSupportFragmentManager();

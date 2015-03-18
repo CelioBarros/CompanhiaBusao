@@ -1,6 +1,10 @@
 package com.application.ciadobusao.telas;
 
+import android.content.Context;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,8 +22,11 @@ import com.application.ciadobusao.util.CheckNetwork;
 import com.application.ciadobusao.util.Encontro;
 import com.application.ciadobusao.util.MyLocation;
 import com.application.ciadobusao.util.MyLocation.LocationResult;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMyLocationChangeListener;
 import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -28,9 +35,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapFragment extends Fragment {
 
 	private static View rootView;
-	private LocationResult locationResult;
 	private double latitude;
 	private double longitude;
+	private LocationManager locationManager;
+	private String provider;
 	private GoogleMap map;
 	private Button sairButton;
 
@@ -46,7 +54,7 @@ public class MapFragment extends Fragment {
 			rootView = inflater
 					.inflate(R.layout.fragment_map, container, false);
 		} catch (InflateException e) {
-			/* map is already there, just return view as it is */
+			/* map is already there*/
 		}
 		
 		SupportMapFragment mapFragment = (SupportMapFragment) getFragmentManager()
@@ -74,7 +82,11 @@ public class MapFragment extends Fragment {
 				public void onClick(View v) {
 					NovoEncontroFragment.latitudeEncontro = latitude;
 					NovoEncontroFragment.longitudeEncontro = longitude;
-					NovoEncontroFragment.localEncontro = "Local definido";
+					if (latitude != 0) {
+						NovoEncontroFragment.localEncontro = "Local definido";
+					} else {
+						NovoEncontroFragment.localEncontro = "";
+					}
 					NovoEncontroFragment novoEncontroFragment = new NovoEncontroFragment();
 					FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 					fragmentManager.beginTransaction().replace(R.id.container, novoEncontroFragment).commit();
@@ -83,24 +95,29 @@ public class MapFragment extends Fragment {
 		} else {
 			createMarkers(map);
 		}
+		locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+	    Criteria criteria = new Criteria();
+	    provider = locationManager.getBestProvider(criteria, false);
+	    Location location = locationManager.getLastKnownLocation(provider);
+	    latitude = location.getLatitude();
+		longitude = location.getLongitude();
 		
-		locationResult = new LocationResult() {
-			@Override
-			public void gotLocation(Location location) {
-				latitude = location.getLatitude();
-				longitude = location.getLongitude();
-			}
-		};
-		MyLocation myLocation = new MyLocation();
-		myLocation.getLocation(getActivity(), locationResult);
 		map.setMyLocationEnabled(true);
-
 		if (!CheckNetwork.isInternetAvailable(getActivity())) {
 			Toast.makeText(getActivity(),
 					"Verifique sua conexão com a Internet e tente novamente.",
 					1500).show();
 		}
-		
+		map.setOnMyLocationChangeListener(new OnMyLocationChangeListener() {
+			
+			@Override
+			public void onMyLocationChange(Location arg0) {
+				if (latitude != 0) {
+					CameraUpdate zoomLocation = CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 15);
+					map.animateCamera(zoomLocation);
+				}
+			}
+		});
 		return rootView;
 	}
 
@@ -139,5 +156,5 @@ public class MapFragment extends Fragment {
 	public void onDestroy() {
 		super.onDestroy();
 	}
-
+	
 }

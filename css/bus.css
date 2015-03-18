@@ -12,6 +12,10 @@
     background-color: #ffb732;
 }
 
-h2,a,h1,p,h3 {
+h2,a,h1,p,h3,div {
 	font-family: Corbel;
+}
+
+#cima {
+	font-size: 24px
 }

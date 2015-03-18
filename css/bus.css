@@ -17,5 +17,14 @@ h2,a,h1,p,h3,div {
 }
 
 #cima {
-	font-size: 24px
+	font-size: 24px;
+}
+
+img{
+	margin-left: 20px;
+}
+
+.desc{
+	margin-left: 10px;
+	margin-right: 20px;
 }

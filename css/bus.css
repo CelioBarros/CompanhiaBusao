@@ -11,3 +11,7 @@
 .center {
     background-color: #ffb732;
 }
+
+h2,a,h1,p {
+	font-family: Corbel;
+}

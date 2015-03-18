@@ -118,8 +118,19 @@ public class MeusEncontrosFragment extends Fragment {
 								int which) {
 						}
 					});
-					
-					alertDialog.setButton3("Já cheguei!", 
+					String nomeBotao = "Já Cheguei!";
+					try {
+						List<String> array = newRest.getPerfisChegaram(item.getId()+"");
+						for (String nomeUser : array) {
+							System.out.println(nomeUser);
+							if (nomeUser.equals(PerfilFragment.getUser().getName())) {
+								nomeBotao = "";
+							}
+						}
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
+					alertDialog.setButton3(nomeBotao, 
 							new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog,
 								int which) {

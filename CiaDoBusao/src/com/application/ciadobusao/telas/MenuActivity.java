@@ -70,50 +70,6 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 		
 	}
 
-	public void criaUsuarioERegID(){
-		new AsyncTask<Void, Void, String>() {
-			@Override
-			protected String doInBackground(Void... params) {
-				String msg = "";
-				try {
-					if (gcm == null) {
-						gcm = GoogleCloudMessaging.getInstance(getApplicationContext());
-					}
-					regid = gcm.register(PROJECT_NUMBER);
-					msg = regid;
-					Log.i("GCM",  msg);
-
-				} catch (IOException ex) {
-					msg = "Error :" + ex.getMessage();
-
-				}
-				return msg;
-			}
-
-			@Override
-			protected void onPostExecute(String msg) {
-				Bitmap foto = PerfilFragment.profilePictureView.getDrawingCache();
-				ByteArrayOutputStream baos = new ByteArrayOutputStream();  
-				foto.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object   
-				byte[] b = baos.toByteArray();
-				String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
-				Usuario usuario = new Usuario();
-				usuario.setIdFace(PerfilFragment.getUser().getId()+"");
-				usuario.setNome(PerfilFragment.getUser().getName());
-				usuario.setId_gcm(msg);
-				usuario.setFoto(encodedImage);
-				ClienteRest cliREST = new ClienteRest();
-				try {
-					cliREST.criarUsuario(usuario);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}            		
-
-			}
-		}.execute(null,null,null);
-	}
-
 
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {

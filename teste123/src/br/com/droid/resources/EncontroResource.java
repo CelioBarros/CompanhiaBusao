@@ -418,24 +418,31 @@ public void gcmChegada(int idEncontro, String idUsuario) throws SQLException{
 	@Produces("application/json")
 	@Consumes("application/json")
 	public String criarUsuario(Usuario usuario) throws SQLException {
-		Connection c = ConnectionMySQL.connectToDatabase();
-		String queryInserir = "INSERT INTO usuario VALUES(?,?,?,?)";
-		PreparedStatement p = c.prepareStatement(queryInserir);
-		p.setString(1,usuario.getIdFace());
-		p.setString(2,usuario.getNome());
-		p.setString(3,usuario.getId_gcm());
 		Blob blob = new SerialBlob(usuario.getFoto().getBytes());
-		p.setBlob(4, blob);
-		p.executeUpdate();
-		p.close();
-		c.close();
-		
-		Connection c2 = ConnectionMySQL.connectToDatabase();
-		String queryUpdate = "UPDATE usuario SET foto ="+ blob + " " + "where id=" + usuario.getIdFace();
-		PreparedStatement p2 = c2.prepareStatement(queryUpdate);
-		p2.executeUpdate();
-		p2.close();
-		c2.close();
+
+		try {
+			Connection c = ConnectionMySQL.connectToDatabase();
+			String queryInserir = "INSERT INTO usuario VALUES(?,?,?,?)";
+			PreparedStatement p = c.prepareStatement(queryInserir);
+			p.setString(1,usuario.getIdFace());
+			p.setString(2,usuario.getNome());
+			p.setString(3,usuario.getId_gcm());
+			p.setBlob(4, blob);
+			p.executeUpdate();
+			p.close();
+			c.close();
+			
+		} catch (Exception e) {
+			Connection c2 = ConnectionMySQL.connectToDatabase();
+			String queryUpdate = "UPDATE usuario SET foto = ? , nome= ? WHERE id=?";
+			PreparedStatement p2 = c2.prepareStatement(queryUpdate);
+			p2.setBlob(1, blob);
+			p2.setString(2, usuario.getNome());
+			p2.setString(3,usuario.getIdFace());
+			p2.executeUpdate();
+			p2.close();
+			c2.close();
+		}
 
 		return "Usuário criado";
 

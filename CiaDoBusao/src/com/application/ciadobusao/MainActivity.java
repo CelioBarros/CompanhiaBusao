@@ -17,7 +17,7 @@ public class MainActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 
 		if (!CheckNetwork.isInternetAvailable(this)) {
-			Toast.makeText(this,"Verifique sua conex„o com a Internet e tente novamente.",1500).show();
+			Toast.makeText(this,"Verifique sua conex√£o com a Internet e tente novamente.",1500).show();
 		}
 		if (savedInstanceState == null) {
 			// Add the fragment on initial activity setup

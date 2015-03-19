@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.application.ciadobusao.MainActivity;
+import com.application.ciadobusao.MainFragment;
 import com.application.ciadobusao.R;
 import com.application.ciadobusao.db.ClienteRest;
 import com.application.ciadobusao.util.Usuario;
@@ -20,8 +21,11 @@ import com.facebook.widget.ProfilePictureView;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -52,6 +56,9 @@ public class PerfilFragment extends Fragment {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		if (!checaConexao()) {
+			getActivity().getSupportFragmentManager().popBackStack();
+		}
 		super.onCreate(savedInstanceState);
 		uiHelper = new UiLifecycleHelper(getActivity(), callback);
 		uiHelper.onCreate(savedInstanceState);
@@ -63,6 +70,7 @@ public class PerfilFragment extends Fragment {
 		return friendlist;
 	}
 	public void criaUsuarioERegID(){
+		if(checaConexao()) {
 		new AsyncTask<Void, Void, String>() {
 			@Override
 			protected String doInBackground(Void... params) {
@@ -103,6 +111,7 @@ public class PerfilFragment extends Fragment {
 
 			}
 		}.execute(null,null,null);
+		}
 	}
 
 	public static GraphUser getUser() {
@@ -113,7 +122,9 @@ public class PerfilFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
+		if (!checaConexao()) {
+			getActivity().getSupportFragmentManager().popBackStack();
+		}
 		view = inflater.inflate(R.layout.fragment_perfil, container, false);
 
 		profilePictureView = (ProfilePictureView) view
@@ -121,7 +132,6 @@ public class PerfilFragment extends Fragment {
 		profilePictureView.setCropped(true);
 		
 		userNameView = (TextView) view.findViewById(R.id.selection_user_name);
-		//userNameGender = (TextView) view.findViewById(R.id.selection_gender);
 		Session session = Session.getActiveSession();
 		if (session != null && session.isOpened()) {
 			makeMeRequest(session);
@@ -217,6 +227,7 @@ public class PerfilFragment extends Fragment {
 	}
 
 	private void getFriends() {
+		
 		Session activeSession = Session.getActiveSession();
 		friendlist = new ArrayList<GraphUser>();
 		if (activeSession.getState().isOpened()) {
@@ -258,17 +269,6 @@ public class PerfilFragment extends Fragment {
 								byte[] b = baos.toByteArray();
 								encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
 								userNameView.setText(userMe.getName());
-/*								String gender = "";
-								if (userMe.asMap().get("gender").toString()
-										.equals("male")) {
-									gender = "Masculino";
-								} else if (userMe.asMap().get("gender")
-										.toString().equals("female")) {
-									gender = "Feminino";
-								} else {
-									gender = "Indefinido";
-								}
-								userNameGender.setText("Genero: " + gender);*/
 							}
 						}
 						if (response.getError() != null) {
@@ -276,6 +276,19 @@ public class PerfilFragment extends Fragment {
 					}
 				});
 		request.executeAsync();
+	}
+	
+	private boolean checaConexao() {
+		ConnectivityManager conMgr = (ConnectivityManager) getActivity().getApplicationContext()
+	            .getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo i = conMgr.getActiveNetworkInfo();
+		if (i == null) {
+			return false;
+		}
+		if (!i.isConnected() && !i.isAvailable()) {
+			return false;
+		}
+		return true;
 	}
 
 	

@@ -161,7 +161,8 @@ public class EncontroResource {
 	@Produces("application/json")
 	public String getPerfisChegaram(@PathParam("id") int idEncontro) {
 		ArrayList<String> nomes = new ArrayList<String>();
-		String query = "select u.nome from usuario u, perfischegaram pc, perfisconfirmados pco where pc.id_usuario = u.id and pco.id_usuario = u.id and pc.id_encontro=" + idEncontro  + " and pco.id_encontro=" + idEncontro;
+		String query = "select distinct u.nome from usuario u, perfischegaram pc, encontro e where e.id="+idEncontro+" and pc.id_encontro="+idEncontro+" and (pc.id_usuario = u.id or (pc.id_usuario = e.id_dono and e.id_dono = u.id))";
+		
 		Connection c;
 		try {
 			c = ConnectionMySQL.connectToDatabase();
@@ -188,7 +189,7 @@ public class EncontroResource {
 	@Produces("application/json")
 	public String getPerfisNaoChegaram(@PathParam("id") int idEncontro) {
 		ArrayList<String> nomes = new ArrayList<String>();
-		String query = "select u.nome from usuario u, perfisconfirmados pc where pc.id_encontro="+idEncontro+" and pc.id_usuario=u.id and pc.id_usuario not in (select u.id from usuario u, perfischegaram pch where pch.id_usuario = u.id and pch.id_encontro="+idEncontro+")";
+		String query = "select distinct us.nome from usuario us, perfisconfirmados pco,encontro enc where enc.id=pco.id_encontro and pco.id_encontro="+idEncontro+" and (pco.id_usuario=us.id or us.id=enc.id_dono) and us.id not in (select u.id from usuario u, perfischegaram pc, encontro e where e.id="+idEncontro+" and pc.id_encontro="+idEncontro+" and (pc.id_usuario = u.id or (pc.id_usuario = e.id_dono and e.id_dono = u.id)))";
 		Connection c;
 		try {
 			c = ConnectionMySQL.connectToDatabase();
@@ -288,6 +289,14 @@ public class EncontroResource {
 		p.setInt(1,idEncontro);
 		p.setString(2, idUsuario);
 		p.execute();
+		queryInserir = "DELETE FROM perfischegaram WHERE id_encontro= ? and id_usuario=?";
+		p = c.prepareStatement(queryInserir);
+		p.setInt(1,idEncontro);
+		p.setString(2, idUsuario);
+		p.execute();
+		
+		p.close();
+		c.close();
 		return "Perfil desconfirmado com Sucesso";
 	}
 

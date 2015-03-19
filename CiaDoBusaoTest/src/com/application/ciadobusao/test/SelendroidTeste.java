@@ -65,8 +65,51 @@ public class SelendroidTeste {
                      
       // Verifique se o campo de texto ativado assim que o usuário insere o texto
       Assert.assertEquals("true", inputField.getAttribute("enabled"));
-       
+      
+   // Enter a text to text field
+      inputField.sendKeys("Nome qualquer");
   
+   // Find the input text field on screen
+      // The id of this text field was get from step 9
+      WebElement inputField1 = driver.findElement(By.id("linhaEdit"));
+      
+   // Verifique se o campo de texto ativado assim que o usuário insere o texto
+      Assert.assertEquals("true", inputField1.getAttribute("enabled"));
+    
+   // Enter a text to text field
+      inputField1.sendKeys("Linha qualquer");
+   
+   // Find the input text field on screen
+      // The id of this text field was get from step 9
+      WebElement inputField2 = driver.findElement(By.id("pontoEdit"));
+  
+   // Verifique se o campo de texto ativado assim que o usuário insere o texto
+      Assert.assertEquals("true", inputField2.getAttribute("enabled"));
+      
+   // Enter a text to text field
+      inputField2.sendKeys("Ponto qualquer");
+      
+      // Clicar no botao de abrir o mapa
+      WebElement button1 = driver.findElement(By.id("mapa"));
+                  button1.click();
+      
+      // Clicar no botao de visualizar encontros
+      WebElement button2 = driver.findElement(By.id("encontros"));
+                   button2.click();
+     
+      // Clicar no botao de visualizar sobre
+      WebElement button3 = driver.findElement(By.id("sobre"));
+                   button3.click();
+                   
+      // Clicar no botao de sair
+     WebElement button4 = driver.findElement(By.id("sair"));
+                   button4.click();
+                   
+    // Clicar no botao de visualizar meus encontros
+    WebElement button5 = driver.findElement(By.id("meusEncontros"));
+                  button5.click();
+              
+                  
 }
 	@AfterSuite
 	public void tearDown() {

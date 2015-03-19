@@ -5,6 +5,8 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -48,6 +50,13 @@ public class MapFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		if (!checaConexao()) {
+			getActivity().getSupportFragmentManager().popBackStack();
+			getActivity().finish();
+		}
+		if (!CheckNetwork.isInternetAvailable(getActivity())) {
+			Toast.makeText(getActivity(),"Verifique sua conexão com a Internet e tente novamente.",1500).show();
+		} else {
 		if (rootView != null) {
 			ViewGroup parent = (ViewGroup) rootView.getParent();
 			if (parent != null)
@@ -125,8 +134,23 @@ public class MapFragment extends Fragment {
 				}
 			}
 		});
+		}
 		return rootView;
+		
 	}
+
+	private boolean checaConexao() {
+	 	ConnectivityManager conMgr = (ConnectivityManager) getActivity().getApplicationContext()
+	  .getSystemService(Context.CONNECTIVITY_SERVICE);
+	 	NetworkInfo i = conMgr.getActiveNetworkInfo();
+	 	if (i == null) {
+	 	return false;
+	 	}
+	 	if (!i.isConnected() && !i.isAvailable()) {
+	 	return false;
+	 	}
+	 	return true;
+	 }
 
 	public void onMapReady(GoogleMap map) {
 		map.clear();

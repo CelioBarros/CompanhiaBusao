@@ -11,7 +11,10 @@ import com.application.ciadobusao.util.Encontro;
 import com.facebook.model.GraphUser;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,13 +34,16 @@ public class EncontrosFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
+		if (!checaConexao()) {
+			getActivity().getSupportFragmentManager().popBackStack();
+			getActivity().finish();
+		}
 		View rootView = inflater.inflate(R.layout.fragment_notificacoes,
 				container, false);
 		listView = (ListView) rootView.findViewById(R.id.notificacoes);
 
         if (!CheckNetwork.isInternetAvailable(getActivity())) {
-			Toast.makeText(getActivity(),"Verifique sua conex„o com a Internet e tente novamente.",1500).show();
+			Toast.makeText(getActivity(),"Verifique sua conex√£o com a Internet e tente novamente.",1500).show();
 		} else {
 			new MeuAsyncTask().execute();
 		}
@@ -88,6 +94,19 @@ public class EncontrosFragment extends Fragment {
 		});
 		return rootView;
 	}
+	
+	private boolean checaConexao() {
+	 	ConnectivityManager conMgr = (ConnectivityManager) getActivity().getApplicationContext()
+	  .getSystemService(Context.CONNECTIVITY_SERVICE);
+	 	NetworkInfo i = conMgr.getActiveNetworkInfo();
+	 	if (i == null) {
+	 	return false;
+	 	}
+	 	if (!i.isConnected() && !i.isAvailable()) {
+	 	return false;
+	 	}
+	 	return true;
+	 }
 
 	class MeuAsyncTask extends AsyncTask<Void, Void, List<Encontro>> {
 

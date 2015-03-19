@@ -10,7 +10,10 @@ import com.application.ciadobusao.util.CheckNetwork;
 import com.application.ciadobusao.util.Encontro;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,7 +32,10 @@ public class MeusEncontrosFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
+		if (!checaConexao()) {
+			getActivity().getSupportFragmentManager().popBackStack();
+			getActivity().finish();
+		}
 		View rootView = inflater.inflate(R.layout.fragment_meus_encontros,
 				container, false);
 		mListView = (ListView) rootView.findViewById(R.id.encontros);
@@ -40,6 +46,19 @@ public class MeusEncontrosFragment extends Fragment {
 		}
 		return rootView;
 	}
+
+	private boolean checaConexao() {
+	 	ConnectivityManager conMgr = (ConnectivityManager) getActivity().getApplicationContext()
+	  .getSystemService(Context.CONNECTIVITY_SERVICE);
+	 	NetworkInfo i = conMgr.getActiveNetworkInfo();
+	 	if (i == null) {
+	 	return false;
+	 	}
+	 	if (!i.isConnected() && !i.isAvailable()) {
+	 	return false;
+	 	}
+	 	return true;
+	 }
 
 	public static List<Encontro> getMeusEncontros() {
 		ClienteRest clientRest = new ClienteRest();

@@ -76,22 +76,22 @@ public class NovoEncontroFragment extends Fragment {
 		horaTextView = (TextView) rootView.findViewById(R.id.textViewHora);
 		dataTextView = (TextView) rootView.findViewById(R.id.textViewData);
 		localEncontroTextView = (TextView) rootView.findViewById(R.id.textViewLocal);
-		
+
 		linhaEncontroTextView = (TextView) rootView
 				.findViewById(R.id.linhaEdit);
 		pontoEncontroTextView = (TextView) rootView
 				.findViewById(R.id.pontoEdit);
-		
+
 		nomeEncontroTextView.setText(nomeEncontro);
 		linhaEncontroTextView.setText(linhaEncontro);
 		pontoEncontroTextView.setText(pontoEncontro);
 		localEncontroTextView.setText(localEncontro);
-		
+
 		localButton = (Button) rootView.findViewById(R.id.buttonLocal);
-		
+
 		//Acao Botao Local
 		localButton.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				latitudeEncontro = 0; longitudeEncontro = 0;
@@ -107,8 +107,8 @@ public class NovoEncontroFragment extends Fragment {
 				fragmentManager.beginTransaction().replace(R.id.container, mapFragment).commit();
 			}
 		});
-		
-		
+
+
 		dataButton = (Button) rootView.findViewById(R.id.dataPickerButton);
 		dataButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -144,7 +144,7 @@ public class NovoEncontroFragment extends Fragment {
 				FragmentManager fragmentManager = getActivity()
 						.getSupportFragmentManager();
 				fragmentManager.beginTransaction()
-						.replace(R.id.container, new PerfilFragment()).commit();
+				.replace(R.id.container, new PerfilFragment()).commit();
 
 			}
 		});
@@ -154,20 +154,20 @@ public class NovoEncontroFragment extends Fragment {
 			@SuppressLint("NewApi")
 			@Override
 			public void onClick(View v) {
-				
-					nomeEncontro = ((TextView) rootView
-							.findViewById(R.id.nomeEdit)).getText().toString();
-				
-				
-				
-					pontoEncontro = ((TextView) rootView
-							.findViewById(R.id.pontoEdit)).getText().toString();
-				
-				
-					linhaEncontro = ((TextView) rootView
-							.findViewById(R.id.linhaEdit)).getText().toString();
 
-				
+				nomeEncontro = ((TextView) rootView
+						.findViewById(R.id.nomeEdit)).getText().toString();
+
+
+
+				pontoEncontro = ((TextView) rootView
+						.findViewById(R.id.pontoEdit)).getText().toString();
+
+
+				linhaEncontro = ((TextView) rootView
+						.findViewById(R.id.linhaEdit)).getText().toString();
+
+
 				count = 0;
 				if (!isNomeEncontroValid(nomeEncontro)) {
 					nomeEncontroTextView.setError("Nome Invalido");
@@ -189,97 +189,100 @@ public class NovoEncontroFragment extends Fragment {
 				if ((data == null)
 						|| (data.getAno() < Integer.parseInt(dataAtu[2]))
 						|| (data.getAno() == Integer.parseInt(dataAtu[2]) && data
-								.getMes() < (Integer.parseInt(dataAtu[1])))
+						.getMes() < (Integer.parseInt(dataAtu[1])))
 						|| (data.getAno() == Integer.parseInt(dataAtu[2])
-								&& data.getMes() == (Integer
-										.parseInt(dataAtu[1])) && data.getDia() < (Integer
-								.parseInt(dataAtu[0])))) {
+						&& data.getMes() == (Integer
+								.parseInt(dataAtu[1])) && data.getDia() < (Integer
+										.parseInt(dataAtu[0])))) {
 					count = count + 1;
 					Toast.makeText(getActivity(), "Data Invalida",
 							Toast.LENGTH_LONG).show();
 				}
-				if(data != null || horario != null){
-				
-				AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
-						.create(); // Read Update
-				alertDialog.setTitle("Criar Encontro");
-				
-				alertDialog.setMessage("Nome:" + nomeEncontro + "\n"
-						+ "Ponto de Referencia:" + pontoEncontro + "\n"
-						+ "Linha: " + linhaEncontro + "\n" + "Data: "
-						+ data.toString() + "\n" + "Horario: "
-						+ horario.toString() + "\n");
+				//BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+				if(data == null || horario == null){
 
-				alertDialog.setButton("OK",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int which) {
-								if (count == 0) {
-									Log.v("mapa", "qnty = " + getFragmentManager().getBackStackEntryCount());
-									encontro = new Encontro();
 
-									encontro.setNome(nomeEncontro);
-									encontro.setPonto(pontoEncontro);
-									encontro.setLinha(linhaEncontro);
-									encontro.setHorario(horario);
-									encontro.setData(data);
-									encontro.setIdDono(PerfilFragment.getUser()
-											.getId());
-									encontro.setNomeDono(PerfilFragment
-											.getUser().getName());
-									encontro.setLatitude(latitudeEncontro);
-									encontro.setLongitude(longitudeEncontro);
 
-									ClienteRest cliREST = new ClienteRest();
-									try {
+				}else{
+					AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+					.create(); // Read Update
+					alertDialog.setTitle("Criar Encontro");
 
-										String resposta = cliREST
-												.inserirEncontro(encontro);
-										Log.d("Aqui" + resposta, encontro
-												.getPerfisConfirmados()
-												.toString());
-									} catch (Exception e) {
-										e.getMessage();
-										gerarToast(e.getMessage());
-									}
-									novoEncontro = false;
-									nomeEncontro = "";
-									linhaEncontro = "";
-									pontoEncontro = "";
-									localEncontro = "";
-									getActivity().getActionBar().setTitle(R.string.title_section3);
-									FragmentManager fragmentManager = getActivity()
-											.getSupportFragmentManager();
-									fragmentManager
-											.beginTransaction()
-											.replace(R.id.container,
-													new MeusEncontrosFragment())
-											.commit();
-									gerarToast("Encontro Criado!");
+					alertDialog.setMessage("Nome:" + nomeEncontro + "\n"
+							+ "Ponto de Referencia:" + pontoEncontro + "\n"
+							+ "Linha: " + linhaEncontro + "\n" + "Data: "
+							+ data.toString() + "\n" + "Horario: "
+							+ horario.toString() + "\n");
+
+					alertDialog.setButton("OK",
+							new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,
+								int which) {
+							if (count == 0) {
+								Log.v("mapa", "qnty = " + getFragmentManager().getBackStackEntryCount());
+								encontro = new Encontro();
+
+								encontro.setNome(nomeEncontro);
+								encontro.setPonto(pontoEncontro);
+								encontro.setLinha(linhaEncontro);
+								encontro.setHorario(horario);
+								encontro.setData(data);
+								encontro.setIdDono(PerfilFragment.getUser()
+										.getId());
+								encontro.setNomeDono(PerfilFragment
+										.getUser().getName());
+								encontro.setLatitude(latitudeEncontro);
+								encontro.setLongitude(longitudeEncontro);
+
+								ClienteRest cliREST = new ClienteRest();
+								try {
+
+									String resposta = cliREST
+											.inserirEncontro(encontro);
+									Log.d("Aqui" + resposta, encontro
+											.getPerfisConfirmados()
+											.toString());
+								} catch (Exception e) {
+									e.getMessage();
+									gerarToast(e.getMessage());
 								}
+								novoEncontro = false;
+								nomeEncontro = "";
+								linhaEncontro = "";
+								pontoEncontro = "";
+								localEncontro = "";
+								getActivity().getActionBar().setTitle(R.string.title_section3);
+								FragmentManager fragmentManager = getActivity()
+										.getSupportFragmentManager();
+								fragmentManager
+								.beginTransaction()
+								.replace(R.id.container,
+										new MeusEncontrosFragment())
+										.commit();
+								gerarToast("Encontro Criado!");
 							}
-						});
+						}
+					});
 
-				alertDialog.setButton2("Editar",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int which) {
-							}
-						});
-				alertDialog.show();
-
-			}
+					alertDialog.setButton2("Editar",
+							new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,
+								int which) {
+						}
+					});
+					alertDialog.show();
+				}
 			}
 		});
 		return rootView;
 	}
-	
+
 	@Override
 	public void onResume() {
 		novoEncontro = false;
 		super.onResume();
 	}
-	
+
 	private void gerarToast(CharSequence message) {
 		int duration = Toast.LENGTH_LONG;
 		Toast toast = Toast.makeText(getActivity().getApplicationContext(),
@@ -310,7 +313,7 @@ public class NovoEncontroFragment extends Fragment {
 
 	// =======================DATA PICKER =====================
 	public class DatePickerFragment extends DialogFragment implements
-			DatePickerDialog.OnDateSetListener {
+	DatePickerDialog.OnDateSetListener {
 
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -326,17 +329,17 @@ public class NovoEncontroFragment extends Fragment {
 
 		@Override
 		public void onDateSet(DatePicker view, int year, int month, int day) {
-			
+
 			data = new DataDoEncontro(day, month, year);
 			dataTextView.setText(data.toString());
-			
+
 		}
 
 	};
 
 	// ====================CLOCK PICKER=========================================
 	public class TimePickerFragment extends DialogFragment implements
-			TimePickerDialog.OnTimeSetListener {
+	TimePickerDialog.OnTimeSetListener {
 
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {

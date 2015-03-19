@@ -37,10 +37,13 @@ public class MapFragment extends Fragment {
 	private static View rootView;
 	private double latitude;
 	private double longitude;
+	private double latitudeZoom;
+	private double longitudeZoom;
 	private LocationManager locationManager;
 	private String provider;
 	private GoogleMap map;
 	private Button sairButton;
+	private boolean zoomed;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,6 +59,7 @@ public class MapFragment extends Fragment {
 		} catch (InflateException e) {
 			/* map is already there*/
 		}
+		zoomed = false;
 		
 		SupportMapFragment mapFragment = (SupportMapFragment) getFragmentManager()
 				.findFragmentById(R.id.map);
@@ -95,12 +99,6 @@ public class MapFragment extends Fragment {
 		} else {
 			createMarkers(map);
 		}
-		locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-	    Criteria criteria = new Criteria();
-	    provider = locationManager.getBestProvider(criteria, false);
-	    Location location = locationManager.getLastKnownLocation(provider);
-	    latitude = location.getLatitude();
-		longitude = location.getLongitude();
 		
 		map.setMyLocationEnabled(true);
 		if (!CheckNetwork.isInternetAvailable(getActivity())) {
@@ -108,13 +106,22 @@ public class MapFragment extends Fragment {
 					"Verifique sua conexão com a Internet e tente novamente.",
 					1500).show();
 		}
+		locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 		map.setOnMyLocationChangeListener(new OnMyLocationChangeListener() {
 			
 			@Override
 			public void onMyLocationChange(Location arg0) {
-				if (latitude != 0) {
-					CameraUpdate zoomLocation = CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 15);
+			    Criteria criteria = new Criteria();
+			    provider = locationManager.getBestProvider(criteria, false);
+			    Location location = locationManager.getLastKnownLocation(provider);
+			    latitudeZoom = location.getLatitude();
+				longitudeZoom = location.getLongitude();
+				if (latitudeZoom != 0 && zoomed == false) {
+					CameraUpdate zoomLocation = CameraUpdateFactory.newLatLngZoom(new LatLng(latitudeZoom, longitudeZoom), 15);
 					map.animateCamera(zoomLocation);
+					if (map.getCameraPosition().zoom == 15) {
+						zoomed = true;
+					}
 				}
 			}
 		});

@@ -98,19 +98,30 @@ public class MeusEncontrosFragment extends Fragment {
 					.create(); // Read Update
 					alertDialog.setTitle(item.getNome());
 					try {
-						alertDialog.setMessage(item.getPonto()
+						String nomes = "";
+						List<String> auxList = newRest.getPerfisChegaram(item.getId()+"");
+						for (String nome : auxList) {
+							nomes += "\n"+ nome;
+						}
+						
+						String nomesNao = "";
+						List<String> auxListNao = newRest.getPerfisNaoChegaram(item.getId()+"");
+						for (String nome : auxListNao) {
+							nomesNao += "\n"+ nome;
+						}
+						alertDialog.setMessage("Ponto: " + item.getPonto()
 								+ "\n"
-								+ item.getLinha()
+								+ "Linha: " + item.getLinha()
 								+ "\n"
-								+ item.getData().toString()
+								+ "Data: " + item.getData().toString()
 								+ "\n"
-								+ item.getHorario().toString()
-								+ "\n"
+								+ "Horario: " + item.getHorario().toString()
+								+ "\n" + "\n"
 								+ "Chegaram: "
-								+ newRest.getPerfisChegaram(item.getId()+"").toString()
-								+ "\n"
+								+ nomes
+								+ "\n" + "\n"
 								+ "Não chegaram: "
-								+ newRest.getPerfisNaoChegaram(item.getId()+"").toString());
+								+ nomesNao);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

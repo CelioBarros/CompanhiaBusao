@@ -58,18 +58,21 @@ public class EncontrosFragment extends Fragment {
 					final int position, long id) {
 				String listaConfirmados = "";
 				try {
-					listaConfirmados = newRest.getPerfisConfirmados(""+listaEncontros.get(position).getId()).toString();
+					List<String> nomes = newRest.getPerfisConfirmados(""+listaEncontros.get(position).getId());
+					for (String nome : nomes) {
+						listaConfirmados += "\n"+ nome;
+					}
 				} catch (Exception e) {
 					e.getMessage();
 				}
 				AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
 						.create(); // Read Update
 				alertDialog.setTitle(listaEncontros.get(position).getNome());
-				alertDialog.setMessage(listaEncontros.get(position).getPonto()
-						+ "\n" + listaEncontros.get(position).getLinha() + "\n"
-						+ listaEncontros.get(position).getData() + "\n"
-						+ listaEncontros.get(position).getHorario() + "\n"
-						+ "confirmados: "
+				alertDialog.setMessage("Ponto: " + listaEncontros.get(position).getPonto()
+						+ "\n" + "Linha: " + listaEncontros.get(position).getLinha() + "\n"
+						+ "Data: " + listaEncontros.get(position).getData() + "\n"
+						+ "Horario: " + listaEncontros.get(position).getHorario() + "\n" + "\n"
+						+ "Confirmados: "
 						+ listaConfirmados);
 
 				alertDialog.setButton("Confirmar",

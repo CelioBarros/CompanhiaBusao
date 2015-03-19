@@ -17,7 +17,8 @@ public class AboutFragment extends Fragment{
 
 		View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 		TextView textView = (TextView) rootView.findViewById(R.id.sobre);
-		textView.getBackground().setAlpha(40);
+		textView.getBackground().setAlpha(30);
+		textView.setKeyListener(null);
 		
 		return rootView;
 	}

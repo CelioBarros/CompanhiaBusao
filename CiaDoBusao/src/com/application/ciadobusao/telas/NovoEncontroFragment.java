@@ -3,7 +3,7 @@ package com.application.ciadobusao.telas;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -27,7 +27,6 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import com.application.ciadobusao.R;
 import com.application.ciadobusao.db.ClienteRest;
 import com.application.ciadobusao.telas.MeusEncontrosFragment.MeuAsyncTask;
@@ -152,6 +151,7 @@ public class NovoEncontroFragment extends Fragment {
 
 		criarEncontroButton = (Button) rootView.findViewById(R.id.botaocriar);
 		criarEncontroButton.setOnClickListener(new View.OnClickListener() {
+			@SuppressLint("NewApi")
 			@Override
 			public void onClick(View v) {
 				if (nomeEncontro.equals("") ) {
@@ -199,10 +199,12 @@ public class NovoEncontroFragment extends Fragment {
 					Toast.makeText(getActivity(), "Data Invalida",
 							Toast.LENGTH_LONG).show();
 				}
-
+				if(data != null || horario != null){
+				
 				AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
 						.create(); // Read Update
 				alertDialog.setTitle("Criar Encontro");
+				
 				alertDialog.setMessage("Nome:" + nomeEncontro + "\n"
 						+ "Ponto de Referencia:" + pontoEncontro + "\n"
 						+ "Linha: " + linhaEncontro + "\n" + "Data: "
@@ -267,6 +269,7 @@ public class NovoEncontroFragment extends Fragment {
 						});
 				alertDialog.show();
 
+			}
 			}
 		});
 		return rootView;

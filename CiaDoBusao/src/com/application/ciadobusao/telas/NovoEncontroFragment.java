@@ -154,21 +154,20 @@ public class NovoEncontroFragment extends Fragment {
 			@SuppressLint("NewApi")
 			@Override
 			public void onClick(View v) {
-				if (nomeEncontro.equals("") ) {
+				
 					nomeEncontro = ((TextView) rootView
 							.findViewById(R.id.nomeEdit)).getText().toString();
-				}
 				
-				if (pontoEncontro.equals("")) {
+				
+				
 					pontoEncontro = ((TextView) rootView
 							.findViewById(R.id.pontoEdit)).getText().toString();
-				}
 				
-				if (linhaEncontro.equals("")) {
+				
 					linhaEncontro = ((TextView) rootView
 							.findViewById(R.id.linhaEdit)).getText().toString();
 
-				}
+				
 				count = 0;
 				if (!isNomeEncontroValid(nomeEncontro)) {
 					nomeEncontroTextView.setError("Nome Invalido");
